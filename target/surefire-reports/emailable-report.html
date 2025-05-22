@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>TestNG Report</title><style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}</style></head><body><table><tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr><tr><th colspan="7">Suite</th></tr><tr><td><a href="#t0">Test</a></td><td class="num">11</td><td class="num attn">1</td><td class="num attn">1</td><td class="num">3,038</td><td></td><td></td></tr></table><table><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Test &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">com.menumitra.superclass.APIBase</td><td><a href="#m0">tearDown</a></td><td rowspan="1">1745919486580</td><td rowspan="1">0</td></tr><tr class="failedodd"><td rowspan="1">com.menumitratCommonAPITestScript.StaffCreateTestScript</td><td><a href="#m1">setup</a></td><td rowspan="1">1745919486314</td><td rowspan="1">0</td></tr><tr><th colspan="4">Test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">com.menumitratCommonAPITestScript.loginTestScript</td><td><a href="#m2">verifyLoginUsingInvalidInputData</a></td><td rowspan="1">1745919485761</td><td rowspan="1">61</td></tr><tr><th colspan="4">Test &#8212; skipped (configuration methods)</th></tr><tr class="skippedeven"><td rowspan="1">com.menumitratCommonAPITestScript.StaffCreateTestScript</td><td><a href="#m3">tearDown</a></td><td rowspan="1">1745919486333</td><td rowspan="1">0</td></tr><tr><th colspan="4">Test &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="1">com.menumitratCommonAPITestScript.StaffCreateTestScript</td><td><a href="#m4">createStaff</a></td><td rowspan="1">1745919486331</td><td rowspan="1">1</td></tr><tr><th colspan="4">Test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript</td><td><a href="#m5">getOwnerUrl</a></td><td rowspan="1">1745919485986</td><td rowspan="1">0</td></tr><tr class="passedeven"><td><a href="#m6">verifyOTPAPiUsingValidInputData</a></td><td rowspan="1">1745919486026</td><td rowspan="1">122</td></tr><tr class="passedodd"><td rowspan="2">com.menumitratCommonAPITestScript.ResendOTPTestScript</td><td><a href="#m7">getResendOTPURL</a></td><td rowspan="1">1745919486169</td><td rowspan="1">0</td></tr><tr class="passedodd"><td><a href="#m8">verifyRessendOTPUSingPositiveInputData</a></td><td rowspan="1">1745919486191</td><td rowspan="1">123</td></tr><tr class="passedeven"><td rowspan="7">com.menumitratCommonAPITestScript.loginTestScript</td><td><a href="#m9">verifyLoginUsingInvalidInputData</a></td><td rowspan="6">1745919485827</td><td rowspan="6">69</td></tr><tr class="passedeven"><td><a href="#m10">verifyLoginUsingInvalidInputData</a></td></tr><tr class="passedeven"><td><a href="#m11">verifyLoginUsingInvalidInputData</a></td></tr><tr class="passedeven"><td><a href="#m12">verifyLoginUsingInvalidInputData</a></td></tr><tr class="passedeven"><td><a href="#m13">verifyLoginUsingInvalidInputData</a></td></tr><tr class="passedeven"><td><a href="#m14">verifyLoginUsingInvalidInputData</a></td></tr><tr class="passedeven"><td><a href="#m15">verifyloginUsingValidInputData</a></td><td rowspan="1">1745919483845</td><td rowspan="1">1556</td></tr></tbody></table><h2>Test</h2><h3 id="m0">com.menumitra.superclass.APIBase#tearDown</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.RuntimeException: Logout process failed
+	at com.menumitra.utilityclass.TokenManagers.logout(TokenManagers.java:265)
+	at com.menumitra.superclass.APIBase.tearDown(APIBase.java:143)
+Caused by: java.lang.NullPointerException
+	at com.menumitra.utilityclass.TokenManagers.logout(TokenManagers.java:243)
+	... 23 more
+... Removed 22 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m1">com.menumitratCommonAPITestScript.StaffCreateTestScript#setup</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.Error: Unresolved compilation problem: 
+	The method getDeviceToken() is undefined for the type TokenManagers
+
+	at com.menumitratCommonAPITestScript.StaffCreateTestScript.setup(StaffCreateTestScript.java:185)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m2">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_006</td><td>negative</td><td>Invalid login using  Not register number</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;9745635634&quot;
+}</td><td>{
+ 
+    &quot;details&quot;: &quot; This Mobile Number is not resistered&quot;
+}</td><td>400</td></tr><tr><th colspan="8">Exception</th></tr><tr><td colspan="8"><div class="stacktrace">com.menumitra.utilityclass.customException: Error in negative test case login_006: Error validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]
+	at com.menumitratCommonAPITestScript.loginTestScript.verifyLoginUsingInvalidInputData(loginTestScript.java:306)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m3">com.menumitratCommonAPITestScript.StaffCreateTestScript#tearDown</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m4">com.menumitratCommonAPITestScript.StaffCreateTestScript#createStaff</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>staffcreate</td><td>staffcreate_001</td><td>positive</td><td>Valid staff creation with all correct fields</td><td>post</td><td>{ &quot;user_id&quot;: 648, &quot;name&quot;: &quot;XYZ&quot;, &quot;mobile&quot;: &quot;9833445566&quot;, &quot;dob&quot;: &quot;06 Dec 2014&quot;, &quot;address&quot;: &quot;Katraj Pune&quot;, &quot;role&quot;: &quot;cleaner&quot;, &quot;aadhar_number&quot;: &quot;523456789091&quot;, &quot;outlet_id&quot;: 101, &quot;device_token&quot;: &quot;token123&quot; }</td><td>{ &quot;st&quot;: 1, &quot;msg&quot;: &quot;success&quot; }</td><td>200</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m5">com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript#getOwnerUrl</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th></tr><tr class="param stripe"><td>ownerVerifyotp</td><td>post</td><td>https://menusmitra.xyz/owner_api/verify_otp</td><td>{
+    &quot;mobile&quot;:&quot;9999999991&quot;,
+    &quot;otp&quot;:&quot;1234&quot;,
+    &quot;fcm_token&quot;:&quot;8998998998&quot;,
+    &quot;device_id&quot;:&quot;h0ol74eq6rom9i826wa&quot;,
+    &quot;device_model&quot;:&quot;samsung&quot;
+}</td><td>{
+    &quot;st&quot;: 1,
+    &quot;msg&quot;: &quot;Success&quot;,
+    &quot;owner_data&quot;: {
+        &quot;refresh&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NTgxNzM3MiwiaWF0IjoxNzQ1MjEyNTcyLCJqdGkiOiJmZTYwZGMyZDM0YzY0NDg0YTk0NGNhMzFkNDhiYjcxYiIsInVzZXJfaWQiOjUxOCwiZGV2aWNlX3Rva2VuIjoicktDcXFDc25SVnFZRGJBSUNzSmFQZG5rWllpOGFlYU4xajUuSkwwTGduVXhFMjh2aGZkdVE0R1cyYjlTejB4WmY3OUpoTko5aWxEQ0ZWNG0ubEJ1SFhZZHlKZm80Mkk0by5ZayJ9.iQ_cxaj_X12Pi0hiR6ObnUl0dNhrd5mwr2Qq-Ohjj-4&quot;,
+        &quot;access&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1ODE3MzcyLCJpYXQiOjE3NDUyMTI1NzIsImp0aSI6IjZmOThkZmQzZmIzYTRhZThiYWE3NmNlNDc1MzIzMDRiIiwidXNlcl9pZCI6NTE4LCJkZXZpY2VfdG9rZW4iOiJyS0NxcUNzblJWcVlEYkFJQ3NKYVBkbmtaWWk4YWVhTjFqNS5KTDBMZ25VeEUyOHZoZmR1UTRHVzJiOVN6MHhaZjc5SmhOSjlpbERDRlY0bS5sQnVIWFlkeUpmbzQySTRvLllrIn0.ZRhDl68saGfg-xdHtpNI_a6zkX9ZJ4OhoPXhe496NOA&quot;,
+        &quot;device_token&quot;: &quot;rKCqqCsnRVqYDbAICsJaPdnkZYi8aeaN1j5.JL0LgnUxE28vhfduQ4GW2b9Sz0xZf79JhNJ9ilDCFV4m.lBuHXYdyJfo42I4o.Yk&quot;,
+        &quot;owner_name&quot;: &quot;Santosh&quot;,
+        &quot;user_id&quot;: 518,
+        &quot;role&quot;: &quot;owner&quot;,
+        &quot;outlet_name&quot;: &quot;Deshmukh Wada&quot;,
+        &quot;outlet_id&quot;: 84,
+        &quot;mobile&quot;: &quot;9677777777&quot;,
+        &quot;address&quot;: &quot;Pune Satara Road Pune&quot;,
+        &quot;outlet_status&quot;: true,
+        &quot;order_number_sequence&quot;: &quot;since_opening&quot;,
+        &quot;is_open&quot;: true,
+        &quot;gst&quot;: &quot;4&quot;,
+        &quot;service_charges&quot;: &quot;2&quot;,
+        &quot;upi_id&quot;: &quot;9527279639@ybl&quot;,
+        &quot;completed_orders&quot;: 0,
+        &quot;active_orders&quot;: 0,
+        &quot;today_total_revenue&quot;: null
+    },
+    &quot;settings&quot;: {
+        &quot;theme&quot;: &quot;system&quot;,
+        &quot;style&quot;: &quot;blue&quot;,
+        &quot;has_dine_in&quot;: true,
+        &quot;has_parcel&quot;: false,
+        &quot;has_counter&quot;: false,
+        &quot;has_delivery&quot;: false,
+        &quot;has_drive_through&quot;: true,
+        &quot;print_and_save&quot;: true,
+        &quot;KOT_and_save&quot;: true,
+        &quot;settle&quot;: true,
+        &quot;reserve_table&quot;: true,
+        &quot;cancel&quot;: true,
+        &quot;POS_show_menu_image&quot;: true
+    }
+}</td><td>200</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m6">com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript#verifyOTPAPiUsingValidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>ownerVerifyOTP</td><td>OwnerVerifyOTP_001</td><td>positive</td><td>valild verify OTP</td><td>post</td><td>{
+    &quot;mobile&quot;:&quot;9999999991&quot;,
+    &quot;otp&quot;:&quot;1234&quot;,
+    &quot;fcm_token&quot;:&quot;8998998998&quot;,
+    &quot;device_id&quot;:&quot;h0ol74eq6rom9i826wa&quot;,
+    &quot;device_model&quot;:&quot;samsung&quot;
+}</td><td>{
+    &quot;st&quot;: 1,
+    &quot;msg&quot;: &quot;Success&quot;,
+    &quot;owner_data&quot;: {
+        &quot;refresh&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NTgyMjEyNiwiaWF0IjoxNzQ1MjE3MzI2LCJqdGkiOiJhZjY2OTNiYzI1ZDY0ZjIyOGY4MDMwYjdhN2RmZmE0OCIsInVzZXJfaWQiOjUxOCwiZGV2aWNlX3Rva2VuIjoiTW1tS20zdEszZ2xhWTRhNXZMSThsM1czWTUzLjBiazJ2TVl6WlRDU25xN0dHUml1dmM2SVF4cWhVVGVWODRXMkhuMUdqM3pra0VMZHhBeDFQMHBlVlRPdVhiV3JkUGxibTlRNyJ9.wofSFAthCt_AVCaxeTaufm0jkir3KIvJecXVh0lmazE&quot;,
+        &quot;access&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1ODIyMTI2LCJpYXQiOjE3NDUyMTczMjYsImp0aSI6ImZlN2YyMWY4NWNlZDQxNDg4MGM5NzJlNmVjODAwZDVhIiwidXNlcl9pZCI6NTE4LCJkZXZpY2VfdG9rZW4iOiJNbW1LbTN0SzNnbGFZNGE1dkxJOGwzVzNZNTMuMGJrMnZNWXpaVENTbnE3R0dSaXV2YzZJUXhxaFVUZVY4NFcySG4xR2ozemtrRUxkeEF4MVAwcGVWVE91WGJXcmRQbGJtOVE3In0.mS5cBmhZRYqeICdIAQM3Yo46zWSgFm1ybMwGAwDaCkk&quot;,
+        &quot;device_token&quot;: &quot;MmmKm3tK3glaY4a5vLI8l3W3Y53.0bk2vMYzZTCSnq7GGRiuvc6IQxqhUTeV84W2Hn1Gj3zkkELdxAx1P0peVTOuXbWrdPlbm9Q7&quot;,
+        &quot;owner_name&quot;: &quot;Santosh&quot;,
+        &quot;user_id&quot;: 518,
+        &quot;role&quot;: &quot;owner&quot;,
+        &quot;outlet_name&quot;: &quot;Deshmukh Wada&quot;,
+        &quot;outlet_id&quot;: 84,
+        &quot;mobile&quot;: &quot;9677777777&quot;,
+        &quot;address&quot;: &quot;Pune Satara Road Pune&quot;,
+        &quot;outlet_status&quot;: true,
+        &quot;order_number_sequence&quot;: &quot;since_opening&quot;,
+        &quot;is_open&quot;: true,
+        &quot;gst&quot;: &quot;4&quot;,
+        &quot;service_charges&quot;: &quot;2&quot;,
+        &quot;upi_id&quot;: &quot;9527279639@ybl&quot;,
+        &quot;completed_orders&quot;: 0,
+        &quot;active_orders&quot;: 0,
+        &quot;today_total_revenue&quot;: null
+    },
+    &quot;settings&quot;: {
+        &quot;theme&quot;: &quot;system&quot;,
+        &quot;style&quot;: &quot;blue&quot;,
+        &quot;has_dine_in&quot;: true,
+        &quot;has_parcel&quot;: false,
+        &quot;has_counter&quot;: false,
+        &quot;has_delivery&quot;: false,
+        &quot;has_drive_through&quot;: true,
+        &quot;print_and_save&quot;: true,
+        &quot;KOT_and_save&quot;: true,
+        &quot;settle&quot;: true,
+        &quot;reserve_table&quot;: true,
+        &quot;cancel&quot;: true,
+        &quot;POS_show_menu_image&quot;: true
+    }
+}</td><td>200</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m7">com.menumitratCommonAPITestScript.ResendOTPTestScript#getResendOTPURL</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th></tr><tr class="param stripe"><td>resendOTP</td><td>post</td><td>https://men4u.xyz/common_api/resend_otp</td><td>{
+    &quot;mobile&quot;:&quot;9999999991&quot;,
+    &quot;role&quot;:&quot;owner&quot;
+    
+}</td><td>{
+    &quot;st&quot;: 1,
+    &quot;msg&quot;: &quot;OTP resent successfully&quot;,
+    &quot;role&quot;: &quot;owner&quot;
+}</td><td>200</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m8">com.menumitratCommonAPITestScript.ResendOTPTestScript#verifyRessendOTPUSingPositiveInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>resendotp</td><td>resendotp_001</td><td>positive</td><td>Valid login</td><td>post</td><td>{
+    &quot;mobile&quot;:&quot;9999999991&quot;,
+    &quot;role&quot;:&quot;owner&quot;
+    
+}</td><td>{
+    &quot;st&quot;: 1,
+    &quot;msg&quot;: &quot;OTP resent successfully&quot;,
+    &quot;role&quot;: &quot;owner&quot;
+}</td><td>200</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m9">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_007</td><td>negative</td><td>Invalid login using  combination of all character and special character</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;Adbt@#4Gh7&quot;
+}</td><td>{
+    &quot;detail&quot;: &quot;Mobile number must contain only digits&quot;
+}</td><td>400</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m10">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_008</td><td>negative</td><td>verify 1 to 5 first digit</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;1264335759&quot;
+}</td><td>{
+    &quot;detail&quot;: &quot;Mobile number must start with digits 6, 7, 8, or 9&quot;
+}</td><td>400</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m11">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_002</td><td>negative</td><td>Invalid login using empty test data</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;&quot;
+}</td><td>{
+    &quot;detail&quot;: &quot;Please provide mobile number&quot;
+}</td><td>400</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m12">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_005</td><td>negative</td><td>Invalid login using  character</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;6264Af35759&quot;
+}</td><td>{
+    &quot;detail&quot;: &quot;Mobile number must contain only digits&quot;
+}</td><td>400</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m13">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_003</td><td>negative</td><td>Invalid login using less than ten digit test data</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;626433575&quot;
+}</td><td>{
+    &quot;detail&quot;: &quot;Mobile number must be exactly 10 digits long&quot;
+}</td><td>400</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m14">com.menumitratCommonAPITestScript.loginTestScript#verifyLoginUsingInvalidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_004</td><td>negative</td><td>Invalid login using special character</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;626433@ 59&quot;
+}</td><td>{
+    &quot;detail&quot;: &quot;Mobile number must contain only digits&quot;
+}</td><td>400</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m15">com.menumitratCommonAPITestScript.loginTestScript#verifyloginUsingValidInputData</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th></tr><tr class="param stripe"><td>login</td><td>login_001</td><td>positive</td><td>Valid login</td><td>post</td><td>{   
+ &quot;mobile&quot;:&quot;6264335759&quot;
+}</td><td>{
+    &quot;st&quot;: 1,
+    &quot;msg&quot;: &quot;Your OTP is sent successfully.&quot;,
+    &quot;role&quot;: &quot;owner&quot;
+}</td><td>200</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p></body></html>

@@ -1,0 +1,2276 @@
+<html>
+<head>
+<title>TestNG:  MenuMitra API Tests</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>MenuMitra API Tests</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>51/22/1</td>
+</tr><tr>
+<td>Started on:</td><td>Thu May 22 18:29:37 IST 2025</td>
+</tr>
+<tr><td>Total time:</td><td>26 seconds (26136 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_004, negative, Missing name, post, { "outlet_id": "1", "user_id": "2", "name": "", "mobile": "6936344567", "address": "", "aadhar_number": "343332322321", "dob": "", "email": ""}, {"detail":"Name is required"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace137840913", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace137840913'><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_005, negative, Missing mobile, post, { "outlet_id": "1", "user_id": "2", "name": "captain Raj", "mobile": "", "address": "", "aadhar_number": "343332322321", "dob": "", "email": ""}, {"detail":"Mobile is required"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1026226391", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1026226391'><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_006, negative, Invalid mobile format (less digits), post, {"outlet_id": "1", "user_id": "2", "name": "captain Raj", "mobile": "12345", "address": "", "aadhar_number": "343332322321","dob": "", "email": ""}, {"detail":"Mobile number must be a 10 digits number"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1776502451", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1776502451'><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_007, negative, Missing aadhar_number, post, { "outlet_id": "1", "user_id": "2", "name": "captain Raj","mobile": "6936344567", "address": "", "aadhar_number": "", "dob": "", "email": ""}, {"detail":"Aadhar number is required"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace787028959", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace787028959'><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_008, negative, Invalid email format, post, { "outlet_id": "1", "user_id": "2", "name": "captain Raj", "mobile": "6936344567", "address": "","aadhar_number": "343332322321", "dob": "", "email": "invalid-email"}, {"detail": "The email format is incorrect."}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1486728342", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1486728342'><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_009, negative, All required fields empty, post, { "outlet_id": "", "user_id": "", "name": "", "mobile": "", "address": "", "aadhar_number": "", "dob": "", "email": ""}, {"detail": "Please provide user_id"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace198042728", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace198042728'><pre>com.menumitra.utilityclass.customException: Error in captain create negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest(CaptainCreateTestScript.java:418)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateTest()'><b>captainCreateTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_001, positive, verify captain create, post, {
+ "outlet_id":"1",
+ "user_id":"2",
+ "name":"captain Raj",
+ "mobile":"6936344567",
+ "address":"",
+ "aadhar_number":"343332322321",
+ "dob":"",
+ "email":""
+
+}, {
+    "detail": "Captain created successfully",
+    "data": {
+        "captain_id": 12,
+        "name": "captain A"
+    }
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain create test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateTest(CaptainCreateTestScript.java:229)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1769947269", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1769947269'><pre>com.menumitra.utilityclass.customException: Error in captain create test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateTest(CaptainCreateTestScript.java:229)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainListViewTestScript.captainListViewTest()'><b>captainListViewTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainListViewTestScript<br>Parameters: captainlistview, captainlistview_001, positive, verify captain list view, post, {
+    "outlet_id":"1"
+}, , </td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in captain list view test: Status code mismatch - Expected: , Actual: 400
+	at com.menumitratCommonAPITestScript.CaptainListViewTestScript.captainListViewTest(CaptainListViewTestScript.java:220)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace229193548", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace229193548'><pre>com.menumitra.utilityclass.customException: Error in captain list view test: Status code mismatch - Expected: , Actual: 400
+	at com.menumitratCommonAPITestScript.CaptainListViewTestScript.captainListViewTest(CaptainListViewTestScript.java:220)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainListViewTestScript@4e423aa2</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ChefViewTestScript.chefViewTest()'><b>chefViewTest</b><br>Test class: com.menumitratCommonAPITestScript.ChefViewTestScript<br>Parameters: chefview, chefview_001, positive, verify chef view , post, {
+     "outlet_id":"1",
+    "user_id": "18"
+}, {
+    "chef": {
+        "outlet_id": 1,
+        "user_id": 13,
+        "name": "chef ",
+        "mobile": "8600000000",
+        "aadhar_number": "123456789018",
+        "address": "lean",
+        "dob": null,
+        "email": "h@gmai",
+        "is_active": true,
+        "created_by": "owner",
+        "created_on": "02 May 2025 05:16:54 PM",
+        "updated_by": null,
+        "updated_on": null
+    }
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in chef view test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.ChefViewTestScript.chefViewTest(ChefViewTestScript.java:221)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1859227008", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1859227008'><pre>com.menumitra.utilityclass.customException: Error in chef view test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.ChefViewTestScript.chefViewTest(ChefViewTestScript.java:221)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ChefViewTestScript@4196c360</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainDeleteTestScript.deleteCaptain()'><b>deleteCaptain</b><br>Test class: com.menumitratCommonAPITestScript.CaptainDeleteTestScript<br>Parameters: captaindelete, captaindelete_001, positive, verify captain delete, delete, {
+ "update_user_id":"2",
+ "user_id":"17",
+ "outlet_id":"1"
+
+}, {
+    "detail": "(pymysql.err.IntegrityError) (1048, \"Column 'user_id' cannot be null\")\n[SQL: UPDATE user_settings SET user_id=%(user_id)s WHERE user_settings.user_settings_id = %(user_settings_user_settings_id)s]\n[parameters: {'user_id': None, 'user_settings_user_settings_id': 5}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)"
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Test execution failed: Status code validation failed - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.CaptainDeleteTestScript.deleteCaptain(CaptainDeleteTestScript.java:234)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace61480005", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace61480005'><pre>com.menumitra.utilityclass.customException: Test execution failed: Status code validation failed - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.CaptainDeleteTestScript.deleteCaptain(CaptainDeleteTestScript.java:234)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainDeleteTestScript@7fbdb894</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderNegativeTest()'><b>forceCancelOrderNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ForceCancelOrderTestScript<br>Parameters: forcecancelorder, forcecancelorder_004, negative, Invalid force cancel order with missing both fields, post, { "order_id":"","user_id":""}, {"detail":"order_id is required"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in force cancel order negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderNegativeTest(ForceCancelOrderTestScript.java:390)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace901752766", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace901752766'><pre>com.menumitra.utilityclass.customException: Error in force cancel order negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderNegativeTest(ForceCancelOrderTestScript.java:390)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ForceCancelOrderTestScript@1bd39d3c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderTest()'><b>forceCancelOrderTest</b><br>Test class: com.menumitratCommonAPITestScript.ForceCancelOrderTestScript<br>Parameters: forcecancelorder, forcecancelorder_001, positive, verify force cancel order, post, {
+    "order_id":"6",
+    "user_id":"2"
+}, {
+    "detail": "Order cancelled successfully"
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in force cancel order test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderTest(ForceCancelOrderTestScript.java:221)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace568725229", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace568725229'><pre>com.menumitra.utilityclass.customException: Error in force cancel order test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderTest(ForceCancelOrderTestScript.java:221)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ForceCancelOrderTestScript@1bd39d3c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.MenuCategoryViewTestScript.verifyMenuCategoryView()'><b>verifyMenuCategoryView</b><br>Test class: com.menumitratCommonAPITestScript.MenuCategoryViewTestScript<br>Parameters: menucategoryview, menucategoryview_001, positive, verify menu category view, post, {
+    "outlet_id":"1",
+    "menu_cat_id": "5"
+}, , 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in menu category view test: Status code mismatch - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.MenuCategoryViewTestScript.verifyMenuCategoryView(MenuCategoryViewTestScript.java:261)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace885437742", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace885437742'><pre>com.menumitra.utilityclass.customException: Error in menu category view test: Status code mismatch - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.MenuCategoryViewTestScript.verifyMenuCategoryView(MenuCategoryViewTestScript.java:261)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.MenuCategoryViewTestScript@7ceb3185</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SearchMenu.verifySearchMenu()'><b>verifySearchMenu</b><br>Test class: com.menumitratCommonAPITestScript.SearchMenu<br>Parameters: searchmenu, searchmenu_001, positive, verify search menu, post, {
+    "outlet_id":"1",
+    "keyword":"Anda Biryani"
+    
+}, {
+    "menu_list": [
+        {
+            "menu_id": 18,
+            "menu_name": "Anda Biryani",
+            "menu_food_type": "veg",
+            "outlet_id": 1,
+            "outlet_veg_nonveg": "veg",
+            "menu_cat_id": 3,
+            "category_name": "Rice",
+            "spicy_index": "2",
+            "price": 180,
+            "rating": "5.0",
+            "offer": 40,
+            "is_special": false,
+            "image": "http://men4u.xyz/media/Images/4e8e71420d0d48ebbd1252fe465fa2a9.jpg",
+            "is_favourite": 0
+        }
+    ]
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in search menu test: Status code mismatch - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.SearchMenu.verifySearchMenu(SearchMenu.java:262)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace317794116", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace317794116'><pre>com.menumitra.utilityclass.customException: Error in search menu test: Status code mismatch - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.SearchMenu.verifySearchMenu(SearchMenu.java:262)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SearchMenu@20f5281c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SectionDeleteTestScript.verifySectionDeleteUsingValidInputData()'><b>verifySectionDeleteUsingValidInputData</b><br>Test class: com.menumitratCommonAPITestScript.SectionDeleteTestScript<br>Parameters: sectiondelete, sectiondelete_001, positive, Valid user_id, outlet_id, and section_id, delete, { "user_id": "2", "outlet_id": "1", "section_id": "15"}, {
+    "message": "Outlet Section and associated tables deleted successfully"
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error during section delete verification
+	at com.menumitratCommonAPITestScript.SectionDeleteTestScript.verifySectionDeleteUsingValidInputData(SectionDeleteTestScript.java:209)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1513530373", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1513530373'><pre>com.menumitra.utilityclass.customException: Error during section delete verification
+	at com.menumitratCommonAPITestScript.SectionDeleteTestScript.verifySectionDeleteUsingValidInputData(SectionDeleteTestScript.java:209)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SectionDeleteTestScript@6f19ac19</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SupplierListViewTestScript.verifySupplierListViewUsingPositiveData()'><b>verifySupplierListViewUsingPositiveData</b><br>Test class: com.menumitratCommonAPITestScript.SupplierListViewTestScript<br>Parameters: supplierlistview, supplierlistview_001, positive, verify supplier list view, post, {
+    "outlet_id": "1"
+    
+}, [
+    {
+        "supplier_id": 8,
+        "name": "vaibhav",
+        "supplier_code": "607502",
+        "mobile_number1": "9837375656",
+        "mobile_number2": null,
+        "supplier_status": true
+    },
+    {
+        "supplier_id": 7,
+        "name": "C Supplier",
+        "supplier_code": "493227",
+        "mobile_number1": "9076543312",
+        "mobile_number2": null,
+        "supplier_status": true
+    },
+    {
+        "supplier_id": 6,
+        "name": "heena Supplier",
+        "supplier_code": "949715",
+        "mobile_number1": "9076543370",
+        "mobile_number2": "9076543317",
+        "supplier_status": true
+    },
+    {
+        "supplier_id": 5,
+        "name": "heena Supplier",
+        "supplier_code": null,
+        "mobile_number1": "9076543379",
+        "mobile_number2": "9076543310",
+        "supplier_status": true
+    },
+    {
+        "supplier_id": 4,
+        "name": "C Supplier",
+        "supplier_code": null,
+        "mobile_number1": "9076543319",
+        "mobile_number2": null,
+        "supplier_status": true
+    },
+    {
+        "supplier_id": 2,
+        "name": "B Supplier",
+        "supplier_code": null,
+        "mobile_number1": "9076543217",
+        "mobile_number2": null,
+        "supplier_status": true
+    },
+    {
+        "supplier_id": 1,
+        "name": "Balaji",
+        "supplier_code": null,
+        "mobile_number1": "7996543218",
+        "mobile_number2": "7993456701",
+        "supplier_status": true
+    }
+], 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in supplier list view test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.SupplierListViewTestScript.verifySupplierListViewUsingPositiveData(SupplierListViewTestScript.java:236)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace950982829", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace950982829'><pre>com.menumitra.utilityclass.customException: Error in supplier list view test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.SupplierListViewTestScript.verifySupplierListViewUsingPositiveData(SupplierListViewTestScript.java:236)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SupplierListViewTestScript@341814d3</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.TableListViewTestScript.verifyTableListView()'><b>verifyTableListView</b><br>Test class: com.menumitratCommonAPITestScript.TableListViewTestScript<br>Parameters: tablelistview, tablelistview_001, positive, verify table list view, post, {
+    "outlet_id": "1"
+
+}, {
+    "data": [
+        {
+            "section_name": "Roof Top",
+            "section_id": 17,
+            "tables": [
+                {
+                    "table_id": 81,
+                    "table_number": 76,
+                    "outlet_id": 1,
+                    "is_occupied": 1,
+                    "occupied_time": "02 May 2025 03:13:41 PM",
+                    "grand_total": 3870.36,
+                    "order_id": 4,
+                    "order_number": "4",
+                    "action": "KOT_and_save",
+                    "is_paid": "0",
+                    "payment_method": "card",
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 82,
+                    "table_number": 77,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 83,
+                    "table_number": 78,
+                    "outlet_id": 1,
+                    "is_occupied": 1,
+                    "occupied_time": "02 May 2025 03:13:41 PM",
+                    "grand_total": 3870.36,
+                    "order_id": 4,
+                    "order_number": "4",
+                    "action": "KOT_and_save",
+                    "is_paid": "0",
+                    "payment_method": "card",
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 84,
+                    "table_number": 79,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 85,
+                    "table_number": 80,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 124,
+                    "table_number": 118,
+                    "outlet_id": 1,
+                    "is_occupied": 1,
+                    "occupied_time": "02 May 2025 03:08:32 PM",
+                    "grand_total": 3870.36,
+                    "order_id": 3,
+                    "order_number": "3",
+                    "action": "KOT_and_save",
+                    "is_paid": "0",
+                    "payment_method": "upi",
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 125,
+                    "table_number": 119,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 126,
+                    "table_number": 120,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 127,
+                    "table_number": 121,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 128,
+                    "table_number": 122,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 129,
+                    "table_number": 123,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 130,
+                    "table_number": 124,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 131,
+                    "table_number": 125,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 132,
+                    "table_number": 126,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 133,
+                    "table_number": 127,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                }
+            ]
+        },
+        {
+            "section_name": "Front-Top",
+            "section_id": 18,
+            "tables": [
+                {
+                    "table_id": 86,
+                    "table_number": 81,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 87,
+                    "table_number": 82,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 88,
+                    "table_number": 83,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 89,
+                    "table_number": 84,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 90,
+                    "table_number": 85,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 91,
+                    "table_number": 86,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 92,
+                    "table_number": 87,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 93,
+                    "table_number": 88,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 94,
+                    "table_number": 89,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 95,
+                    "table_number": 90,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 96,
+                    "table_number": 91,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 97,
+                    "table_number": 92,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 98,
+                    "table_number": 93,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 99,
+                    "table_number": 94,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 100,
+                    "table_number": 95,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 104,
+                    "table_number": 98,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 105,
+                    "table_number": 99,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 106,
+                    "table_number": 100,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 107,
+                    "table_number": 101,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 108,
+                    "table_number": 102,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 109,
+                    "table_number": 103,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 110,
+                    "table_number": 104,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 111,
+                    "table_number": 105,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 112,
+                    "table_number": 106,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 113,
+                    "table_number": 107,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 114,
+                    "table_number": 108,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 115,
+                    "table_number": 109,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 116,
+                    "table_number": 110,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 117,
+                    "table_number": 111,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 118,
+                    "table_number": 112,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 119,
+                    "table_number": 113,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 120,
+                    "table_number": 114,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 121,
+                    "table_number": 115,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 122,
+                    "table_number": 116,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                },
+                {
+                    "table_id": 123,
+                    "table_number": 117,
+                    "outlet_id": 1,
+                    "is_occupied": 0,
+                    "occupied_time": null,
+                    "grand_total": null,
+                    "order_id": null,
+                    "order_number": null,
+                    "action": null,
+                    "is_paid": null,
+                    "payment_method": null,
+                    "is_reserved": false
+                }
+            ]
+        }
+    ],
+    "today_total_sales": 2952.28,
+    "live_sales": 11611.08,
+    "total_tables": 50
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Test execution failed: Status code validation failed - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.TableListViewTestScript.verifyTableListView(TableListViewTestScript.java:254)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1794314439", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1794314439'><pre>com.menumitra.utilityclass.customException: Test execution failed: Status code validation failed - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.TableListViewTestScript.verifyTableListView(TableListViewTestScript.java:254)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.TableListViewTestScript@7fcf2fc1</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.WaiterCreateTestScript.verifyWaiterCreate()'><b>verifyWaiterCreate</b><br>Test class: com.menumitratCommonAPITestScript.WaiterCreateTestScript<br>Parameters: waitercreate, waitercreate_001, positive, verify Waiter create, post, {
+
+ "user_id":"2",
+ "outlet_id":"1",
+ "name":"waiter six",
+ "mobile":"6146345895",
+ "address":"",
+ "aadhar_number":"343332322321",
+ "dob":"",
+ "email":""
+
+
+}, {
+    "detail": "Waiter created successfully",
+    "data": {
+        "waiter_id": 10,
+        "name": "waiter C"
+    }
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in waiter create test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.WaiterCreateTestScript.verifyWaiterCreate(WaiterCreateTestScript.java:263)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1010068549", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1010068549'><pre>com.menumitra.utilityclass.customException: Error in waiter create test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.WaiterCreateTestScript.verifyWaiterCreate(WaiterCreateTestScript.java:263)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.WaiterCreateTestScript@479ceda0</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.WaiterViewTestScript.verifyWaiterView()'><b>verifyWaiterView</b><br>Test class: com.menumitratCommonAPITestScript.WaiterViewTestScript<br>Parameters: waiterview, waiterview_001, positive, verify waiter view, post, {
+    "outlet_id":"1",
+   "user_id":"15"
+}, {
+    "detail": "Successfully retrieved waiter details",
+    "data": {
+        "outlet_id": 1,
+        "user_id": 10,
+        "name": "waitvaibhav",
+        "mobile": "6146340039",
+        "aadhar_number": "343332322328",
+        "address": "satara",
+        "dob": "12 Jan 2023",
+        "email": "h@gmail",
+        "is_active": true,
+        "created_by": "owner",
+        "updated_by": "owner",
+        "created_on": "02 May 2025 04:36:09 PM",
+        "updated_on": "02 May 2025 04:47:49 PM"
+    }
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in waiter view test: Status code mismatch - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.WaiterViewTestScript.verifyWaiterView(WaiterViewTestScript.java:229)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace52313140", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace52313140'><pre>com.menumitra.utilityclass.customException: Error in waiter view test: Status code mismatch - Expected: 200, Actual: 404
+	at com.menumitratCommonAPITestScript.WaiterViewTestScript.verifyWaiterView(WaiterViewTestScript.java:229)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.WaiterViewTestScript@38ba6ce3</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.loginTestScript.verifyloginUsingValidInputData()'><b>verifyloginUsingValidInputData</b><br>Test class: com.menumitratCommonAPITestScript.loginTestScript<br>Parameters: login, login_001, positive, Valid login, post, {   
+ "mobile":"6264335759"
+}, {
+    "st": 1,
+    "msg": "Your OTP is sent successfully.",
+    "role": "owner"
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Login API test error: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.loginTestScript.verifyloginUsingValidInputData(loginTestScript.java:209)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace965699106", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace965699106'><pre>com.menumitra.utilityclass.customException: Login API test error: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.loginTestScript.verifyloginUsingValidInputData(loginTestScript.java:209)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.loginTestScript@119cbf96</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.WaiterListViewTestScript.waiterListViewNegativeTest()'><b>waiterListViewNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.WaiterListViewTestScript<br>Parameters: waiterlistview, waiterlistview_002, negative, Verify response when outlet_id is invalid (e.g., special character), POST, { "outlet_id": "@" }, {"detail":"Outlet ID must be a number"}, 400</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in waiter list view negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.WaiterListViewTestScript.waiterListViewNegativeTest(WaiterListViewTestScript.java:391)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1205331126", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1205331126'><pre>com.menumitra.utilityclass.customException: Error in waiter list view negative test: Error validating response: Error processing success response: Actual response does not match expected response
+	at com.menumitratCommonAPITestScript.WaiterListViewTestScript.waiterListViewNegativeTest(WaiterListViewTestScript.java:391)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.WaiterListViewTestScript@609db546</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.WaiterListViewTestScript.waiterListViewTest()'><b>waiterListViewTest</b><br>Test class: com.menumitratCommonAPITestScript.WaiterListViewTestScript<br>Parameters: waiterlistview, waiterlistview_001, positive, verify waiter list view, post, {
+    "outlet_id":"1"
+}, {
+    "detail": "Successfully retrieved waiters",
+    "data": [
+        {
+            "outlet_id": "1",
+            "user_id": 10,
+            "name": "waiter C",
+            "mobile": "6146345585",
+            "dob": null,
+            "email": null
+        },
+        {
+            "outlet_id": "1",
+            "user_id": 9,
+            "name": "waiter B",
+            "mobile": "6146345005",
+            "dob": null,
+            "email": null
+        },
+        {
+            "outlet_id": "1",
+            "user_id": 8,
+            "name": "waiter A",
+            "mobile": "6146345004",
+            "dob": "12 Jan 2023",
+            "email": "h@gmaiom"
+        }
+    ]
+}, 200</td>
+<td><div><pre>com.menumitra.utilityclass.customException: Error in waiter list view test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.WaiterListViewTestScript.waiterListViewTest(WaiterListViewTestScript.java:221)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace608616031", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace608616031'><pre>com.menumitra.utilityclass.customException: Error in waiter list view test: Status code mismatch - Expected: 200, Actual: 400
+	at com.menumitratCommonAPITestScript.WaiterListViewTestScript.waiterListViewTest(WaiterListViewTestScript.java:221)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.WaiterListViewTestScript@609db546</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ActivityLogTestScript.activityLogTest()'><b>activityLogTest</b><br>Test class: com.menumitratCommonAPITestScript.ActivityLogTestScript<br>Parameters: activitylog, activitylog_001, positive, Verfiy Activity log, post, {
+    "user_id": 2
+}, , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ActivityLogTestScript@2141a12</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_002, negative, Missing outlet_id, post, { "outlet_id": "", "user_id": "2", "name": "captain Raj", "mobile": "6936344567", "address": "", "aadhar_number": "343332322321","dob": "", "email": ""}, {"detail": "Please provide outlet_id"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CaptainCreateTestScript.captainCreateNegativeTest()'><b>captainCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CaptainCreateTestScript<br>Parameters: captaincreate, captaincreate_003, negative, Missing user_id, post, {"outlet_id": "1", "user_id": "", "name": "captain Raj", "mobile": "6936344567", "address": "", "aadhar_number": "343332322321", "dob": "", "email": ""}, {"detail": "Please provide user_id"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CaptainCreateTestScript@5454d35e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CheckVersionTestScript.checkVersionNegativeTest()'><b>checkVersionNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CheckVersionTestScript<br>Parameters: checkversion, checkversion_003, negative, app_type is an empty string, post, { "app_type": ""}, {"detail": "App type is required"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CheckVersionTestScript@56c4278e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CheckVersionTestScript.checkVersionNegativeTest()'><b>checkVersionNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.CheckVersionTestScript<br>Parameters: checkversion, checkversion_004, negative, app_type has unsupported type (number), post, { "app_type": "123"},  {"detail": "Incorrect app type, app_type must be one of: user_app, owner_app, waiter_app, captain_app, partner_app, kds, cds, pos, statistics_dashbaord"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CheckVersionTestScript@56c4278e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.CheckVersionTestScript.checkVersionTest()'><b>checkVersionTest</b><br>Test class: com.menumitratCommonAPITestScript.CheckVersionTestScript<br>Parameters: checkversion, checkversion_001, positive, verify check version , post, {
+    "app_type": "pos"
+}, {
+    "success": true,
+    "detail": "Version retrieved successfully",
+    "version": "1.0.0"
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.CheckVersionTestScript@56c4278e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.DefaultSettingTestScript.defaultSetting()'><b>defaultSetting</b><br>Test class: com.menumitratCommonAPITestScript.DefaultSettingTestScript<br>Parameters: defaultsettings, defaultsettings001, positive, Verify Default Settings, post, {
+    "outlet_id":"2"
+}, , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.DefaultSettingTestScript@2d6c53fc</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.DefaultUserSettingsTestScript.defaultUserSettingsTest()'><b>defaultUserSettingsTest</b><br>Test class: com.menumitratCommonAPITestScript.DefaultUserSettingsTestScript<br>Parameters: defaultusersettings, defaultusersettings_001, positive, Verify Default User Settings, post, {   
+    
+    "user_id":2
+    
+}, , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.DefaultUserSettingsTestScript@4397ad89</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ChefDeleteTestScript.deleteChef()'><b>deleteChef</b><br>Test class: com.menumitratCommonAPITestScript.ChefDeleteTestScript<br>Parameters: chefdelete, chefdelete_001, positive, verify chef delete, delete, {
+ "update_user_id":"2",
+ "user_id":"13",
+ "outlet_id":"1"
+
+}, {
+    "detail": "(pymysql.err.IntegrityError) (1048, \"Column 'user_id' cannot be null\")\n[SQL: UPDATE user_settings SET user_id=%(user_id)s WHERE user_settings.user_settings_id = %(user_settings_user_settings_id)s]\n[parameters: {'user_id': None, 'user_settings_user_settings_id': 6}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)"
+}, 404</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ChefDeleteTestScript@68dc098b</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ForceCancelOrderTestScript.forceCancelOrderNegativeTest()'><b>forceCancelOrderNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ForceCancelOrderTestScript<br>Parameters: forcecancelorder, forcecancelorder_002, negative, Invalid force cancel order with missing fields, post, { "order_id":"6", "user_id":""}, {"detail":"Order already cancelled"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ForceCancelOrderTestScript@1bd39d3c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetInventoryCategoryList.getInventoryCategoryList()'><b>getInventoryCategoryList</b><br>Test class: com.menumitratCommonAPITestScript.GetInventoryCategoryList<br>Parameters: getinventorycategorylist, getinventorycategorylist_001, positive, verify Get Inventory Category list view, get, , {
+    "st": 1,
+    "msg": "Success",
+    "categories": [
+        {
+            "inventory_category_id": 1,
+            "name": "Raw Material"
+        },
+        {
+            "inventory_category_id": 2,
+            "name": "Raw Material"
+        },
+        {
+            "inventory_category_id": 3,
+            "name": "water"
+        },
+        {
+            "inventory_category_id": 4,
+            "name": "Farm"
+        }
+    ]
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetInventoryCategoryList@3148f668</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.InventoryCategoryListView.getInventoryCategoryList()'><b>getInventoryCategoryList</b><br>Test class: com.menumitratCommonAPITestScript.InventoryCategoryListView<br>Parameters: inventorycategorylistview, inventorycategorylistview_001, positive, verify inventory category list view, get, , {
+    "st": 1,
+    "msg": "Success",
+    "categories": [
+        {
+            "inventory_category_id": 1,
+            "name": "Raw Material"
+        },
+        {
+            "inventory_category_id": 2,
+            "name": "Raw Material"
+        },
+        {
+            "inventory_category_id": 3,
+            "name": "water"
+        },
+        {
+            "inventory_category_id": 4,
+            "name": "Farm"
+        }
+    ]
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.InventoryCategoryListView@436c81a3</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetStaffListWithRole.getStaffListWithRoleTest()'><b>getStaffListWithRoleTest</b><br>Test class: com.menumitratCommonAPITestScript.GetStaffListWithRole<br>Parameters: getstafflistwithrole, getstafflistwithrole_001, positive, Verify get staff list with role, post, {
+    "outlet_id":1,
+    "staff_role":"receptionist"
+}, {
+    "lists": [
+        {
+            "staff_id": 3,
+            "name": "Jully",
+            "mobile": "9833445579",
+            "role": "receptionist",
+            "photo": null
+        }
+    ]
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetStaffListWithRole@41294f8</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetStaffListWithRole.getStaffListWithRoleTest()'><b>getStaffListWithRoleTest</b><br>Test class: com.menumitratCommonAPITestScript.GetStaffListWithRole<br>Parameters: getstafflistwithrole, getstafflistwithrole_001, positive, Verify get staff list with role using invalid outlet id, post, {
+    "outlet_id":"1010",
+    "staff_role":"receptionist"
+}, {"detail":"outlet_id does not exist."}, 404</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetStaffListWithRole@41294f8</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript.menuCategoryUpdateNegativeTest()'><b>menuCategoryUpdateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript<br>Parameters: menucategoryupdate, menucategoryupdate_002, negative, Invalid menu_cat_id with missing or incorrect fields, patch, {
+
+"outlet_id":"1",
+"menu_cat_id":"",
+"user_id":"2",
+"category_name":"Gujrati",
+"food_type":"veg",
+"image":""
+
+}, { "detail": "Menu_cat_id must be a number" }, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript@7c214cc0</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript.menuCategoryUpdateNegativeTest()'><b>menuCategoryUpdateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript<br>Parameters: menucategoryupdate, menucategoryupdate_004, negative, category_name , patch, {
+
+"outlet_id":"1",
+"menu_cat_id":"demo",
+"user_id":"",
+"category_name":"",
+"food_type":"veg",
+"image":""
+
+}, { "detail": "Menu_cat_id must be a number" }, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript@7c214cc0</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.orderListViewSetUp.orderListViewTest()'><b>orderListViewTest</b><br>Test class: com.menumitratCommonAPITestScript.orderListViewSetUp<br>Parameters: orderlistview, orderlistview_001, positive, verify Order order list view, post, {
+           
+    "outlet_id":"1",
+    "order_status":"cooking"
+}, {
+    "st": 1,
+    "msg": "success",
+    "lists": {
+        "22 Dec 2024": [
+            {
+                "order_id": 6,
+                "order_number": "782877",
+                "order_status": "paid",
+                "table_number": "1",
+                "order_type": "dine-in",
+                "payment_method": null,
+                "restaurant_id": 1,
+                "restaurant_name": "jagadamb",
+                "total_bill_amount": 500.0,
+                "total_bill_with_discount": 350.0,
+                "service_charges_percent": 1.0,
+                "service_charges_amount": 3.5,
+                "gst_percent": 1.0,
+                "gst_amount": 3.5,
+                "discount_percent": 30.0,
+                "discount_amount": 150.0,
+                "grand_total": 357.0,
+                "menu_count": 1,
+                 "time": "04:33:21 PM",
+                "section_name": "Dinning"
+            },a, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.orderListViewSetUp@571c5681</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.OrderViewTestScript.orderViewTest()'><b>orderViewTest</b><br>Test class: com.menumitratCommonAPITestScript.OrderViewTestScript<br>Parameters: orderview, orderview_001, positive, Verify order view, post, {
+    "outlet_id":"1",
+    "order_id": "29",
+    "order_number": "29"
+}, , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.OrderViewTestScript@d278d2b</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.OutletSettingsViewTestScript.outletSettingsView()'><b>outletSettingsView</b><br>Test class: com.menumitratCommonAPITestScript.OutletSettingsViewTestScript<br>Parameters: outletsettingsview, outletsettingsview_001, positive, Verify Outlet Settings view, post, {
+    "outlet_id":"1"
+}, , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.OutletSettingsViewTestScript@6e005dc9</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SearchMenu.searchMenuNegativeTest()'><b>searchMenuNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.SearchMenu<br>Parameters: searchmenu, searchmenu_002, negative, Verify behavior when invalid keyword is searched, post, { "outlet_id": "@", "keyword": "Invalid Biryani" }, {"detail": "outlet_id must be a number"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SearchMenu@20f5281c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.sectionCreateTestScript.sectionCreateNegativeTest()'><b>sectionCreateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.sectionCreateTestScript<br>Parameters: sectioncreate, section_002, negative, Empty section_name, post, { "outlet_id": 1, "user_id": 2, "section_name": "" },  {"detail": "Please provide section_name"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.sectionCreateTestScript@768fc0f2</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.sectionUpdateTestScript.sectionUpdateNegativeTest()'><b>sectionUpdateNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.sectionUpdateTestScript<br>Parameters: sectionupdate, sectionupdate_002, negative, Empty section_name value, patch, { "user_id": 2, "section_id": 17, "outlet_id": 1, "section_name": "" }, {
+    "detail": "Please provide section_name"
+}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.sectionUpdateTestScript@25f4878b</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SendQRLinkTestScript.sendQRLinkTest()'><b>sendQRLinkTest</b><br>Test class: com.menumitratCommonAPITestScript.SendQRLinkTestScript<br>Parameters: sendqrlink, sendqrlink_001, positive, verify send QR Link, post, {
+    "outlet_id":"1",
+    "table_id":"82"
+}, {
+    "user_app_url": "https://menumitra-testing.netlify.app/user_app/",
+    "outlet_code": "9001",
+    "section_id": 17,
+    "table_number": 77
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SendQRLinkTestScript@488d1cd7</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.StaffRoleListTestScript.staffRoleListNegativeTest()'><b>staffRoleListNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.StaffRoleListTestScript<br>Parameters: staffrolelist, staffrolelist_002, negative, Verify Staff role list with invalid outlet_id, post, {
+    "outlet_id":"1909"
+}, 	{ "detail": "Outlet not found" }, 404</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.StaffRoleListTestScript@301eda63</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.StaffRoleListTestScript.staffRoleListTest()'><b>staffRoleListTest</b><br>Test class: com.menumitratCommonAPITestScript.StaffRoleListTestScript<br>Parameters: staffrolelist, staffrolelist_001, positive, Verify Staff role list, post, {
+    "outlet_id":"1"
+}, {
+    "role_list": [
+        {
+            "role_name": "cleaner",
+            "staff_count": 0
+        },
+        {
+            "role_name": "receptionist",
+            "staff_count": 0
+        },
+        {
+            "role_name": "all",
+            "staff_count": 0
+        }
+    ]
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.StaffRoleListTestScript@301eda63</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SupplierListViewTestScript.supplierListViewNegativeTest()'><b>supplierListViewNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.SupplierListViewTestScript<br>Parameters: supplierlistview, supplierlistview_002, Negative, verify response when outlet_id is invalid, POST, { "outlet_id": "@" }, {"detail": "outlet_id must be a number"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SupplierListViewTestScript@341814d3</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetTableListTestScript.tableListViewNegativeTest()'><b>tableListViewNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.GetTableListTestScript<br>Parameters: gettablelistview, gettablelistview_002, negative, Verify table list view with invalid outlet_id, post, { "outlet_id": "-1", "section_id": "17" }, {"detail":"Outlet ID does not exist."}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetTableListTestScript@71329995</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetTableListTestScript.tableListViewNegativeTest()'><b>tableListViewNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.GetTableListTestScript<br>Parameters: gettablelistview, gettablelistview_003, negative, Verify table list view with missing section_id, post, { "outlet_id": "1", "section_id": "" },  {"detail":"Please provide section_id"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetTableListTestScript@71329995</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript.testSupplierCreditRatingChoices()'><b>testSupplierCreditRatingChoices</b><br>Test class: com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript<br>Parameters: suppliercreditratinchoices, suppliercreditratinchoices_001, positive, verify supplier credit ratin choices, get, , {
+    "st": 1,
+    "credit_rating_choices": {
+        "excellent": "excellent",
+        "good": "good",
+        "bad": "bad",
+        "very_bad": "very_bad",
+        "not_rated": "not_rated"
+    }
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript@3561c410</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.UpdateTemplatesTestScript.updateTemplatesUsingValidInputData()'><b>updateTemplatesUsingValidInputData</b><br>Test class: com.menumitratCommonAPITestScript.UpdateTemplatesTestScript<br>Parameters: updatetemplates, updatetemplates_001, positive, Verify Update Templates, post,  {
+        "name": "Classic",
+        "qr_overlay_position": "top",
+        "template_id":3,
+        "image_name": "C:\Users\hp\Downloads\pexels-pixabay-460672.jpg"
+}, , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.UpdateTemplatesTestScript@20435c40</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.MakeMenuSpecialNonSpecial.verifyMakeMenuSpecialNonSpecial()'><b>verifyMakeMenuSpecialNonSpecial</b><br>Test class: com.menumitratCommonAPITestScript.MakeMenuSpecialNonSpecial<br>Parameters: makemenuspecialnonspecial, makemenuspecialnonspecial_002, negative, Send request with invalid menu_id to update menu status, post, { "outlet_id":"1", "menu_id":"9999", "user_id":"2" }, { "detail": "Menu not found" }, 404</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.MakeMenuSpecialNonSpecial@225129c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.verifyOTPTestScript.verifyOTPAPiUsingValidInputData()'><b>verifyOTPAPiUsingValidInputData</b><br>Test class: com.menumitratCommonAPITestScript.verifyOTPTestScript<br>Parameters: verifyotp, verifyotp_001, positive, Verify OTP with valid data, post, { "mobile": "6264335759", "otp": "1234", "fcm_token": "4578963547892", "device_id": "8974561234", "device_model": "Laptop 122" }, {
+    "user_id": 2,
+    "name": "Heena",
+    "role": "owner",
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZXhwIjoxNzQ2NTMxOTEyLCJpYXQiOjE3NDU5MjcxMTIsImp0aSI6Ijc5NzRmYzkwLTY1MDAtNGQ2OS1iMWRmLWQwNmIzOWFiNGZiZSIsInJvbGUiOiJvd25lciIsImRldmljZSI6Ijg5NzQ1NjEyMzR8TGFwdG9wIDEyMiJ9.bQ2RYiEhNDHHW6ZAx3CqKkLu3QVdAyIm6Qz49eE9BCA",
+    "expires_at": "06 May 2025"
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.verifyOTPTestScript@59e32960</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.verifyOTPTestScript.verifyOTPusingInvalidData()'><b>verifyOTPusingInvalidData</b><br>Test class: com.menumitratCommonAPITestScript.verifyOTPTestScript<br>Parameters: verifyotp, verifyotp_002, negative, Invalid OTP, post, { "mobile": "6264335759", "otp": "9999", "fcm_token": "4578963547892", "device_id": "8974561234", "device_model": "Laptop 122" }, {"detail":"Invalid OTP"}, 401</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.verifyOTPTestScript@59e32960</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.verifyOTPTestScript.verifyOTPusingInvalidData()'><b>verifyOTPusingInvalidData</b><br>Test class: com.menumitratCommonAPITestScript.verifyOTPTestScript<br>Parameters: verifyotp, verifyotp_003, negative, Missing mobile number, post, {"mobile":"", "otp": "1234", "fcm_token": "4578963547892", "device_id": "8974561234", "device_model": "Laptop 122" }, {
+    "detail": "Please provide mobile number"
+}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.verifyOTPTestScript@59e32960</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.verifyOTPTestScript.verifyOTPusingInvalidData()'><b>verifyOTPusingInvalidData</b><br>Test class: com.menumitratCommonAPITestScript.verifyOTPTestScript<br>Parameters: verifyotp, verifyotp_004, negative, Invalid mobile number format, post, { "mobile": "123", "otp": "1234", "fcm_token": "4578963547892", "device_id": "8974561234", "device_model": "Laptop 122" }, {"detail":"Mobile number must be a 10 digits number"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.verifyOTPTestScript@59e32960</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.verifyOTPTestScript.verifyOTPusingInvalidData()'><b>verifyOTPusingInvalidData</b><br>Test class: com.menumitratCommonAPITestScript.verifyOTPTestScript<br>Parameters: verifyotp, verifyotp_005, negative, Missing OTP, post, { "mobile": "6264335759","otp": "", "fcm_token": "4578963547892", "device_id": "8974561234", "device_model": "Laptop 122" }, {
+    "detail": "OTP is required"
+}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.verifyOTPTestScript@59e32960</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetRatingList.verifyRatingList()'><b>verifyRatingList</b><br>Test class: com.menumitratCommonAPITestScript.GetRatingList<br>Parameters: ratinglist, ratinglist_001, positive, Verify Rating list, get, , , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetRatingList@5b67bb7e</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.sectionUpdateTestScript.verifySectionCreateUsingInvalidData()'><b>verifySectionCreateUsingInvalidData</b><br>Test class: com.menumitratCommonAPITestScript.sectionUpdateTestScript<br>Parameters: sectionupdate, sectionupdate_002, negative, Empty section_name value, patch, { "user_id": 2, "section_id": 17, "outlet_id": 1, "section_name": "" }, {
+    "detail": "Please provide section_name"
+}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.sectionUpdateTestScript@25f4878b</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.sectionUpdateTestScript.verifySectionUpdateUsingValidInputData()'><b>verifySectionUpdateUsingValidInputData</b><br>Test class: com.menumitratCommonAPITestScript.sectionUpdateTestScript<br>Parameters: sectionupdate, sectionupdate_001, positive, Valid section update, patch, {  
+    "user_id":2,
+    "section_id":17,
+    "outlet_id": 1,
+    "section_name": "Top"
+}, {"detail":"Outlet Section updated successfully"}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.sectionUpdateTestScript@25f4878b</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.sectionCreateTestScript.verifySectionUsingValidInputData()'><b>verifySectionUsingValidInputData</b><br>Test class: com.menumitratCommonAPITestScript.sectionCreateTestScript<br>Parameters: sectioncreate, section_001, positive, verify section create, post, { "outlet_id": 1, "user_id": 2, "section_name": "Front-Top" }, {"detail":"Outlet Section and 5 tables created successfully"}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.sectionCreateTestScript@768fc0f2</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetStaffRole.verifyStaffRole()'><b>verifyStaffRole</b><br>Test class: com.menumitratCommonAPITestScript.GetStaffRole<br>Parameters: getstaffrole, getstaffrole_001, positive, Verify Get Staff Role, get, , , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetStaffRole@573906eb</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.TableCreateTestScript.verifyTableCreate()'><b>verifyTableCreate</b><br>Test class: com.menumitratCommonAPITestScript.TableCreateTestScript<br>Parameters: tablecreate, tablecreate_001, positive, verify table create , post, {  
+    
+    "outlet_id": "1",
+    "section_id": "17",
+    "user_id":"2"
+}, {"detail":"Outlet table created successfully"}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.TableCreateTestScript@3081f72c</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetTableListTestScript.verifyTableListView()'><b>verifyTableListView</b><br>Test class: com.menumitratCommonAPITestScript.GetTableListTestScript<br>Parameters: gettablelistview, gettablelistview_001, positive, verify table list view, post, {  
+    
+    "outlet_id": 1,
+    "section_id": "17"
+}, {  
+    
+    "outlet_id": 1,
+    "section_id": "17"
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetTableListTestScript@71329995</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.GetVegOrNonVegList.verifyVegOrNonVegList()'><b>verifyVegOrNonVegList</b><br>Test class: com.menumitratCommonAPITestScript.GetVegOrNonVegList<br>Parameters: getvegornonveglist, getvegornonveglist_001, positive, verify Get Veg or non veg list, get, , , 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.GetVegOrNonVegList@3d246ea3</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.verifyViewOutlet()'><b>verifyViewOutlet</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet, positive, verify view Outlet, post, {
+    "outlet_id":"1"
+}, {
+    "message": "Successfully retrieved outlet details",
+    "data": {
+        "owner_id": 2,
+        "owner_name": "Heena",
+        "total_category": 0,
+        "total_menu": 0,
+        "total_order": 0,
+        "total_completed_orders": 0,
+        "total_cancelled_orders": 0,
+        "total_active_menu": 0,
+        "total_inactive_menu": 0,
+        "total_active_category": 0,
+        "total_inactive_category": 0,
+        "total_active_section": 0,
+        "total_inactive_section": 0,
+        "name": "spicy world",
+        "outlet_type": "mess",
+        "fssainumber": "None",
+        "gstnumber": null,
+        "mobile": "9898989899",
+        "veg_nonveg": "nonveg",
+        "service_charges": "5",
+        "gst": "18",
+        "address": "456 Second Street, City",
+        "is_open": true,
+        "upi_id": null,
+        "whatsapp": null,
+        "facebook": null,
+        "instagram": null,
+        "website": null,
+        "google_review": null,
+        "google_business_link": null,
+        "opening_time": "10:00",
+        "closing_time": "23:00",
+        "image": null,
+        "outlet_status": true,
+        "order_number_sequence": "since_opening",
+        "created_on": "26 Apr 2025 09:17:23 AM",
+        "created_by": null,
+        "updated_by": null,
+        "updated_on": null
+    }
+}, 200</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.viewOutletNegativeTest()'><b>viewOutletNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet_002, negative, Invalid outlet_id format (string instead int), POST, { "outlet_id": "abc" }, {"detail":"Outlet ID must be an integer"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.viewOutletNegativeTest()'><b>viewOutletNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet_004, negative, outlet_id as negative number, POST, { "outlet_id": "-1" },  {"detail":"Outlet not found"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.viewOutletNegativeTest()'><b>viewOutletNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet_005, negative, outlet_id with special characters, post, { "outlet_id": "!@#" }, {"detail":"Outlet ID must be an integer"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.viewOutletNegativeTest()'><b>viewOutletNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet_006, negative, outlet_id not present in DB, post, { "outlet_id": "9999" }, {"detail":"Outlet not found"}, 404</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.viewOutletNegativeTest()'><b>viewOutletNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet_008, negative, outlet_id as float, post, { "outlet_id": "1.5" }, {"detail":"Outlet ID must be an integer"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ViewOutletTestScript.viewOutletNegativeTest()'><b>viewOutletNegativeTest</b><br>Test class: com.menumitratCommonAPITestScript.ViewOutletTestScript<br>Parameters: viewoutlet, viewoutlet_010, negative, outlet_id as boolean, post, { "outlet_id": "true" }, {"detail":"Outlet ID must be an integer"}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ViewOutletTestScript@59cba5a</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-skipped'>
+<tr><td colspan='4' align='center'><b>SKIPPED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.MenuUpdate.updateMenu()'><b>updateMenu</b><br>Test class: com.menumitratCommonAPITestScript.MenuUpdate</td>
+<td><div><pre>java.lang.RuntimeException: com.menumitra.utilityclass.customException: Error while reading menu update test scenario data: No valid menu update test scenario data found for menuupdate_001
+Caused by: com.menumitra.utilityclass.customException: Error while reading menu update test scenario data: No valid menu update test scenario data found for menuupdate_001
+	at com.menumitratCommonAPITestScript.MenuUpdate.getMenuUpdateData(MenuUpdate.java:215)
+	... 20 more
+... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace278976826", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace278976826'><pre>java.lang.RuntimeException: com.menumitra.utilityclass.customException: Error while reading menu update test scenario data: No valid menu update test scenario data found for menuupdate_001
+	at org.testng.internal.MethodInvocationHelper.invokeDataProvider(MethodInvocationHelper.java:163)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:430)
+	at org.testng.internal.Invoker.handleParameters(Invoker.java:1274)
+	at org.testng.internal.Invoker.createParameters(Invoker.java:989)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1079)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+Caused by: com.menumitra.utilityclass.customException: Error while reading menu update test scenario data: No valid menu update test scenario data found for menuupdate_001
+	at com.menumitratCommonAPITestScript.MenuUpdate.getMenuUpdateData(MenuUpdate.java:215)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.MethodInvocationHelper.invokeDataProvider(MethodInvocationHelper.java:137)
+	... 20 more
+</pre></div></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.MenuUpdate@6d07a63d</td></tr>
+</table><p>
+</body>
+</html>

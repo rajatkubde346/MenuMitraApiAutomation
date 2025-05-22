@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="classes" name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <test name="MenuMitra API Tests">
+    <classes>
+      <class name="com.menumitra.superclass.APIBase"/>
+      <class name="com.menumitratCommonAPITestScript.TableListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ActivityLogTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ChefViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetStaffListWithRole"/>
+      <class name="com.menumitratCommonAPITestScript.MakeMenuSpecialNonSpecial"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateTemplatesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetStaffRole"/>
+      <class name="com.menumitratCommonAPITestScript.WaiterCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuUpdate"/>
+      <class name="com.menumitratCommonAPITestScript.orderListViewSetUp"/>
+      <class name="com.menumitratCommonAPITestScript.SendQRLinkTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ChefDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.WaiterViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.OrderViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.DefaultSettingTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.sectionUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CaptainListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CaptainDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TableCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetInventoryCategoryList"/>
+      <class name="com.menumitratCommonAPITestScript.OutletSettingsViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryCategoryListView"/>
+      <class name="com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.verifyOTPTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetRatingList"/>
+      <class name="com.menumitratCommonAPITestScript.WaiterListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SearchMenu"/>
+      <class name="com.menumitratCommonAPITestScript.CheckVersionTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.StaffRoleListTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetVegOrNonVegList"/>
+      <class name="com.menumitratCommonAPITestScript.SupplierListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.DefaultUserSettingsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ViewOutletTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ForceCancelOrderTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SectionDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.loginTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetTableListTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.sectionCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CaptainCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateTableTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SectionViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CheckTableIsReservedTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetTemplatesListTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CreateOrderTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.JoinTablesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.StaffViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.sectionListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ViewTemplatesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetOutletListTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CaptainUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.WaiterUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuListView"/>
+      <class name="com.menumitratCommonAPITestScript.RemoveTemplateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetInorOutList"/>
+      <class name="com.menumitratCommonAPITestScript.MenuView"/>
+      <class name="com.menumitratCommonAPITestScript.OrderListViewCdskdsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateMenuQuantity"/>
+      <class name="com.menumitratCommonAPITestScript.CaptainViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SupplierCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CreateQRTemplatesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SelectTemplateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SelectOutletTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ContinueChatTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.DeleteTemplatesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateProfileDetailTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TicketListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.PosDetailsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TableDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TotalTicketsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ChefCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ChangeSettingsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateActiveStatusTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ChefUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ListViewOutletTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TableIsReservedTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.AddMenusToOrder"/>
+      <class name="com.menumitratCommonAPITestScript.SupplierStatusChoicesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuDelete"/>
+      <class name="com.menumitratCommonAPITestScript.GetMenuList"/>
+      <class name="com.menumitratCommonAPITestScript.OwnerDetailsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.StaffDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCategorysTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.CreateTicketTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.WaiterDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.OrderMenuDetailsTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ViewProfileTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ChefListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetSpicyIndexList"/>
+      <class name="com.menumitratCommonAPITestScript.GetSupplierListTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryCategoryCreate"/>
+      <class name="com.menumitratCommonAPITestScript.GetAllMenuListByCategory"/>
+      <class name="com.menumitratCommonAPITestScript.StaffCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.ResendOTPTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TicketViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetFoodTypeList"/>
+      <class name="com.menumitratCommonAPITestScript.OutletTypeTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.supplierViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.InventoryViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryListViewTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.TableListTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.tableView"/>
+      <class name="com.menumitratCommonAPITestScript.GetAvailableTablesTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.SupplierDeleteTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateOutletTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.UpdateOrderTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryCreateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.StaffUpdateTestScript"/>
+      <class name="com.menumitratCommonAPITestScript.GetTemplates"/>
+    </classes>
+  </test> <!-- MenuMitra API Tests -->
+  <test parallel="classes" name="MenuMitra API Tests(failed)">
+    <classes>
+      <class name="com.menumitratCommonAPITestScript.StaffCreateTestScript">
+        <methods>
+          <include name="createStaff"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.StaffCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ListViewOutletTestScript">
+        <methods>
+          <include name="verifyListViewOutlet"/>
+          <include name="listViewOutletSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ListViewOutletTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ViewTemplatesTestScript">
+        <methods>
+          <include name="viewTemplatesSetUp"/>
+          <include name="viewTemplatesTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ViewTemplatesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ResendOTPTestScript">
+        <methods>
+          <include name="setupResendOTP"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ResendOTPTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetAllMenuListByCategory">
+        <methods>
+          <include name="getAllMenuListByCategory"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetAllMenuListByCategory -->
+      <class name="com.menumitratCommonAPITestScript.PosDetailsTestScript">
+        <methods>
+          <include name="posDetailsTest"/>
+          <include name="posDetailsNegativeTest"/>
+          <include name="posDetailsSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.PosDetailsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.tableView">
+        <methods>
+          <include name="verifyTableView" invocation-numbers="0"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.tableView -->
+      <class name="com.menumitratCommonAPITestScript.ViewOutletTestScript">
+        <methods>
+          <include name="viewOutletSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ViewOutletTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetInorOutList">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetInorOutList -->
+      <class name="com.menumitratCommonAPITestScript.InventoryCategoryListView">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryCategoryListView -->
+      <class name="com.menumitratCommonAPITestScript.ChefCreateTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ChefCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ForceCancelOrderTestScript">
+        <methods>
+          <include name="forceCancelOrderSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ForceCancelOrderTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetTemplatesListTestScript">
+        <methods>
+          <include name="getTemplatesListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetTemplatesListTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryDeleteTestScript">
+        <methods>
+          <include name="menuCategoryDeleteSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCategoryDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ContinueChatTestScript">
+        <methods>
+          <include name="continueChatTest"/>
+          <include name="continueChatSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ContinueChatTestScript -->
+      <class name="com.menumitratCommonAPITestScript.StaffRoleListTestScript">
+        <methods>
+          <include name="staffRoleListTest"/>
+          <include name="staffRoleListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.StaffRoleListTestScript -->
+      <class name="com.menumitratCommonAPITestScript.InventoryUpdateTestScript">
+        <methods>
+          <include name="updateInventory"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.TableCreateTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="createTable" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TableCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.OwnerDetailsTestScript">
+        <methods>
+          <include name="ownerDetailsTest"/>
+          <include name="ownerDetailsSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.OwnerDetailsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.WaiterUpdateTestScript">
+        <methods>
+          <include name="waiterUpdateSetUp"/>
+          <include name="updateWaiter"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.WaiterUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SupplierListViewTestScript">
+        <methods>
+          <include name="supplierListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SupplierListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SectionDeleteTestScript">
+        <methods>
+          <include name="sectionDeleteSetup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SectionDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SupplierCreateTestScript">
+        <methods>
+          <include name="createSupplier"/>
+          <include name="tearDown"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SupplierCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.JoinTablesTestScript">
+        <methods>
+          <include name="joinTables"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.JoinTablesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryCreateTestScript">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCategoryCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="testSupplierCreditRatingChoices"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.TicketListViewTestScript">
+        <methods>
+          <include name="ticketListViewNegativeTest"/>
+          <include name="ticketListViewTest"/>
+          <include name="ticketListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TicketListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.DefaultSettingTestScript">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.DefaultSettingTestScript -->
+      <class name="com.menumitratCommonAPITestScript.UpdateOrderTestScript">
+        <methods>
+          <include name="updateDineInOrder" invocation-numbers="0"/>
+          <include name="updateDriveThroughOrder"/>
+          <include name="updateDeliveryOrder"/>
+          <include name="updateOrder"/>
+          <include name="updateOrderSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateOrderTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SelectOutletTestScript">
+        <methods>
+          <include name="selectOutletSetUp"/>
+          <include name="selectOutletTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SelectOutletTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CaptainUpdateTestScript">
+        <methods>
+          <include name="captainUpdateSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CaptainUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.sectionListViewTestScript">
+        <methods>
+          <include name="sectionListViewSetup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.sectionListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CheckTableIsReservedTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="checkIfTableIsReserved"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CheckTableIsReservedTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetInventoryCategoryList">
+        <methods>
+          <include name="getInventoryCategoryList"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetInventoryCategoryList -->
+      <class name="com.menumitratCommonAPITestScript.OrderMenuDetailsTestScript">
+        <methods>
+          <include name="orderMenuDetailsSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.OrderMenuDetailsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.OutletTypeTestScript">
+        <methods>
+          <include name="outletTypeSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.OutletTypeTestScript -->
+      <class name="com.menumitratCommonAPITestScript.orderListViewSetUp">
+        <methods>
+          <include name="orderListViewSetUp"/>
+          <include name="orderListViewTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.orderListViewSetUp -->
+      <class name="com.menumitratCommonAPITestScript.OutletSettingsViewTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="outletSettingsView"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.OutletSettingsViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ActivityLogTestScript">
+        <methods>
+          <include name="activityLogTest"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ActivityLogTestScript -->
+      <class name="com.menumitratCommonAPITestScript.sectionUpdateTestScript">
+        <methods>
+          <include name="sectionUpdateSetup"/>
+          <include name="verifySectionCreateUsingInvalidData"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.sectionUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ChangeSettingsTestScript">
+        <methods>
+          <include name="changeSettingsSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ChangeSettingsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ChefViewTestScript">
+        <methods>
+          <include name="chefViewSetUp"/>
+          <include name="chefViewTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ChefViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.supplierViewTestScript">
+        <methods>
+          <include name="supplierViewSetUp"/>
+          <include name="supplierViewNegativeTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.supplierViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ViewProfileTestScript">
+        <methods>
+          <include name="viewProfileSetUp"/>
+          <include name="verifyViewProfile"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ViewProfileTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CaptainViewTestScript">
+        <methods>
+          <include name="captainViewTest" invocation-numbers="0"/>
+          <include name="captainViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CaptainViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetAvailableTablesTestScript">
+        <methods>
+          <include name="getAvailableTablesSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetAvailableTablesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.InventoryCategoryCreate">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryCategoryCreate -->
+      <class name="com.menumitratCommonAPITestScript.InventoryDeleteTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.UpdateOutletTestScript">
+        <methods>
+          <include name="updateOutletSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateOutletTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetMenuList">
+        <methods>
+          <include name="verifyMenuList"/>
+          <include name="menuListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetMenuList -->
+      <class name="com.menumitratCommonAPITestScript.GetRatingList">
+        <methods>
+          <include name="verifyRatingList"/>
+          <include name="getRatingListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetRatingList -->
+      <class name="com.menumitratCommonAPITestScript.StaffUpdateTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.StaffUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CreateQRTemplatesTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="tearDown"/>
+          <include name="createQRTemplatesUsingValidInputData"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CreateQRTemplatesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuDelete">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuDelete -->
+      <class name="com.menumitratCommonAPITestScript.SupplierStatusChoicesTestScript">
+        <methods>
+          <include name="testSupplierStatusChoices"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SupplierStatusChoicesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.InventoryCreateTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.WaiterDeleteTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.WaiterDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.TableDeleteTestScript">
+        <methods>
+          <include name="verifyTableDelete" invocation-numbers="0"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TableDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCreateTestScript">
+        <methods>
+          <include name="createMenuUsigValidInputData"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetStaffRole">
+        <methods>
+          <include name="getStaffRoleSetUp"/>
+          <include name="verifyStaffRole"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetStaffRole -->
+      <class name="com.menumitratCommonAPITestScript.GetStaffListWithRole">
+        <methods>
+          <include name="getStaffListWithRoleTest"/>
+          <include name="getStaffListWithRoleSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetStaffListWithRole -->
+      <class name="com.menumitratCommonAPITestScript.UpdateTemplatesTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="updateTemplatesUsingValidInputData"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateTemplatesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.InventoryListViewTestScript">
+        <methods>
+          <include name="inventoryListSetUp"/>
+          <include name="inventoryListViewTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ChefUpdateTestScript">
+        <methods>
+          <include name="updateChef"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ChefUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CaptainCreateTestScript">
+        <methods>
+          <include name="captainCreateSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CaptainCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CaptainListViewTestScript">
+        <methods>
+          <include name="captainListViewSetUp"/>
+          <include name="captainListViewTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CaptainListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SearchMenu">
+        <methods>
+          <include name="searchMenuSetUp"/>
+          <include name="verifySearchMenu"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SearchMenu -->
+      <class name="com.menumitratCommonAPITestScript.GetFoodTypeList">
+        <methods>
+          <include name="getFoodTypeListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetFoodTypeList -->
+      <class name="com.menumitratCommonAPITestScript.TableIsReservedTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TableIsReservedTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CreateTicketTestScript">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CreateTicketTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SendQRLinkTestScript">
+        <methods>
+          <include name="sendQRLinkTest"/>
+          <include name="sendQRLinkSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SendQRLinkTestScript -->
+      <class name="com.menumitratCommonAPITestScript.sectionCreateTestScript">
+        <methods>
+          <include name="sectionCreateSetup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.sectionCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.WaiterListViewTestScript">
+        <methods>
+          <include name="waiterListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.WaiterListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.TotalTicketsTestScript">
+        <methods>
+          <include name="totalTicketsNegativeTest"/>
+          <include name="totalTicketsSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TotalTicketsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.UpdateProfileDetailTestScript">
+        <methods>
+          <include name="updateProfileDetailSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateProfileDetailTestScript -->
+      <class name="com.menumitratCommonAPITestScript.UpdateActiveStatusTestScript">
+        <methods>
+          <include name="updateActiveStatusSetUp"/>
+          <include name="updateActiveStatusTest" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateActiveStatusTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCategorysTestScript">
+        <methods>
+          <include name="menuCategorysSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCategorysTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CreateOrderTestScript">
+        <methods>
+          <include name="createOrderSetUp"/>
+          <include name="createParcelOrderString" invocation-numbers="0"/>
+          <include name="createCounterOrder" invocation-numbers="0"/>
+          <include name="createDeliveryOrder" invocation-numbers="0"/>
+          <include name="createDineInOrder" invocation-numbers="0"/>
+          <include name="createDriveThroughOrder" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CreateOrderTestScript -->
+      <class name="com.menumitratCommonAPITestScript.DefaultUserSettingsTestScript">
+        <methods>
+          <include name="defaultUserSettingsTest"/>
+          <include name="defaultUserSettingsSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.DefaultUserSettingsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.StaffViewTestScript">
+        <methods>
+          <include name="staffviewsetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.StaffViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.TableListTestScript">
+        <methods>
+          <include name="TableListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TableListTestScript -->
+      <class name="com.menumitratCommonAPITestScript.UpdateTableTestScript">
+        <methods>
+          <include name="updateTableUsingValidInputData" invocation-numbers="0"/>
+          <include name="setup"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateTableTestScript -->
+      <class name="com.menumitratCommonAPITestScript.RemoveTemplateTestScript">
+        <methods>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.RemoveTemplateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.AddMenusToOrder">
+        <methods>
+          <include name="verifyAddMenusToOrder" invocation-numbers="0"/>
+          <include name="addMenusToOrderSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.AddMenusToOrder -->
+      <class name="com.menumitratCommonAPITestScript.ChefListViewTestScript">
+        <methods>
+          <include name="chefListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ChefListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.loginTestScript">
+        <methods>
+          <include name="LoginAPiTestSetup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.loginTestScript -->
+      <class name="com.menumitra.superclass.APIBase">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.menumitra.superclass.APIBase -->
+      <class name="com.menumitratCommonAPITestScript.verifyOTPTestScript">
+        <methods>
+          <include name="verifyOTPUsingValidInputData" invocation-numbers="0"/>
+          <include name="verifyOTPSetup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.verifyOTPTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CheckVersionTestScript">
+        <methods>
+          <include name="checkVersionTest"/>
+          <include name="checkVersionSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CheckVersionTestScript -->
+      <class name="com.menumitratCommonAPITestScript.ChefDeleteTestScript">
+        <methods>
+          <include name="setup"/>
+          <include name="deleteChef"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.ChefDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.InventoryViewTestScript">
+        <methods>
+          <include name="inventoryViewSetUp"/>
+          <include name="inventoryViewTest"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.InventoryViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryListViewTestScript">
+        <methods>
+          <include name="menuCategoryListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCategoryListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SectionViewTestScript">
+        <methods>
+          <include name="sectionViewSetup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SectionViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuUpdate">
+        <methods>
+          <include name="setup"/>
+          <include name="updateMenu"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuUpdate -->
+      <class name="com.menumitratCommonAPITestScript.GetSupplierListTestScript">
+        <methods>
+          <include name="supplierListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetSupplierListTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuCategoryViewTestScript">
+        <methods>
+          <include name="menuCategoryViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuCategoryViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetOutletListTestScript">
+        <methods>
+          <include name="getOutletListTest"/>
+          <include name="getOutletListNegativeTest"/>
+          <include name="getOutletListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetOutletListTestScript -->
+      <class name="com.menumitratCommonAPITestScript.OrderListViewCdskdsTestScript">
+        <methods>
+          <include name="orderListViewCdskdsSetUp"/>
+          <include name="orderListViewCdskdsTest" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.OrderListViewCdskdsTestScript -->
+      <class name="com.menumitratCommonAPITestScript.SupplierDeleteTestScript">
+        <methods>
+          <include name="testSupplierDelete"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SupplierDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuListView">
+        <methods>
+          <include name="menuListViewSetUp"/>
+          <include name="verifyMenuListView"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuListView -->
+      <class name="com.menumitratCommonAPITestScript.OrderViewTestScript">
+        <methods>
+          <include name="verifyOrderView"/>
+          <include name="orderViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.OrderViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.MenuView">
+        <methods>
+          <include name="menuViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.MenuView -->
+      <class name="com.menumitratCommonAPITestScript.TableListViewTestScript">
+        <methods>
+          <include name="verifyTableListView"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TableListViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.TicketViewTestScript">
+        <methods>
+          <include name="ticketViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.TicketViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetVegOrNonVegList">
+        <methods>
+          <include name="getVegOrNonVegListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetVegOrNonVegList -->
+      <class name="com.menumitratCommonAPITestScript.SelectTemplateTestScript">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.SelectTemplateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetTableListTestScript">
+        <methods>
+          <include name="TableListViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetTableListTestScript -->
+      <class name="com.menumitratCommonAPITestScript.CaptainDeleteTestScript">
+        <methods>
+          <include name="deleteCaptain"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.CaptainDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.DeleteTemplatesTestScript">
+        <methods>
+          <include name="deleteTemplatesSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.DeleteTemplatesTestScript -->
+      <class name="com.menumitratCommonAPITestScript.WaiterCreateTestScript">
+        <methods>
+          <include name="verifyWaiterCreate"/>
+          <include name="waiterCreateSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.WaiterCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetTemplates">
+        <methods>
+          <include name="getTemplatesSetUp"/>
+          <include name="verifyTemplates"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetTemplates -->
+      <class name="com.menumitratCommonAPITestScript.StaffDeleteTestScript">
+        <methods>
+          <include name="staffDeleteSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.StaffDeleteTestScript -->
+      <class name="com.menumitratCommonAPITestScript.GetSpicyIndexList">
+        <methods>
+          <include name="getSpicyIndexListSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.GetSpicyIndexList -->
+      <class name="com.menumitratCommonAPITestScript.WaiterViewTestScript">
+        <methods>
+          <include name="waiterViewSetUp"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.WaiterViewTestScript -->
+      <class name="com.menumitratCommonAPITestScript.UpdateMenuQuantity">
+        <methods>
+          <include name="updateMenuQuantitySetUp"/>
+          <include name="verifyUpdateMenuQuantity" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- com.menumitratCommonAPITestScript.UpdateMenuQuantity -->
+    </classes>
+  </test> <!-- MenuMitra API Tests(failed) -->
+</suite> <!-- Failed suite [Suite] -->

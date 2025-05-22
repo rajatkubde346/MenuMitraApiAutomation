@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="TestSuite" time="3.856" tests="16" errors="0" skipped="2" failures="3">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation\target\test-classes;D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation\target\classes;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-java\4.11.0\selenium-java-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-api\4.11.0\selenium-api-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-chrome-driver\4.11.0\selenium-chrome-driver-4.11.0.jar;C:\Users\hp\.m2\repository\com\google\auto\service\auto-service-annotations\1.0.1\auto-service-annotations-1.0.1.jar;C:\Users\hp\.m2\repository\com\google\guava\guava\31.1-jre\guava-31.1-jre.jar;C:\Users\hp\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\hp\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\hp\.m2\repository\org\checkerframework\checker-qual\3.12.0\checker-qual-3.12.0.jar;C:\Users\hp\.m2\repository\com\google\errorprone\error_prone_annotations\2.11.0\error_prone_annotations-2.11.0.jar;C:\Users\hp\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-chromium-driver\4.11.0\selenium-chromium-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-json\4.11.0\selenium-json-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-manager\4.11.0\selenium-manager-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v113\4.11.0\selenium-devtools-v113-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v114\4.11.0\selenium-devtools-v114-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v115\4.11.0\selenium-devtools-v115-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v85\4.11.0\selenium-devtools-v85-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-edge-driver\4.11.0\selenium-edge-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-firefox-driver\4.11.0\selenium-firefox-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-http\4.11.0\selenium-http-4.11.0.jar;C:\Users\hp\.m2\repository\dev\failsafe\failsafe\3.3.1\failsafe-3.3.1.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-ie-driver\4.11.0\selenium-ie-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-remote-driver\4.11.0\selenium-remote-driver-4.11.0.jar;C:\Users\hp\.m2\repository\io\netty\netty-buffer\4.1.92.Final\netty-buffer-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-codec-http\4.1.92.Final\netty-codec-http-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-codec\4.1.92.Final\netty-codec-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-handler\4.1.92.Final\netty-handler-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-common\4.1.92.Final\netty-common-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-classes-epoll\4.1.92.Final\netty-transport-classes-epoll-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-classes-kqueue\4.1.92.Final\netty-transport-classes-kqueue-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-epoll\4.1.92.Final\netty-transport-native-epoll-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-kqueue\4.1.92.Final\netty-transport-native-kqueue-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.92.Final\netty-transport-native-unix-common-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport\4.1.92.Final\netty-transport-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-resolver\4.1.92.Final\netty-resolver-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-api\1.26.0\opentelemetry-api-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-context\1.26.0\opentelemetry-context-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-exporter-logging\1.26.0\opentelemetry-exporter-logging-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-metrics\1.26.0\opentelemetry-sdk-metrics-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-extension-incubator\1.26.0-alpha\opentelemetry-extension-incubator-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-logs\1.26.0-alpha\opentelemetry-sdk-logs-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-api-logs\1.26.0-alpha\opentelemetry-api-logs-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-api-events\1.26.0-alpha\opentelemetry-api-events-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-common\1.26.0\opentelemetry-sdk-common-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-extension-autoconfigure-spi\1.26.0\opentelemetry-sdk-extension-autoconfigure-spi-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-extension-autoconfigure\1.26.0-alpha\opentelemetry-sdk-extension-autoconfigure-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-trace\1.26.0\opentelemetry-sdk-trace-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk\1.26.0\opentelemetry-sdk-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-semconv\1.26.0-alpha\opentelemetry-semconv-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\net\bytebuddy\byte-buddy\1.14.4\byte-buddy-1.14.4.jar;C:\Users\hp\.m2\repository\org\apache\commons\commons-exec\1.3\commons-exec-1.3.jar;C:\Users\hp\.m2\repository\org\asynchttpclient\async-http-client\2.12.3\async-http-client-2.12.3.jar;C:\Users\hp\.m2\repository\org\asynchttpclient\async-http-client-netty-utils\2.12.3\async-http-client-netty-utils-2.12.3.jar;C:\Users\hp\.m2\repository\io\netty\netty-codec-socks\4.1.60.Final\netty-codec-socks-4.1.60.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-handler-proxy\4.1.60.Final\netty-handler-proxy-4.1.60.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-epoll\4.1.60.Final\netty-transport-native-epoll-4.1.60.Final-linux-x86_64.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-kqueue\4.1.60.Final\netty-transport-native-kqueue-4.1.60.Final-osx-x86_64.jar;C:\Users\hp\.m2\repository\org\reactivestreams\reactive-streams\1.0.3\reactive-streams-1.0.3.jar;C:\Users\hp\.m2\repository\com\typesafe\netty\netty-reactive-streams\2.0.4\netty-reactive-streams-2.0.4.jar;C:\Users\hp\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\hp\.m2\repository\com\sun\activation\jakarta.activation\1.2.2\jakarta.activation-1.2.2.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-safari-driver\4.11.0\selenium-safari-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-support\4.11.0\selenium-support-4.11.0.jar;C:\Users\hp\.m2\repository\org\testng\testng\6.9.10\testng-6.9.10.jar;C:\Users\hp\.m2\repository\com\beust\jcommander\1.48\jcommander-1.48.jar;C:\Users\hp\.m2\repository\org\beanshell\bsh\2.0b4\bsh-2.0b4.jar;C:\Users\hp\.m2\repository\io\rest-assured\rest-assured\5.3.0\rest-assured-5.3.0.jar;C:\Users\hp\.m2\repository\org\apache\groovy\groovy\4.0.6\groovy-4.0.6.jar;C:\Users\hp\.m2\repository\org\apache\groovy\groovy-xml\4.0.6\groovy-xml-4.0.6.jar;C:\Users\hp\.m2\repository\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;C:\Users\hp\.m2\repository\org\apache\httpcomponents\httpcore\4.4.13\httpcore-4.4.13.jar;C:\Users\hp\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\hp\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;C:\Users\hp\.m2\repository\org\apache\httpcomponents\httpmime\4.5.13\httpmime-4.5.13.jar;C:\Users\hp\.m2\repository\org\hamcrest\hamcrest\2.1\hamcrest-2.1.jar;C:\Users\hp\.m2\repository\org\ccil\cowan\tagsoup\tagsoup\1.2.1\tagsoup-1.2.1.jar;C:\Users\hp\.m2\repository\io\rest-assured\xml-path\5.3.0\xml-path-5.3.0.jar;C:\Users\hp\.m2\repository\org\apache\commons\commons-lang3\3.11\commons-lang3-3.11.jar;C:\Users\hp\.m2\repository\io\rest-assured\json-path\5.1.1\json-path-5.1.1.jar;C:\Users\hp\.m2\repository\org\apache\groovy\groovy-json\4.0.1\groovy-json-4.0.1.jar;C:\Users\hp\.m2\repository\io\rest-assured\rest-assured-common\5.1.1\rest-assured-common-5.1.1.jar;C:\Users\hp\.m2\repository\io\rest-assured\json-schema-validator\5.1.1\json-schema-validator-5.1.1.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\json-schema-validator\2.2.14\json-schema-validator-2.2.14.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\jackson-coreutils-equivalence\1.0\jackson-coreutils-equivalence-1.0.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\jackson-coreutils\2.0\jackson-coreutils-2.0.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\msg-simple\1.2\msg-simple-1.2.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\btf\1.3\btf-1.3.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\json-schema-core\1.2.14\json-schema-core-1.2.14.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\uri-template\0.10\uri-template-0.10.jar;C:\Users\hp\.m2\repository\org\mozilla\rhino\1.7.7.2\rhino-1.7.7.2.jar;C:\Users\hp\.m2\repository\com\sun\mail\mailapi\1.6.2\mailapi-1.6.2.jar;C:\Users\hp\.m2\repository\joda-time\joda-time\2.10.5\joda-time-2.10.5.jar;C:\Users\hp\.m2\repository\com\googlecode\libphonenumber\libphonenumber\8.11.1\libphonenumber-8.11.1.jar;C:\Users\hp\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\hp\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar;C:\Users\hp\.m2\repository\com\google\code\gson\gson\2.8.5\gson-2.8.5.jar;C:\Users\hp\.m2\repository\com\github\scribejava\scribejava-apis\8.3.1\scribejava-apis-8.3.1.jar;C:\Users\hp\.m2\repository\com\github\scribejava\scribejava-core\8.3.1\scribejava-core-8.3.1.jar;C:\Users\hp\.m2\repository\com\github\scribejava\scribejava-java8\8.3.1\scribejava-java8-8.3.1.jar;C:\Users\hp\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\hp\.m2\repository\org\apache\ws\commons\schema\XmlSchema\1.4.7\XmlSchema-1.4.7.jar;C:\Users\hp\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.2\jackson-databind-2.15.2.jar;C:\Users\hp\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.2\jackson-annotations-2.15.2.jar;C:\Users\hp\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.2\jackson-core-2.15.2.jar;C:\Users\hp\.m2\repository\org\apache\poi\poi-ooxml\3.17\poi-ooxml-3.17.jar;C:\Users\hp\.m2\repository\org\apache\poi\poi\3.17\poi-3.17.jar;C:\Users\hp\.m2\repository\org\apache\commons\commons-collections4\4.1\commons-collections4-4.1.jar;C:\Users\hp\.m2\repository\org\apache\poi\poi-ooxml-schemas\3.17\poi-ooxml-schemas-3.17.jar;C:\Users\hp\.m2\repository\org\apache\xmlbeans\xmlbeans\2.6.0\xmlbeans-2.6.0.jar;C:\Users\hp\.m2\repository\stax\stax-api\1.0.1\stax-api-1.0.1.jar;C:\Users\hp\.m2\repository\com\github\virtuald\curvesapi\1.04\curvesapi-1.04.jar;C:\Users\hp\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\hp\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\hp\.m2\repository\com\aventstack\extentreports\4.0.9\extentreports-4.0.9.jar;C:\Users\hp\.m2\repository\org\freemarker\freemarker\2.3.23\freemarker-2.3.23.jar;C:\Users\hp\.m2\repository\org\mongodb\mongodb-driver\3.3.0\mongodb-driver-3.3.0.jar;C:\Users\hp\.m2\repository\org\mongodb\mongodb-driver-core\3.3.0\mongodb-driver-core-3.3.0.jar;C:\Users\hp\.m2\repository\org\mongodb\bson\3.3.0\bson-3.3.0.jar;C:\Users\hp\.m2\repository\org\hamcrest\hamcrest-all\1.3\hamcrest-all-1.3.jar;C:\Users\hp\.m2\repository\org\apache\logging\log4j\log4j-core\2.20.0\log4j-core-2.20.0.jar;C:\Users\hp\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://openjdk.java.net/"/>
+    <property name="user.timezone" value="Asia/Calcutta"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="IN"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11\bin"/>
+    <property name="sun.java.command" value="C:\Users\hp\AppData\Local\Temp\surefire11719018032365199176\surefirebooter-20250429150800353_3.jar C:\Users\hp\AppData\Local\Temp\surefire11719018032365199176 2025-04-29T15-08-00_065-jvmRun1 surefire-20250429150800353_1tmp surefire_0-20250429150800353_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation\target\test-classes;D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation\target\classes;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-java\4.11.0\selenium-java-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-api\4.11.0\selenium-api-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-chrome-driver\4.11.0\selenium-chrome-driver-4.11.0.jar;C:\Users\hp\.m2\repository\com\google\auto\service\auto-service-annotations\1.0.1\auto-service-annotations-1.0.1.jar;C:\Users\hp\.m2\repository\com\google\guava\guava\31.1-jre\guava-31.1-jre.jar;C:\Users\hp\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\hp\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\hp\.m2\repository\org\checkerframework\checker-qual\3.12.0\checker-qual-3.12.0.jar;C:\Users\hp\.m2\repository\com\google\errorprone\error_prone_annotations\2.11.0\error_prone_annotations-2.11.0.jar;C:\Users\hp\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-chromium-driver\4.11.0\selenium-chromium-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-json\4.11.0\selenium-json-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-manager\4.11.0\selenium-manager-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v113\4.11.0\selenium-devtools-v113-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v114\4.11.0\selenium-devtools-v114-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v115\4.11.0\selenium-devtools-v115-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-devtools-v85\4.11.0\selenium-devtools-v85-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-edge-driver\4.11.0\selenium-edge-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-firefox-driver\4.11.0\selenium-firefox-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-http\4.11.0\selenium-http-4.11.0.jar;C:\Users\hp\.m2\repository\dev\failsafe\failsafe\3.3.1\failsafe-3.3.1.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-ie-driver\4.11.0\selenium-ie-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-remote-driver\4.11.0\selenium-remote-driver-4.11.0.jar;C:\Users\hp\.m2\repository\io\netty\netty-buffer\4.1.92.Final\netty-buffer-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-codec-http\4.1.92.Final\netty-codec-http-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-codec\4.1.92.Final\netty-codec-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-handler\4.1.92.Final\netty-handler-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-common\4.1.92.Final\netty-common-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-classes-epoll\4.1.92.Final\netty-transport-classes-epoll-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-classes-kqueue\4.1.92.Final\netty-transport-classes-kqueue-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-epoll\4.1.92.Final\netty-transport-native-epoll-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-kqueue\4.1.92.Final\netty-transport-native-kqueue-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.92.Final\netty-transport-native-unix-common-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport\4.1.92.Final\netty-transport-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-resolver\4.1.92.Final\netty-resolver-4.1.92.Final.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-api\1.26.0\opentelemetry-api-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-context\1.26.0\opentelemetry-context-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-exporter-logging\1.26.0\opentelemetry-exporter-logging-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-metrics\1.26.0\opentelemetry-sdk-metrics-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-extension-incubator\1.26.0-alpha\opentelemetry-extension-incubator-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-logs\1.26.0-alpha\opentelemetry-sdk-logs-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-api-logs\1.26.0-alpha\opentelemetry-api-logs-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-api-events\1.26.0-alpha\opentelemetry-api-events-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-common\1.26.0\opentelemetry-sdk-common-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-extension-autoconfigure-spi\1.26.0\opentelemetry-sdk-extension-autoconfigure-spi-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-extension-autoconfigure\1.26.0-alpha\opentelemetry-sdk-extension-autoconfigure-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk-trace\1.26.0\opentelemetry-sdk-trace-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-sdk\1.26.0\opentelemetry-sdk-1.26.0.jar;C:\Users\hp\.m2\repository\io\opentelemetry\opentelemetry-semconv\1.26.0-alpha\opentelemetry-semconv-1.26.0-alpha.jar;C:\Users\hp\.m2\repository\net\bytebuddy\byte-buddy\1.14.4\byte-buddy-1.14.4.jar;C:\Users\hp\.m2\repository\org\apache\commons\commons-exec\1.3\commons-exec-1.3.jar;C:\Users\hp\.m2\repository\org\asynchttpclient\async-http-client\2.12.3\async-http-client-2.12.3.jar;C:\Users\hp\.m2\repository\org\asynchttpclient\async-http-client-netty-utils\2.12.3\async-http-client-netty-utils-2.12.3.jar;C:\Users\hp\.m2\repository\io\netty\netty-codec-socks\4.1.60.Final\netty-codec-socks-4.1.60.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-handler-proxy\4.1.60.Final\netty-handler-proxy-4.1.60.Final.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-epoll\4.1.60.Final\netty-transport-native-epoll-4.1.60.Final-linux-x86_64.jar;C:\Users\hp\.m2\repository\io\netty\netty-transport-native-kqueue\4.1.60.Final\netty-transport-native-kqueue-4.1.60.Final-osx-x86_64.jar;C:\Users\hp\.m2\repository\org\reactivestreams\reactive-streams\1.0.3\reactive-streams-1.0.3.jar;C:\Users\hp\.m2\repository\com\typesafe\netty\netty-reactive-streams\2.0.4\netty-reactive-streams-2.0.4.jar;C:\Users\hp\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\hp\.m2\repository\com\sun\activation\jakarta.activation\1.2.2\jakarta.activation-1.2.2.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-safari-driver\4.11.0\selenium-safari-driver-4.11.0.jar;C:\Users\hp\.m2\repository\org\seleniumhq\selenium\selenium-support\4.11.0\selenium-support-4.11.0.jar;C:\Users\hp\.m2\repository\org\testng\testng\6.9.10\testng-6.9.10.jar;C:\Users\hp\.m2\repository\com\beust\jcommander\1.48\jcommander-1.48.jar;C:\Users\hp\.m2\repository\org\beanshell\bsh\2.0b4\bsh-2.0b4.jar;C:\Users\hp\.m2\repository\io\rest-assured\rest-assured\5.3.0\rest-assured-5.3.0.jar;C:\Users\hp\.m2\repository\org\apache\groovy\groovy\4.0.6\groovy-4.0.6.jar;C:\Users\hp\.m2\repository\org\apache\groovy\groovy-xml\4.0.6\groovy-xml-4.0.6.jar;C:\Users\hp\.m2\repository\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;C:\Users\hp\.m2\repository\org\apache\httpcomponents\httpcore\4.4.13\httpcore-4.4.13.jar;C:\Users\hp\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\hp\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;C:\Users\hp\.m2\repository\org\apache\httpcomponents\httpmime\4.5.13\httpmime-4.5.13.jar;C:\Users\hp\.m2\repository\org\hamcrest\hamcrest\2.1\hamcrest-2.1.jar;C:\Users\hp\.m2\repository\org\ccil\cowan\tagsoup\tagsoup\1.2.1\tagsoup-1.2.1.jar;C:\Users\hp\.m2\repository\io\rest-assured\xml-path\5.3.0\xml-path-5.3.0.jar;C:\Users\hp\.m2\repository\org\apache\commons\commons-lang3\3.11\commons-lang3-3.11.jar;C:\Users\hp\.m2\repository\io\rest-assured\json-path\5.1.1\json-path-5.1.1.jar;C:\Users\hp\.m2\repository\org\apache\groovy\groovy-json\4.0.1\groovy-json-4.0.1.jar;C:\Users\hp\.m2\repository\io\rest-assured\rest-assured-common\5.1.1\rest-assured-common-5.1.1.jar;C:\Users\hp\.m2\repository\io\rest-assured\json-schema-validator\5.1.1\json-schema-validator-5.1.1.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\json-schema-validator\2.2.14\json-schema-validator-2.2.14.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\jackson-coreutils-equivalence\1.0\jackson-coreutils-equivalence-1.0.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\jackson-coreutils\2.0\jackson-coreutils-2.0.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\msg-simple\1.2\msg-simple-1.2.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\btf\1.3\btf-1.3.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\json-schema-core\1.2.14\json-schema-core-1.2.14.jar;C:\Users\hp\.m2\repository\com\github\java-json-tools\uri-template\0.10\uri-template-0.10.jar;C:\Users\hp\.m2\repository\org\mozilla\rhino\1.7.7.2\rhino-1.7.7.2.jar;C:\Users\hp\.m2\repository\com\sun\mail\mailapi\1.6.2\mailapi-1.6.2.jar;C:\Users\hp\.m2\repository\joda-time\joda-time\2.10.5\joda-time-2.10.5.jar;C:\Users\hp\.m2\repository\com\googlecode\libphonenumber\libphonenumber\8.11.1\libphonenumber-8.11.1.jar;C:\Users\hp\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\hp\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar;C:\Users\hp\.m2\repository\com\google\code\gson\gson\2.8.5\gson-2.8.5.jar;C:\Users\hp\.m2\repository\com\github\scribejava\scribejava-apis\8.3.1\scribejava-apis-8.3.1.jar;C:\Users\hp\.m2\repository\com\github\scribejava\scribejava-core\8.3.1\scribejava-core-8.3.1.jar;C:\Users\hp\.m2\repository\com\github\scribejava\scribejava-java8\8.3.1\scribejava-java8-8.3.1.jar;C:\Users\hp\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\hp\.m2\repository\org\apache\ws\commons\schema\XmlSchema\1.4.7\XmlSchema-1.4.7.jar;C:\Users\hp\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.2\jackson-databind-2.15.2.jar;C:\Users\hp\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.2\jackson-annotations-2.15.2.jar;C:\Users\hp\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.2\jackson-core-2.15.2.jar;C:\Users\hp\.m2\repository\org\apache\poi\poi-ooxml\3.17\poi-ooxml-3.17.jar;C:\Users\hp\.m2\repository\org\apache\poi\poi\3.17\poi-3.17.jar;C:\Users\hp\.m2\repository\org\apache\commons\commons-collections4\4.1\commons-collections4-4.1.jar;C:\Users\hp\.m2\repository\org\apache\poi\poi-ooxml-schemas\3.17\poi-ooxml-schemas-3.17.jar;C:\Users\hp\.m2\repository\org\apache\xmlbeans\xmlbeans\2.6.0\xmlbeans-2.6.0.jar;C:\Users\hp\.m2\repository\stax\stax-api\1.0.1\stax-api-1.0.1.jar;C:\Users\hp\.m2\repository\com\github\virtuald\curvesapi\1.04\curvesapi-1.04.jar;C:\Users\hp\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\hp\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\hp\.m2\repository\com\aventstack\extentreports\4.0.9\extentreports-4.0.9.jar;C:\Users\hp\.m2\repository\org\freemarker\freemarker\2.3.23\freemarker-2.3.23.jar;C:\Users\hp\.m2\repository\org\mongodb\mongodb-driver\3.3.0\mongodb-driver-3.3.0.jar;C:\Users\hp\.m2\repository\org\mongodb\mongodb-driver-core\3.3.0\mongodb-driver-core-3.3.0.jar;C:\Users\hp\.m2\repository\org\mongodb\bson\3.3.0\bson-3.3.0.jar;C:\Users\hp\.m2\repository\org\hamcrest\hamcrest-all\1.3\hamcrest-all-1.3.jar;C:\Users\hp\.m2\repository\org\apache\logging\log4j\log4j-core\2.20.0\log4j-core-2.20.0.jar;C:\Users\hp\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\hp"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2023-01-17"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-11"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\hp\AppData\Local\Temp\surefire11719018032365199176\surefirebooter-20250429150800353_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.18+9-LTS-195"/>
+    <property name="user.name" value="hp"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="18.9"/>
+    <property name="localRepository" value="C:\Users\hp\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\hp\AppData\Local\Temp\"/>
+    <property name="java.version" value="11.0.18"/>
+    <property name="user.dir" value="D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-11\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\apache-maven-3.9.9-bin\apache-maven-3.9.9\bin;C:\Program Files\Java\jdk-11\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files\Jenkins;%ANDROID%\build-tools;%ANDROID%\build-tools;C:\Program Files\Android\Android Studio\bin;C:\Users\hp\AppData\Local\Android\Sdk\platform-tools;C:\Users\hp\AppData\Local\Android\Sdk\build-tools\34.0.0\aapt2.exe;C:\Users\hp\AppData\Local\Programs\Eclipse Adoptium\jdk-11.0.26.4-hotspot\bin;C:\Users\hp\AppData\Local\Microsoft\WindowsApps;C:\Users\hp\AppData\Roaming\npm;C:\Users\hp\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\hp\AppData\Local\Programs\cursor\resources\app\bin;."/>
+    <property name="suite" value="loginTestScript"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vm.version" value="11.0.18+9-LTS-195"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="verifyloginUsingValidInputData[login, login_001, positive, Valid login, post, {   &#10; &quot;mobile&quot;:&quot;6264335759&quot;&#10;}, {&#10;    &quot;st&quot;: 1,&#10;    &quot;msg&quot;: &quot;Your OTP is sent successfully.&quot;,&#10;    &quot;role&quot;: &quot;owner&quot;&#10;}, 200](1)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="1.555">
+    <system-out><![CDATA[2025-04-29 15:08:03 INFO  menumitra:28 - Log4j configured from static initializer
+2025-04-29 15:08:03 INFO  menumitra:40 - &amp#27;[32m=== Logger initialized with session markers ===&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mStarting test suite setup&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mLoading properties file from: src\test\resources\configFile\config.properties&amp#27;[0m
+2025-04-29 15:08:03 INFO  ReadFile:91 - &amp#27;[32mAttempting to read file from path: src\test\resources\configFile\config.properties&amp#27;[0m
+2025-04-29 15:08:03 INFO  ReadFile:91 - &amp#27;[32mOpening FileInputStream for file&amp#27;[0m
+2025-04-29 15:08:03 INFO  ReadFile:91 - &amp#27;[32mSuccessfully opened file stream&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mProperties file opened successfully&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mProperties object initialized&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mProperties loaded successfully&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mProperties file loaded successfully&amp#27;[0m
+2025-04-29 15:08:03 INFO  EnviromentChanges:91 - &amp#27;[32mEnvironment switched to: qa&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mSetting QA environment...&amp#27;[0m
+2025-04-29 15:08:03 INFO  APIBase:91 - &amp#27;[32mSetup completed. Log4j configured and properties loaded.&amp#27;[0m
+Test Suite started: Test
+2025-04-29 15:08:03 INFO  Listener:91 - &amp#27;[32mTest Suite started: Test&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:03 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: verifyloginUsingValidInputData
+2025-04-29 15:08:03 INFO  Listener:91 - &amp#27;[32mverifyloginUsingValidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:03 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:03 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 200&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 655ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 200 OK&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"st":1,"msg":"Your OTP is sent successfully.","role":"owner"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyloginUsingValidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyloginUsingValidInputData&amp#27;[0m
+]]></system-out>
+    <system-err><![CDATA[log4j:WARN Continuable parsing error 57 and column 10
+log4j:WARN The content of element type "root" must match "(param*,(priority|level)?,appender-ref*)".
+]]></system-err>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_002, negative, Invalid login using empty test data, post, {   &#10; &quot;mobile&quot;:&quot;&quot;&#10;}, {&#10;    &quot;detail&quot;: &quot;Please provide mobile number&quot;&#10;}, 400](1)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.082">
+    <system-out><![CDATA[2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 70ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Please provide mobile number"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_003, negative, Invalid login using less than ten digit test data, post, {   &#10; &quot;mobile&quot;:&quot;626433575&quot;&#10;}, {&#10;    &quot;detail&quot;: &quot;Mobile number must be exactly 10 digits long&quot;&#10;}, 400](2)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.074">
+    <system-out><![CDATA[Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 56ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Mobile number must be exactly 10 digits long"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_004, negative, Invalid login using special character, post, {   &#10; &quot;mobile&quot;:&quot;626433@ 59&quot;&#10;}, {&#10;    &quot;detail&quot;: &quot;Mobile number must contain only digits&quot;&#10;}, 400](3)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.068">
+    <system-out><![CDATA[Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 69ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Mobile number must contain only digits"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 69ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Mobile number must contain only digits"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_005, negative, Invalid login using  character, post, {   &#10; &quot;mobile&quot;:&quot;6264Af35759&quot;&#10;}, {&#10;    &quot;detail&quot;: &quot;Mobile number must contain only digits&quot;&#10;}, 400](4)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.059">
+    <system-out><![CDATA[Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 52ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Mobile number must contain only digits"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_006, negative, Invalid login using  Not register number, post, {   &#10; &quot;mobile&quot;:&quot;9745635634&quot;&#10;}, {&#10; &#10;    &quot;details&quot;: &quot; This Mobile Number is not resistered&quot;&#10;}, 400](5)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.065">
+    <failure message="Error in negative test case login_006: Error validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]" type="com.menumitra.utilityclass.customException"><![CDATA[com.menumitra.utilityclass.customException: Error in negative test case login_006: Error validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]
+	at com.menumitratCommonAPITestScript.loginTestScript.verifyLoginUsingInvalidInputData(loginTestScript.java:306)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]></failure>
+    <system-out><![CDATA[Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 200&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 53ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 200 OK&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"st":1,"msg":"Your OTP is sent successfully.","role":null}&amp#27;[0m
+2025-04-29 15:08:05 ERROR validateResponseBody:113 - &amp#27;[31mSuccess response validation failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]&amp#27;[0m
+2025-04-29 15:08:05 ERROR validateResponseBody:113 - &amp#27;[31mError validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]&amp#27;[0m
+2025-04-29 15:08:05 ERROR loginTestScript:113 - &amp#27;[31mError in negative test case login_006: Error validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]&amp#27;[0m
+Test case failed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 ERROR Listener:113 - &amp#27;[31mTest case failed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_007, negative, Invalid login using  combination of all character and special character, post, {   &#10; &quot;mobile&quot;:&quot;Adbt@#4Gh7&quot;&#10;}, {&#10;    &quot;detail&quot;: &quot;Mobile number must contain only digits&quot;&#10;}, 400](6)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.068">
+    <system-out><![CDATA[Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 61ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Mobile number must contain only digits"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyLoginUsingInvalidInputData[login, login_008, negative, verify 1 to 5 first digit, post, {   &#10; &quot;mobile&quot;:&quot;1264335759&quot;&#10;}, {&#10;    &quot;detail&quot;: &quot;Mobile number must start with digits 6, 7, 8, or 9&quot;&#10;}, 400](7)" classname="com.menumitratCommonAPITestScript.loginTestScript" time="0.055">
+    <system-out><![CDATA[Test case started: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mverifyLoginUsingInvalidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/v2/common/login&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:05 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Code: 400&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Time: 50ms&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Status Line: HTTP/1.1 400 Bad Request&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mResponse Body: {"detail":"Mobile number must start with digits 6, 7, 8, or 9"}&amp#27;[0m
+2025-04-29 15:08:05 INFO  validateResponseBody:91 - &amp#27;[32mSuccess response matched as expected&amp#27;[0m
+Test case passed: verifyLoginUsingInvalidInputData
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyLoginUsingInvalidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="getOwnerUrl[ownerVerifyotp, post, https://menusmitra.xyz/owner_api/verify_otp, {&#10;    &quot;mobile&quot;:&quot;9999999991&quot;,&#10;    &quot;otp&quot;:&quot;1234&quot;,&#10;    &quot;fcm_token&quot;:&quot;8998998998&quot;,&#10;    &quot;device_id&quot;:&quot;h0ol74eq6rom9i826wa&quot;,&#10;    &quot;device_model&quot;:&quot;samsung&quot;&#10;}, {&#10;    &quot;st&quot;: 1,&#10;    &quot;msg&quot;: &quot;Success&quot;,&#10;    &quot;owner_data&quot;: {&#10;        &quot;refresh&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NTgxNzM3MiwiaWF0IjoxNzQ1MjEyNTcyLCJqdGkiOiJmZTYwZGMyZDM0YzY0NDg0YTk0NGNhMzFkNDhiYjcxYiIsInVzZXJfaWQiOjUxOCwiZGV2aWNlX3Rva2VuIjoicktDcXFDc25SVnFZRGJBSUNzSmFQZG5rWllpOGFlYU4xajUuSkwwTGduVXhFMjh2aGZkdVE0R1cyYjlTejB4WmY3OUpoTko5aWxEQ0ZWNG0ubEJ1SFhZZHlKZm80Mkk0by5ZayJ9.iQ_cxaj_X12Pi0hiR6ObnUl0dNhrd5mwr2Qq-Ohjj-4&quot;,&#10;        &quot;access&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1ODE3MzcyLCJpYXQiOjE3NDUyMTI1NzIsImp0aSI6IjZmOThkZmQzZmIzYTRhZThiYWE3NmNlNDc1MzIzMDRiIiwidXNlcl9pZCI6NTE4LCJkZXZpY2VfdG9rZW4iOiJyS0NxcUNzblJWcVlEYkFJQ3NKYVBkbmtaWWk4YWVhTjFqNS5KTDBMZ25VeEUyOHZoZmR1UTRHVzJiOVN6MHhaZjc5SmhOSjlpbERDRlY0bS5sQnVIWFlkeUpmbzQySTRvLllrIn0.ZRhDl68saGfg-xdHtpNI_a6zkX9ZJ4OhoPXhe496NOA&quot;,&#10;        &quot;device_token&quot;: &quot;rKCqqCsnRVqYDbAICsJaPdnkZYi8aeaN1j5.JL0LgnUxE28vhfduQ4GW2b9Sz0xZf79JhNJ9ilDCFV4m.lBuHXYdyJfo42I4o.Yk&quot;,&#10;        &quot;owner_name&quot;: &quot;Santosh&quot;,&#10;        &quot;user_id&quot;: 518,&#10;        &quot;role&quot;: &quot;owner&quot;,&#10;        &quot;outlet_name&quot;: &quot;Deshmukh Wada&quot;,&#10;        &quot;outlet_id&quot;: 84,&#10;        &quot;mobile&quot;: &quot;9677777777&quot;,&#10;        &quot;address&quot;: &quot;Pune Satara Road Pune&quot;,&#10;        &quot;outlet_status&quot;: true,&#10;        &quot;order_number_sequence&quot;: &quot;since_opening&quot;,&#10;        &quot;is_open&quot;: true,&#10;        &quot;gst&quot;: &quot;4&quot;,&#10;        &quot;service_charges&quot;: &quot;2&quot;,&#10;        &quot;upi_id&quot;: &quot;9527279639@ybl&quot;,&#10;        &quot;completed_orders&quot;: 0,&#10;        &quot;active_orders&quot;: 0,&#10;        &quot;today_total_revenue&quot;: null&#10;    },&#10;    &quot;settings&quot;: {&#10;        &quot;theme&quot;: &quot;system&quot;,&#10;        &quot;style&quot;: &quot;blue&quot;,&#10;        &quot;has_dine_in&quot;: true,&#10;        &quot;has_parcel&quot;: false,&#10;        &quot;has_counter&quot;: false,&#10;        &quot;has_delivery&quot;: false,&#10;        &quot;has_drive_through&quot;: true,&#10;        &quot;print_and_save&quot;: true,&#10;        &quot;KOT_and_save&quot;: true,&#10;        &quot;settle&quot;: true,&#10;        &quot;reserve_table&quot;: true,&#10;        &quot;cancel&quot;: true,&#10;        &quot;POS_show_menu_image&quot;: true&#10;    }&#10;}, 200](1)" classname="com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript" time="0.001">
+    <system-out><![CDATA[2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:05 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: getOwnerUrl
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mgetOwnerUrl test case started!&amp#27;[0m
+Test case passed: getOwnerUrl
+2025-04-29 15:08:05 INFO  Listener:91 - &amp#27;[32mTest case passed: getOwnerUrl&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyOTPAPiUsingValidInputData[ownerVerifyOTP, OwnerVerifyOTP_001, positive, valild verify OTP, post, {&#10;    &quot;mobile&quot;:&quot;9999999991&quot;,&#10;    &quot;otp&quot;:&quot;1234&quot;,&#10;    &quot;fcm_token&quot;:&quot;8998998998&quot;,&#10;    &quot;device_id&quot;:&quot;h0ol74eq6rom9i826wa&quot;,&#10;    &quot;device_model&quot;:&quot;samsung&quot;&#10;}, {&#10;    &quot;st&quot;: 1,&#10;    &quot;msg&quot;: &quot;Success&quot;,&#10;    &quot;owner_data&quot;: {&#10;        &quot;refresh&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NTgyMjEyNiwiaWF0IjoxNzQ1MjE3MzI2LCJqdGkiOiJhZjY2OTNiYzI1ZDY0ZjIyOGY4MDMwYjdhN2RmZmE0OCIsInVzZXJfaWQiOjUxOCwiZGV2aWNlX3Rva2VuIjoiTW1tS20zdEszZ2xhWTRhNXZMSThsM1czWTUzLjBiazJ2TVl6WlRDU25xN0dHUml1dmM2SVF4cWhVVGVWODRXMkhuMUdqM3pra0VMZHhBeDFQMHBlVlRPdVhiV3JkUGxibTlRNyJ9.wofSFAthCt_AVCaxeTaufm0jkir3KIvJecXVh0lmazE&quot;,&#10;        &quot;access&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1ODIyMTI2LCJpYXQiOjE3NDUyMTczMjYsImp0aSI6ImZlN2YyMWY4NWNlZDQxNDg4MGM5NzJlNmVjODAwZDVhIiwidXNlcl9pZCI6NTE4LCJkZXZpY2VfdG9rZW4iOiJNbW1LbTN0SzNnbGFZNGE1dkxJOGwzVzNZNTMuMGJrMnZNWXpaVENTbnE3R0dSaXV2YzZJUXhxaFVUZVY4NFcySG4xR2ozemtrRUxkeEF4MVAwcGVWVE91WGJXcmRQbGJtOVE3In0.mS5cBmhZRYqeICdIAQM3Yo46zWSgFm1ybMwGAwDaCkk&quot;,&#10;        &quot;device_token&quot;: &quot;MmmKm3tK3glaY4a5vLI8l3W3Y53.0bk2vMYzZTCSnq7GGRiuvc6IQxqhUTeV84W2Hn1Gj3zkkELdxAx1P0peVTOuXbWrdPlbm9Q7&quot;,&#10;        &quot;owner_name&quot;: &quot;Santosh&quot;,&#10;        &quot;user_id&quot;: 518,&#10;        &quot;role&quot;: &quot;owner&quot;,&#10;        &quot;outlet_name&quot;: &quot;Deshmukh Wada&quot;,&#10;        &quot;outlet_id&quot;: 84,&#10;        &quot;mobile&quot;: &quot;9677777777&quot;,&#10;        &quot;address&quot;: &quot;Pune Satara Road Pune&quot;,&#10;        &quot;outlet_status&quot;: true,&#10;        &quot;order_number_sequence&quot;: &quot;since_opening&quot;,&#10;        &quot;is_open&quot;: true,&#10;        &quot;gst&quot;: &quot;4&quot;,&#10;        &quot;service_charges&quot;: &quot;2&quot;,&#10;        &quot;upi_id&quot;: &quot;9527279639@ybl&quot;,&#10;        &quot;completed_orders&quot;: 0,&#10;        &quot;active_orders&quot;: 0,&#10;        &quot;today_total_revenue&quot;: null&#10;    },&#10;    &quot;settings&quot;: {&#10;        &quot;theme&quot;: &quot;system&quot;,&#10;        &quot;style&quot;: &quot;blue&quot;,&#10;        &quot;has_dine_in&quot;: true,&#10;        &quot;has_parcel&quot;: false,&#10;        &quot;has_counter&quot;: false,&#10;        &quot;has_delivery&quot;: false,&#10;        &quot;has_drive_through&quot;: true,&#10;        &quot;print_and_save&quot;: true,&#10;        &quot;KOT_and_save&quot;: true,&#10;        &quot;settle&quot;: true,&#10;        &quot;reserve_table&quot;: true,&#10;        &quot;cancel&quot;: true,&#10;        &quot;POS_show_menu_image&quot;: true&#10;    }&#10;}, 200](1)" classname="com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript" time="0.121">
+    <system-out><![CDATA[2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: verifyOTPAPiUsingValidInputData
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mverifyOTPAPiUsingValidInputData test case started!&amp#27;[0m
+2025-04-29 15:08:06 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/owner_api/verify_otp&amp#27;[0m
+2025-04-29 15:08:06 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:06 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+Test case passed: verifyOTPAPiUsingValidInputData
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyOTPAPiUsingValidInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="getResendOTPURL[resendOTP, post, https://men4u.xyz/common_api/resend_otp, {&#10;    &quot;mobile&quot;:&quot;9999999991&quot;,&#10;    &quot;role&quot;:&quot;owner&quot;&#10;    &#10;}, {&#10;    &quot;st&quot;: 1,&#10;    &quot;msg&quot;: &quot;OTP resent successfully&quot;,&#10;    &quot;role&quot;: &quot;owner&quot;&#10;}, 200](1)" classname="com.menumitratCommonAPITestScript.ResendOTPTestScript" time="0.0">
+    <system-out><![CDATA[2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: getResendOTPURL
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mgetResendOTPURL test case started!&amp#27;[0m
+Test case passed: getResendOTPURL
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mTest case passed: getResendOTPURL&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="verifyRessendOTPUSingPositiveInputData[resendotp, resendotp_001, positive, Valid login, post, {&#10;    &quot;mobile&quot;:&quot;9999999991&quot;,&#10;    &quot;role&quot;:&quot;owner&quot;&#10;    &#10;}, {&#10;    &quot;st&quot;: 1,&#10;    &quot;msg&quot;: &quot;OTP resent successfully&quot;,&#10;    &quot;role&quot;: &quot;owner&quot;&#10;}, 200](1)" classname="com.menumitratCommonAPITestScript.ResendOTPTestScript" time="0.121">
+    <system-out><![CDATA[2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: verifyRessendOTPUSingPositiveInputData
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mverifyRessendOTPUSingPositiveInputData test case started!&amp#27;[0m
+2025-04-29 15:08:06 INFO  ResponseUtil:91 - &amp#27;[32mMaking POST request to: https://men4u.xyz/common_api/resend_otp&amp#27;[0m
+2025-04-29 15:08:06 INFO  ResponseUtil:91 - &amp#27;[32mExecuting POST request&amp#27;[0m
+2025-04-29 15:08:06 INFO  ResponseUtil:91 - &amp#27;[32mPOST request completed successfully&amp#27;[0m
+Test case passed: verifyRessendOTPUSingPositiveInputData
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mTest case passed: verifyRessendOTPUSingPositiveInputData&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="setup" classname="com.menumitratCommonAPITestScript.StaffCreateTestScript" time="0.122">
+    <failure message="Unresolved compilation problem: &#10;	The method getDeviceToken() is undefined for the type TokenManagers&#10;" type="java.lang.Error"><![CDATA[java.lang.Error: 
+Unresolved compilation problem: 
+	The method getDeviceToken() is undefined for the type TokenManagers
+
+	at com.menumitratCommonAPITestScript.StaffCreateTestScript.setup(StaffCreateTestScript.java:185)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:514)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:215)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:178)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]></failure>
+  </testcase>
+  <testcase name="createStaff[staffcreate, staffcreate_001, positive, Valid staff creation with all correct fields, post, { &quot;user_id&quot;: 648, &quot;name&quot;: &quot;XYZ&quot;, &quot;mobile&quot;: &quot;9833445566&quot;, &quot;dob&quot;: &quot;06 Dec 2014&quot;, &quot;address&quot;: &quot;Katraj Pune&quot;, &quot;role&quot;: &quot;cleaner&quot;, &quot;aadhar_number&quot;: &quot;523456789091&quot;, &quot;outlet_id&quot;: 101, &quot;device_token&quot;: &quot;token123&quot; }, { &quot;st&quot;: 1, &quot;msg&quot;: &quot;success&quot; }, 200](1)" classname="com.menumitratCommonAPITestScript.StaffCreateTestScript" time="0.0">
+    <skipped/>
+    <system-out><![CDATA[2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel sheet read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel file closed successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel data read successfully.&amp#27;[0m
+2025-04-29 15:08:06 INFO  DataDriven:91 - &amp#27;[32mExcel workbook closed successfully.&amp#27;[0m
+Test case started: createStaff
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mcreateStaff test case started!&amp#27;[0m
+Test case skipped: createStaff
+2025-04-29 15:08:06 WARN  Listener:102 - &amp#27;[33mTest case skipped: createStaff&amp#27;[0m
+]]></system-out>
+  </testcase>
+  <testcase name="tearDown" classname="com.menumitratCommonAPITestScript.StaffCreateTestScript" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="tearDown" classname="com.menumitra.superclass.APIBase" time="0.248">
+    <failure message="Logout process failed" type="java.lang.RuntimeException"><![CDATA[java.lang.RuntimeException: Logout process failed
+	at com.menumitra.utilityclass.TokenManagers.logout(TokenManagers.java:265)
+	at com.menumitra.superclass.APIBase.tearDown(APIBase.java:143)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:514)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:215)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:336)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: java.lang.NullPointerException
+	at com.menumitra.utilityclass.TokenManagers.logout(TokenManagers.java:243)
+	... 23 more
+]]></failure>
+    <system-out><![CDATA[Test Suite finished: Test
+2025-04-29 15:08:06 INFO  Listener:91 - &amp#27;[32mTest Suite finished: Test&amp#27;[0m
+Flushing Extent Report
+2025-04-29 15:08:06 INFO  TokenManagers:91 - &amp#27;[32mStarting logout process&amp#27;[0m
+2025-04-29 15:08:06 WARN  TokenManagers:102 - &amp#27;[33mRole is null - Role-based access may fail&amp#27;[0m
+2025-04-29 15:08:06 ERROR TokenManagers:113 - &amp#27;[31mCRITICAL: Logout process failed - null&amp#27;[0m
+2025-04-29 15:08:06 ERROR TokenManagers:113 - &amp#27;[31mStack trace: [Ljava.lang.StackTraceElement;@76828577&amp#27;[0m
+]]></system-out>
+  </testcase>
+</testsuite>

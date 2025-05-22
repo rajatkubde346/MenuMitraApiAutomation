@@ -1,0 +1,5 @@
+# Created at 2025-04-29T15:08:00.393
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Vaibhav Study\Software Testing\Testing Software Files\eclipse-jee-oxygen-R-win32-x86_64\eclipse\MenuMitraApiAutomation\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

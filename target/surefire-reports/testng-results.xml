@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results total="13" passed="11" failed="1" skipped="1">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-04-29T09:38:03Z" name="Suite" finished-at="2025-04-29T09:38:06Z" duration-ms="3038">
+    <groups>
+    </groups>
+    <test started-at="2025-04-29T09:38:03Z" name="Test" finished-at="2025-04-29T09:38:06Z" duration-ms="3038">
+      <class name="com.menumitratCommonAPITestScript.StaffCreateTestScript">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.menumitratCommonAPITestScript.StaffCreateTestScript@c333c60]" started-at="2025-04-29T15:08:06Z" name="setup" finished-at="2025-04-29T15:08:06Z" duration-ms="0" status="FAIL">
+          <exception class="java.lang.Error">
+            <message>
+              <![CDATA[Unresolved compilation problem: 
+	The method getDeviceToken() is undefined for the type TokenManagers
+]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.Error: Unresolved compilation problem: 
+	The method getDeviceToken() is undefined for the type TokenManagers
+
+	at com.menumitratCommonAPITestScript.StaffCreateTestScript.setup(StaffCreateTestScript.java:185)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:514)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:215)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:178)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.Error -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="createStaff(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.menumitratCommonAPITestScript.StaffCreateTestScript@c333c60]" started-at="2025-04-29T15:08:06Z" name="createStaff" data-provider="getStaffCreateData" finished-at="2025-04-29T15:08:06Z" duration-ms="1" status="SKIP">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[staffcreate]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[staffcreate_001]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[positive]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Valid staff creation with all correct fields]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{ "user_id": 648, "name": "XYZ", "mobile": "9833445566", "dob": "06 Dec 2014", "address": "Katraj Pune", "role": "cleaner", "aadhar_number": "523456789091", "outlet_id": 101, "device_token": "token123" }]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{ "st": 1, "msg": "success" }]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createStaff -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.menumitratCommonAPITestScript.StaffCreateTestScript@c333c60]" started-at="2025-04-29T15:08:06Z" name="tearDown" finished-at="2025-04-29T15:08:06Z" duration-ms="0" status="SKIP">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.menumitratCommonAPITestScript.StaffCreateTestScript -->
+      <class name="com.menumitratCommonAPITestScript.loginTestScript">
+        <test-method is-config="true" signature="LoginAPiTestSetup()[pri:0, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:03Z" name="LoginAPiTestSetup" finished-at="2025-04-29T15:08:03Z" duration-ms="402" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LoginAPiTestSetup -->
+        <test-method signature="verifyloginUsingValidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:1, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:03Z" name="verifyloginUsingValidInputData" data-provider="getPositiveInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="1556" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_001]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[positive]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Valid login]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"6264335759"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "st": 1,
+    "msg": "Your OTP is sent successfully.",
+    "role": "owner"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyloginUsingValidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="83" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_002]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Invalid login using empty test data]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":""
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "detail": "Please provide mobile number"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="68" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_003]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Invalid login using less than ten digit test data]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"626433575"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "detail": "Mobile number must be exactly 10 digits long"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="81" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_004]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Invalid login using special character]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"626433@ 59"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "detail": "Mobile number must contain only digits"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="62" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_005]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Invalid login using  character]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"6264Af35759"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "detail": "Mobile number must contain only digits"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="61" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_006]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Invalid login using  Not register number]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"9745635634"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+ 
+    "details": " This Mobile Number is not resistered"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <exception class="com.menumitra.utilityclass.customException">
+            <message>
+              <![CDATA[Error in negative test case login_006: Error validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.menumitra.utilityclass.customException: Error in negative test case login_006: Error validating response: success response validate failed: Acutal response does not matched expected response expected [{details= This Mobile Number is not resistered}] but found [{msg=Your OTP is sent successfully., st=1, role=null}]
+	at com.menumitratCommonAPITestScript.loginTestScript.verifyLoginUsingInvalidInputData(loginTestScript.java:306)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:643)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:820)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1128)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.menumitra.utilityclass.customException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="69" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_007]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Invalid login using  combination of all character and special character]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"Adbt@#4Gh7"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "detail": "Mobile number must contain only digits"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+        <test-method signature="verifyLoginUsingInvalidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:2, instance:com.menumitratCommonAPITestScript.loginTestScript@3738449f]" started-at="2025-04-29T15:08:05Z" name="verifyLoginUsingInvalidInputData" data-provider="getNegativeInputData" finished-at="2025-04-29T15:08:05Z" duration-ms="59" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[login]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[login_008]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[negative]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[verify 1 to 5 first digit]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{   
+ "mobile":"1264335759"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "detail": "Mobile number must start with digits 6, 7, 8, or 9"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyLoginUsingInvalidInputData -->
+      </class> <!-- com.menumitratCommonAPITestScript.loginTestScript -->
+      <class name="com.menumitra.superclass.APIBase">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.menumitra.superclass.APIBase@378542de]" started-at="2025-04-29T15:08:03Z" name="setUp" finished-at="2025-04-29T15:08:03Z" duration-ms="93" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.menumitra.superclass.APIBase@378542de]" started-at="2025-04-29T15:08:06Z" name="tearDown" finished-at="2025-04-29T15:08:06Z" duration-ms="0" status="FAIL">
+          <exception class="java.lang.RuntimeException">
+            <message>
+              <![CDATA[Logout process failed]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.RuntimeException: Logout process failed
+	at com.menumitra.utilityclass.TokenManagers.logout(TokenManagers.java:265)
+	at com.menumitra.superclass.APIBase.tearDown(APIBase.java:143)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:514)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:215)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:336)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: java.lang.NullPointerException
+	at com.menumitra.utilityclass.TokenManagers.logout(TokenManagers.java:243)
+	... 23 more
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.RuntimeException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.menumitra.superclass.APIBase -->
+      <class name="com.menumitratCommonAPITestScript.ResendOTPTestScript">
+        <test-method signature="getResendOTPURL(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.menumitratCommonAPITestScript.ResendOTPTestScript@11bd0f3b]" started-at="2025-04-29T15:08:06Z" name="getResendOTPURL" data-provider="getResendURl" finished-at="2025-04-29T15:08:06Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[resendOTP]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[https://men4u.xyz/common_api/resend_otp]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[{
+    "mobile":"9999999991",
+    "role":"owner"
+    
+}]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[{
+    "st": 1,
+    "msg": "OTP resent successfully",
+    "role": "owner"
+}]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getResendOTPURL -->
+        <test-method signature="verifyRessendOTPUSingPositiveInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:1, instance:com.menumitratCommonAPITestScript.ResendOTPTestScript@11bd0f3b]" started-at="2025-04-29T15:08:06Z" name="verifyRessendOTPUSingPositiveInputData" data-provider="getPositiveinputData" finished-at="2025-04-29T15:08:06Z" duration-ms="123" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[resendotp]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[resendotp_001]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[positive]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Valid login]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{
+    "mobile":"9999999991",
+    "role":"owner"
+    
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "st": 1,
+    "msg": "OTP resent successfully",
+    "role": "owner"
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyRessendOTPUSingPositiveInputData -->
+      </class> <!-- com.menumitratCommonAPITestScript.ResendOTPTestScript -->
+      <class name="com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript@69e1dd28]" started-at="2025-04-29T15:08:05Z" name="setup" finished-at="2025-04-29T15:08:05Z" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="getOwnerUrl(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript@69e1dd28]" started-at="2025-04-29T15:08:05Z" name="getOwnerUrl" data-provider="getVerifyotpUrl" finished-at="2025-04-29T15:08:05Z" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ownerVerifyotp]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[https://menusmitra.xyz/owner_api/verify_otp]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[{
+    "mobile":"9999999991",
+    "otp":"1234",
+    "fcm_token":"8998998998",
+    "device_id":"h0ol74eq6rom9i826wa",
+    "device_model":"samsung"
+}]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[{
+    "st": 1,
+    "msg": "Success",
+    "owner_data": {
+        "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NTgxNzM3MiwiaWF0IjoxNzQ1MjEyNTcyLCJqdGkiOiJmZTYwZGMyZDM0YzY0NDg0YTk0NGNhMzFkNDhiYjcxYiIsInVzZXJfaWQiOjUxOCwiZGV2aWNlX3Rva2VuIjoicktDcXFDc25SVnFZRGJBSUNzSmFQZG5rWllpOGFlYU4xajUuSkwwTGduVXhFMjh2aGZkdVE0R1cyYjlTejB4WmY3OUpoTko5aWxEQ0ZWNG0ubEJ1SFhZZHlKZm80Mkk0by5ZayJ9.iQ_cxaj_X12Pi0hiR6ObnUl0dNhrd5mwr2Qq-Ohjj-4",
+        "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1ODE3MzcyLCJpYXQiOjE3NDUyMTI1NzIsImp0aSI6IjZmOThkZmQzZmIzYTRhZThiYWE3NmNlNDc1MzIzMDRiIiwidXNlcl9pZCI6NTE4LCJkZXZpY2VfdG9rZW4iOiJyS0NxcUNzblJWcVlEYkFJQ3NKYVBkbmtaWWk4YWVhTjFqNS5KTDBMZ25VeEUyOHZoZmR1UTRHVzJiOVN6MHhaZjc5SmhOSjlpbERDRlY0bS5sQnVIWFlkeUpmbzQySTRvLllrIn0.ZRhDl68saGfg-xdHtpNI_a6zkX9ZJ4OhoPXhe496NOA",
+        "device_token": "rKCqqCsnRVqYDbAICsJaPdnkZYi8aeaN1j5.JL0LgnUxE28vhfduQ4GW2b9Sz0xZf79JhNJ9ilDCFV4m.lBuHXYdyJfo42I4o.Yk",
+        "owner_name": "Santosh",
+        "user_id": 518,
+        "role": "owner",
+        "outlet_name": "Deshmukh Wada",
+        "outlet_id": 84,
+        "mobile": "9677777777",
+        "address": "Pune Satara Road Pune",
+        "outlet_status": true,
+        "order_number_sequence": "since_opening",
+        "is_open": true,
+        "gst": "4",
+        "service_charges": "2",
+        "upi_id": "9527279639@ybl",
+        "completed_orders": 0,
+        "active_orders": 0,
+        "today_total_revenue": null
+    },
+    "settings": {
+        "theme": "system",
+        "style": "blue",
+        "has_dine_in": true,
+        "has_parcel": false,
+        "has_counter": false,
+        "has_delivery": false,
+        "has_drive_through": true,
+        "print_and_save": true,
+        "KOT_and_save": true,
+        "settle": true,
+        "reserve_table": true,
+        "cancel": true,
+        "POS_show_menu_image": true
+    }
+}]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getOwnerUrl -->
+        <test-method signature="verifyOTPAPiUsingValidInputData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript@69e1dd28]" started-at="2025-04-29T15:08:06Z" name="verifyOTPAPiUsingValidInputData" data-provider="getPositiveInputData" finished-at="2025-04-29T15:08:06Z" duration-ms="122" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ownerVerifyOTP]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[OwnerVerifyOTP_001]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[positive]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[valild verify OTP]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[post]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[{
+    "mobile":"9999999991",
+    "otp":"1234",
+    "fcm_token":"8998998998",
+    "device_id":"h0ol74eq6rom9i826wa",
+    "device_model":"samsung"
+}]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[{
+    "st": 1,
+    "msg": "Success",
+    "owner_data": {
+        "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NTgyMjEyNiwiaWF0IjoxNzQ1MjE3MzI2LCJqdGkiOiJhZjY2OTNiYzI1ZDY0ZjIyOGY4MDMwYjdhN2RmZmE0OCIsInVzZXJfaWQiOjUxOCwiZGV2aWNlX3Rva2VuIjoiTW1tS20zdEszZ2xhWTRhNXZMSThsM1czWTUzLjBiazJ2TVl6WlRDU25xN0dHUml1dmM2SVF4cWhVVGVWODRXMkhuMUdqM3pra0VMZHhBeDFQMHBlVlRPdVhiV3JkUGxibTlRNyJ9.wofSFAthCt_AVCaxeTaufm0jkir3KIvJecXVh0lmazE",
+        "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1ODIyMTI2LCJpYXQiOjE3NDUyMTczMjYsImp0aSI6ImZlN2YyMWY4NWNlZDQxNDg4MGM5NzJlNmVjODAwZDVhIiwidXNlcl9pZCI6NTE4LCJkZXZpY2VfdG9rZW4iOiJNbW1LbTN0SzNnbGFZNGE1dkxJOGwzVzNZNTMuMGJrMnZNWXpaVENTbnE3R0dSaXV2YzZJUXhxaFVUZVY4NFcySG4xR2ozemtrRUxkeEF4MVAwcGVWVE91WGJXcmRQbGJtOVE3In0.mS5cBmhZRYqeICdIAQM3Yo46zWSgFm1ybMwGAwDaCkk",
+        "device_token": "MmmKm3tK3glaY4a5vLI8l3W3Y53.0bk2vMYzZTCSnq7GGRiuvc6IQxqhUTeV84W2Hn1Gj3zkkELdxAx1P0peVTOuXbWrdPlbm9Q7",
+        "owner_name": "Santosh",
+        "user_id": 518,
+        "role": "owner",
+        "outlet_name": "Deshmukh Wada",
+        "outlet_id": 84,
+        "mobile": "9677777777",
+        "address": "Pune Satara Road Pune",
+        "outlet_status": true,
+        "order_number_sequence": "since_opening",
+        "is_open": true,
+        "gst": "4",
+        "service_charges": "2",
+        "upi_id": "9527279639@ybl",
+        "completed_orders": 0,
+        "active_orders": 0,
+        "today_total_revenue": null
+    },
+    "settings": {
+        "theme": "system",
+        "style": "blue",
+        "has_dine_in": true,
+        "has_parcel": false,
+        "has_counter": false,
+        "has_delivery": false,
+        "has_drive_through": true,
+        "print_and_save": true,
+        "KOT_and_save": true,
+        "settle": true,
+        "reserve_table": true,
+        "cancel": true,
+        "POS_show_menu_image": true
+    }
+}]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyOTPAPiUsingValidInputData -->
+      </class> <!-- com.menumitraOwnerAPITestScript.OwnerverifyOtpTestScript -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
+</testng-results>

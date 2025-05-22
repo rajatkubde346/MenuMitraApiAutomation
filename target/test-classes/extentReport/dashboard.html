@@ -1,0 +1,418 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MenuMitra API Test Report</title>
+    <link rel="apple-touch-icon" href="https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png">
+    <link rel="shortcut icon" href="https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png">
+    <link href="https://cdn.rawgit.com/extent-framework/extent-github-cdn/24cb10e/spark/css/style.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style type="text/css">
+
+</style></head>	<body class="dashboard-view standard">
+		<div class="app header-dark side-nav-folded">
+			<div class="layout">
+<div class="header navbar">
+    <div class="header-container">
+        <div class="nav-logo">
+          <a href="index.html">
+            <div class="logo logo-dark" style="background-image: url('https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png')"></div>
+            <div class="logo logo-white" style="background-image: url('https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png')"></div>
+          </a>
+        </div>
+        <ul class="nav-left">
+          <li>
+            <a class="sidenav-fold-toggler" href="javascript:void(0);">
+              <i class="fa fa-bars"></i>
+            </a>
+            <a class="sidenav-expand-toggler" href="javascript:void(0);">
+              <i class="fa fa-bars"></i>
+            </a>
+          </li>
+          <li class="search-box">
+            <a class="search-toggle" href="javascript:void(0);">
+              <i class="search-icon fa fa-search"></i>
+              <i class="search-icon-close fa fa-close"></i>
+            </a>
+          </li>
+          <li class="search-input">
+            <input id="search-tests" class="form-control" type="text" placeholder="Type to search...">
+          </li>
+        </ul>
+        <ul class="nav-right">
+          <li class="m-r-10">
+            <a href="#">
+              <span class="badge badge-primary">API Automation Test Results</span>
+            </a>
+          </li>
+            <li class="m-r-10">
+                <a href="#">
+                    <span class="badge badge-primary">Friday, May 23, 2025, 12:05 AM (IST)</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div><div class="side-nav side-nav-folded">
+  <div class="side-nav-inner">
+    <ul class="side-nav-menu scrollable">
+      <li class="nav-item dropdown">
+        <a id="nav-test" class="dropdown-toggle" href="index.html">
+          <span class="icon-holder">
+            <i class="fa fa-align-left"></i>
+          </span>
+          <span class="title">Tests</span>
+        </a>
+      </li>
+            <li class="nav-item dropdown">
+        <a id="nav-ex" class="dropdown-toggle" href="exception.html">
+          <span class="icon-holder">
+            <i class="fa fa-bug"></i>
+          </span>
+          <span class="title">Exception</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a id="nav-dashboard" class="dropdown-toggle" href="dashboard.html">
+          <span class="icon-holder">
+            <i class="fa fa-bar-chart"></i>
+          </span>
+          <span class="title">Dashboard</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+				<div class="page-container">
+					<div class="main-content">
+						<div class="container-fluid p-4">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h6 class="card-title">Tests</h6>
+										</div>
+										<div class="card-body">
+	                                        <div class="">
+	                                            <canvas id='parent-analysis' width='115' height='90'></canvas>
+	                                        </div>
+	                                    </div>
+	                                    <div class="card-footer">
+	                                    	<div><small data-tooltip='63.131%'>
+	                                    		<b>125</b> tests passed
+                                    		</small></div>
+	                                    	<div>
+	                                    		<small data-tooltip='29.798%'><b>59</b> tests failed, 
+	                                    		<b data-tooltip='5.051%'>14</b> others
+	                                    		</small>
+                                    		</div>
+	                                    </div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body box-height-150">
+	                                        <div class="media justify-content-between">
+												<div>
+													<p class="">Tests</p>
+													<h2 class="font-size-28 font-weight-light">198</h2>
+													<span class="text-semibold text-success font-size-15">
+													<i class="ti-arrow-up font-size-11"></i> 
+														<span>63.13%</span>
+													</span>
+												</div>
+												<div class="align-self-end">
+													<i class="fa fa-align-left font-size-70 opacity-01"></i>
+												</div>
+											</div>
+	                                    </div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body box-height-150">
+	                                        <div class="media justify-content-between">
+												<div>
+													<p class="">Start</p>
+													<h6 class="font-weight-light">Friday, May 23, 2025, 12:05 AM (IST)</h6>
+													<span class="text-semibold text-success font-size-15">
+												</div>
+												<div class="align-self-end">
+													<i class="fa fa-clock-o font-size-70 text-success opacity-01"></i>
+												</div>
+											</div>
+	                                    </div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body box-height-150">
+	                                        <div class="media justify-content-between">
+												<div>
+													<p class="">Duration</p>
+													<h6 class="font-weight-light">0h 0m 21s+962ms</h6>
+													<span class="text-semibold font-size-15">
+												</div>
+												<div class="align-self-end">
+													<i class="fa fa-clock-o font-size-70 opacity-01"></i>
+												</div>
+											</div>
+	                                    </div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h6 class="card-title">Timeline</h6>
+										</div>
+										<div class="card-body">
+	                                        <div class="">
+	                                            <canvas id="timeline" height="120"></canvas>
+	                                        </div>
+	                                    </div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-header">
+											<h6 class="card-title">Environment</h6>
+										</div>
+										<div class="table-overflow">
+											<table class="table table-sm">
+												<thead>
+													<tr class="bg-gray">
+														<th>Name</th>
+														<th>Value</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Operating System</td>
+														<td>Windows 11</td>
+													</tr>
+													<tr>
+														<td>User Name</td>
+														<td>DELL</td>
+													</tr>
+													<tr>
+														<td>Environment</td>
+														<td>Test</td>
+													</tr>
+													<tr>
+														<td>Project</td>
+														<td>MenuMitra API Automation</td>
+													</tr>
+													<tr>
+														<td>Test Type</td>
+														<td>API Testing</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var statusGroup = {
+                parentCount: 198,
+				passParent: 125,
+				failParent: 59,
+				fatalParent: 0,
+				errorParent: 10,
+				warningParent: 0,
+				skipParent: 4,
+				exceptionsParent: 73,
+				childCount: 0,
+				passChild: 0,
+				failChild: 0,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 0,
+				debugChild: 0,
+				exceptionsChild: 0,
+				grandChildCount: 0,
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				debugGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+		<script>
+			var timeline = {
+			        "Get Staff List With Role SetUp":3.851,"Update Templates Setup":3.919,"Table List View Test Script":4.014,"Activity Log Setup":3.761,"Chef View SetUp":3.853,"Get Staff Role SetUp":0.917,"Waiter Create SetUp":0.865,"Menu Update Setup":0.848,"Order List View SetUp":0.826,"Send QR Link SetUp":0.789,"Chef Delete Setup":0.687,"Waiter View Test Setup":0.62,"Order View SetUp":0.655,"Default Setting Setup":0.396,"Start Section Update":0.401,"Waiter View Test - waiterview_001":0.114,"Captain List View SetUp":0.639,"Default Setting Test - defaultsettings001":0.115,"Captain Delete Setup":0.698,"Table Create Setup":0.396,"Section Update Negative Test - sectionupdate_002: Empty section_name value":0.151,"Inventory Category List Setup":0.48,"Verify Section Update APi: Valid section update":0.212,"Outlet Settings View Setup":0.508,"Menu Category View SetUp":0.565,"Inventory Category List View Test Setup":0.491,"Supplier Credit Rating Choices Setup":0.692,"Table Creation Test - tablecreate_001":0.014,"Start Verify OTP":0,"Menu Category Update Setup":0.168,"Inventory Category List View Test - inventorycategorylistview_001":0.104,"Menu Category View Test - menucategoryview_001":0.083,"Verify OTP Test - verifyotp_001":0.002,"Get Rating List SetUp":0.563,"Waiter List View SetUp":0.278,"Search Menu SetUp":0.467,"Check Version SetUp":0.694,"Menu Category Update Negative Test - menucategoryupdate_002":0.401,"Waiter List View Test - waiterlistview_001":0.087,"Staff Role List SetUp":0.553,"Get Veg Or NonVeg List SetUp":0.619,"Supplier List View SetUp":0.517,"Menu Category Update Negative Test - menucategoryupdate_004":0.063,"Default User Settings SetUp":0.578,"View Outlet SetUp":0.682,"Force Cancel Order SetUp":0.338,"Supplier list view test - supplierlistview_001":0.126,"Veg Or NonVeg List Test - getvegornonveglist_001":0.137,"Table List View Setup":0.574,"Captain Create SetUp":0.391,"Update Table Setup":0.159,"View Outlet Test - viewoutlet":0.127,"Force Cancel Order Test - forcecancelorder_001":0.089,"Check Table Is Reserved Setup":1.211,"Inventory Create Setup":1.015,"Table List View Test - gettablelistview_001":0.277,"Update Table Using Valid Input Data":0.205,"Captain Create Test - captaincreate_001":0.207,"Get Templates List SetUp":0.846,"Join Tables Setup":0.734,"Staff View Test Setup":0.841,"View Templates SetUp":0.94,"Get Outlet List SetUp":1.156,"Inventory Create Test - inventorycreate_001":0.091,"Templates List Test - gettemplateslist_001":0.437,"Staff View Test - staffview_001":0.371,"Captain Update SetUp":0.359,"Staff View Negative Test - staffview_002":0.084,"Waiter Update SetUp":0.465,"Menu List View SetUp":0.334,"Captain Update Test - captainupdate_001":0.081,"Remove Template Setup":0.253,"Menu Category Delete SetUp":0.482,"In Or Out List Setup":0.36,"Menu List View Negative Test - menulistview_002: Verify API returns error for special character in outlet_id":0.079,"Menu List View Negative Test - menulistview_005: Verify API returns error for empty outlet_id":0.067,"Menu View Test Setup":0.45,"Order List View Cdskds SetUp":0.419,"Menu List View Negative Test - menulistview_006: Verify API returns error for numeric-only string outlet_id not matching any real ID":0.094,"Menu List View Negative Test - menulistview_007: Verify API returns error for non-numeric outlet_id when numeric expected":0.225,"Menu Category Delete Test - menucategorydelete_001":0.164,"In Or Out List Test - getinoroutlist_001":0.086,"Update Menu Quantity SetUp":0.307,"Captain View SetUp":0.283,"Supplier Create Setup":0.4,"Menu View Test - menuview_001":0.075,"Create QR Templates Setup":0.252,"Order List View CDSKDS Negative Test - orderlistviewcdskds_002: Verify order list view Cds kds using special character in outlet":0.115,"Select Template Setup":0.178,"Update Menu Quantity Negative Test - updatemenuquantity_002: verify Update menu quantity using incorrect order_id":0.116,"Order List View CDSKDS Test - orderlistviewcdskds_001":0.002,"Logout":0.258,"Select Outlet SetUp":0.85,"Update Menu Quantity Negative Test - updatemenuquantity_002: verify Update menu quantity using incorrect quantity":0.261,"Captain View Test - captainview_001":0.08,"Inventory List SetUp":0.845,"Continue Chat SetUp":0.856,"Update Menu Quantity Test - updatemenuquantity_001":0.079,"Delete Templates SetUp":0.597,"Select Template Using Valid Input Data - selecttemplate_001":0.368,"Update Profile Detail SetUp":0.857,"Ticket List View SetUp":0.826,"POS Details SetUp":0.726,"Table Delete Test Script":0.285,"Delete Templates Test - deletetemplates_001":0.088,"Total Tickets SetUp":0.467,"Chef Create Setup":0.312,"Update Profile Detail Test - updateprofiledetail_001":0.1,"Change Settings SetUp":0.358,"Table Delete Test - tabledelete_001":0.109,"Update Active Status SetUp":0.263,"Chef Update Setup":0.308,"List View Outlet SetUp":0.526,"Table Is Reserved Setup":0.295,"Chef Creation Test - chefcreate_001":0.082,"Update Active Status Test - updateactivestatus_001":0.07,"Add Menus To Order SetUp":1.127,"Supplier Status Choices Setup":0.903,"Change Settings Test - changesettings_001":0.719,"Menu Delete Setup":0.936,"Table Is Reserved Test - tableisreserved_001":0.644,"Get Menu List SetUp":0.479,"Owner Details SetUp":0.276,"Staff Delete SetUp":0.252,"Add Menus To Order Test - addmenustoorder_001":0.109,"Menu Categorys SetUp":0.431,"Menu Deletion Test - menudelete_001":0.061,"Create Ticket Setup":0.118,"Waiter Delete Setup":0.215,"Order Menu Details SetUp":0.459,"Staff Delete Negative Test - staffdelete_002: Invalid staff ID for deletion":0.059,"Staff Delete Test - staffdelete_001":0.051,"View Profile SetUp":0.366,"Create Ticket Using Valid Input Data":0.105,"Waiter Deletion Test - waiterdelete_001":0.056,"Chef List View SetUp":0.304,"Get Spicy Index List SetUp":0.276,"Menu Categorys Test - menucategorys_001":0.089,"Get Supplier List SetUp":0.339,"Order Menu Details Test - ordermenudetails_001":0.101,"Verify Menu Create Test Script":0.385,"Inventory Category Create Setup":0.387,"Chef List View Test - cheflistview_001":0.104,"Spicy Index List Test - getspicyindexlist_001":0.07,"Menu List View SetUp":0.25,"Staff Create Setup":0.291,"Get Supplier List Test - getsupplierlist_001":0.052,"Ticket View SetUp":0.208,"Get Food Type List SetUp":0.257,"Outlet Type SetUp":0.727,"Inventory Delete Setup":0.719,"Inventory Category Creation Test - inventorycategorycreate_001":0.103,"Ticket View Test - ticketview_001":0.853,"Inventory Update Setup":0.949,"Food Type List Test - getfoodtypelist_001":0.704,"Outlet Type Test - outlettype_001":0.058,"Inventory Delete Test - inventoryDelete_001":0.087,"Supplier View Test Setup":0.382,"Inventory View Test Setup":0.324,"Menu Category List View SetUp":0.308,"Table List View Setup":0.121,"Table View Test Script":0.223,"Reading Table List API Endpoints":0.178,"Supplier View Test - supplierview_001":0.075,"Get Available Tables SetUp":0.332,"Supplier Delete Setup":0.236,"Menu Category List View Test - menucategorylistview_001":0.076,"Table List View Test - tablelistview_001":0,"Update Outlet SetUp":0.332,"Update Order SetUp":0.356,"Table View Test - tableview_001":0.085,"Menu Category Create Setup":0.132,"Update Staff Setup":0.153,"Get Available Tables Test - getavailabletables_001":0.081,"Get Templates SetUp":1.358,"Update Outlet Test - updateoutlet_001":0.091,"Update Dine-In Order Test - updateorder_001":1.529,"Start Section Delete":1.315,"Staff Update Test - staffupdate_001":0.064,"Menu Category Create Using Valid Input Data":0.411,"Login API Test Setup":0.226,"Start Section Create":0.187,"Start Section View":0.175,"Login API Positive Test - login_001":0.063,"Update Parcel Order Test - Updateorder_002":0.462,"Verify Section Delete API: Valid user_id, outlet_id, and section_id":0.241,"Create Order SetUp":0.408,"Section Creation Test - section_001":0.077,"Verify Section View API: Verify section view":0.086,"Start Section List View":0.153,"Update Counter Order Test":0.239,"verify resend OTP using Valid Input data":0.198,"Verify Section List View API: Valid section list view":1.408,"Create Dine-In Order Test - createorder_001":0.346,"Create Delivery Order Test -":0.568,"Create Parcel Order Test - createorder_002":0.332,"Create Drive-Through Order Test":0.237,"Create Counter Order Test - createorder_003":0.08
+			};
+		</script>
+<script src="https://cdn.rawgit.com/extent-framework/extent-github-cdn/24cb10e/spark/js/script.js"></script>
+		<script>
+            /* -- [ chart options ] -- */
+            var options = {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  position: "right",
+                  labels: {
+                      boxWidth: 10,
+                      fontSize: 11,
+                      lineHeight: 1,
+                      fontFamily: "Source Sans Pro",
+                      padding: 1
+                  }
+              },
+              cutoutPercentage: 65
+            };
+
+            function drawChart(ctx, config) {
+                ctx.width = 100;
+                ctx.height = 80;
+                new Chart(ctx, config);
+            }
+
+            /* -- [ parent chart ] -- */
+            (function drawParentChart() {
+                if (typeof statusGroup !== "undefined") {
+                    var config = {
+                        type: 'doughnut',
+                            data: {
+                                datasets: [{
+                                    borderColor: 'transparent',
+                                    data: [
+                                        statusGroup.passParent, statusGroup.failParent, statusGroup.fatalParent, statusGroup.errorParent, statusGroup.warningParent, statusGroup.skipParent
+                                    ],
+                                    backgroundColor: [
+                                        "#00af00", "#F7464A", "#8b0000", "#ff6347", "#FDB45C", "#1e90ff"
+                                    ]
+                                }],
+                                labels: [ "Pass", "Fail", "Fatal", "Error", "Warning", "Skip" ]
+                            },
+                            options: options
+                        };
+
+                        var ctx = document.getElementById("parent-analysis").getContext('2d');
+                        drawChart(ctx, config);
+                }
+            })();
+
+            /* -- [ children chart ] -- */
+            (function drawChildChart() {
+                if (typeof statusGroup !== "undefined" && statusGroup.childCount > 0) {
+                    var config = {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                borderColor: 'transparent',
+                                data: [
+                                    statusGroup.passChild, statusGroup.failChild, statusGroup.fatalChild, statusGroup.errorChild, statusGroup.warningChild, statusGroup.skipChild,statusGroup.infoChild
+                                ],
+                                backgroundColor: [
+                                    "#00af00", "#F7464A", "#8b0000", "#ff6347", "#FDB45C", "#1e90ff", "#46BFBD"
+                                ]
+                            }],
+                            labels: [ "Pass", "Fail", "Fatal", "Error", "Warning", "Skip", "Info" ]
+                        },
+                        options: options
+                    };
+
+                    var ctx = document.getElementById("child-analysis").getContext('2d');
+                    drawChart(ctx, config);
+                }
+            })();
+
+            /* -- [ grand-children chart ] -- */
+            (function drawGrandChildChart() {
+                if ($('#grandchild-analysis').length > 0 && typeof statusGroup !== "undefined" && statusGroup.grandChildCount > 0) {
+                    var config = {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                borderColor: 'transparent',
+                                data: [
+                                    statusGroup.passGrandChild, statusGroup.failGrandChild, statusGroup.fatalGrandChild, statusGroup.errorGrandChild, statusGroup.warningGrandChild, statusGroup.skipGrandChild, statusGroup.infoGrandChild
+                                ],
+                                backgroundColor: [
+                                    "#00af00", "#F7464A", "#8b0000", "#ff6347", "#FDB45C", "#1e90ff", "#46BFBD"
+                                ]
+                            }],
+                            labels: [ "Pass", "Fail", "Fatal", "Error", "Warning", "Skip", "Info" ]
+                        },
+                        options: options
+                    };
+
+                    var ctx = document.getElementById("grandchild-analysis").getContext('2d');
+                    drawChart(ctx, config);
+                }
+            })();
+
+            /* -- [ timeline ] -- */
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            (function drawTimelineChart() {
+                if (typeof timeline !== "undefined") {
+                    var datasets = [];
+                    for (var key in timeline) {
+                        datasets.push({ label:key, data:[timeline[key]], backgroundColor: getRandomColor(), borderWidth: 1 });
+                    }
+                    var ctx = document.getElementById('timeline').getContext('2d');
+
+                    new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data: {
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            tooltips: {
+                                mode: 'point'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    stacked: true,
+                                    gridLines: false
+                                }],
+                                yAxes: [{
+                                    stacked: true,
+                                    gridLines: false,
+                                    barThickness: 25
+                                }]
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                }
+            })();
+        </script>
+	</body>
+</html>

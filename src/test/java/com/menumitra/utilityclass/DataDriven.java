@@ -1,0 +1,195 @@
+package com.menumitra.utilityclass;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class DataDriven 
+{
+    public static Workbook workbook;
+    public static Sheet sheet;
+    public static Row row;
+    public static Cell cell;
+    public static FileInputStream fis;
+    public static FileOutputStream fos;
+
+    /**
+     * Reads the Excel file and returns the specified sheet.
+     * 
+     * @param excelPath Path to the Excel file.
+     * @param sheetName Name of the sheet to read.
+     * @return Sheet object containing the data.
+     * @throws MenumitraException If there is an error while reading the file.
+     */
+    private static Sheet readExcelSheet(String excelPath, String sheetName) {
+        try {
+            fis = new FileInputStream(excelPath); // Open the file
+            workbook = new XSSFWorkbook(fis); // Load the workbook
+            sheet = workbook.getSheet(sheetName); // Get the specified sheet
+            LogUtils.info("Excel sheet read successfully.");
+            return sheet;
+        } catch (IOException e) {
+            LogUtils.error("Error reading the Excel file: " + e.getMessage());
+            throw new MenumitraException("Error reading the Excel file: " + e.getMessage());
+        } catch (Exception e) {
+            LogUtils.error("Unexpected error occurred while reading excel sheet " + e.getMessage());
+            throw new MenumitraException("Unexpected error occurred while reading excel sheet " + e.getMessage());
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                    LogUtils.info("Excel file closed successfully.");
+                }
+            } catch (IOException e) {
+                LogUtils.error("Error closing excel file. ");
+                throw new MenumitraException("Error closing excel file: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Reads data from an Excel sheet and returns it as a 2D array.
+     * 
+     * @param excelPath Path to the Excel file.
+     * @param sheetName Name of the sheet to read.
+     * @return 2D array containing the sheet data.
+     * @throws MenumitraException If there is an error while reading the data.
+     */
+    public static Object[][] readExcelData(String excelPath, String sheetName) {
+        sheet = readExcelSheet(excelPath, sheetName);
+
+        int lastRow = sheet.getLastRowNum();
+        int lastCell = sheet.getRow(0).getLastCellNum();
+        
+        Object[][] data = new Object[lastRow + 1][lastCell];
+
+        try {
+            // Iterate over each row
+            for (int i = 0; i <= lastRow; i++) {
+                row = sheet.getRow(i);
+                if (row == null) continue;
+
+                // Iterate over each cell in the row
+                for (int j = 0; j < lastCell; j++) {
+                    cell = row.getCell(j);
+                    if (cell != null) {
+                        CellType cellType = cell.getCellTypeEnum();
+                        if (cellType == CellType.STRING) {
+                            data[i][j] = cell.getStringCellValue();
+                        } else if (cellType == CellType.NUMERIC) {
+                            double numericValue = cell.getNumericCellValue();
+                            // Check if it's a whole number
+                            if (numericValue == Math.floor(numericValue)) {
+                                data[i][j] = String.valueOf((long)numericValue);
+                            } else {
+                                data[i][j] = String.valueOf(numericValue);
+                            }
+                        } else if (cellType == CellType.BOOLEAN) {
+                            data[i][j] = String.valueOf(cell.getBooleanCellValue());
+                        } else if (cellType == CellType.FORMULA) {
+                            try {
+                                data[i][j] = String.valueOf(cell.getStringCellValue());
+                            } catch (IllegalStateException e) {
+                                try {
+                                    double formulaNumericValue = cell.getNumericCellValue();
+                                    if (formulaNumericValue == Math.floor(formulaNumericValue)) {
+                                        data[i][j] = String.valueOf((long)formulaNumericValue);
+                                    } else {
+                                        data[i][j] = String.valueOf(formulaNumericValue);
+                                    }
+                                } catch (IllegalStateException e2) {
+                                    data[i][j] = String.valueOf(cell.getBooleanCellValue());
+                                }
+                            }
+                        } else if (cellType == CellType.BLANK) {
+                            data[i][j] = "";
+                        } else {
+                            data[i][j] = "";
+                        }
+                    } else {
+                        data[i][j] = "";
+                    }
+                }
+            }
+            LogUtils.info("Excel data read successfully.");
+            return data;
+        } catch (Exception e) {
+            LogUtils.error("Unexpected error occurred while reading excel sheet: " + e.getMessage());
+            throw new MenumitraException("Unexpected error occurred while reading excel sheet: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reads Excel data and returns it as a list of maps where each map represents a row.
+     * The map uses column index as key and cell value as value.
+     * 
+     * @param excelPath Path to the Excel file
+     * @param sheetName Name of the sheet to read
+     * @return List of maps containing row data
+     * @throws MenumitraException If there is an error reading the Excel file
+     */
+    public static List<Map<Integer, String>> readExcelDataAsMap(String excelPath, String sheetName) {
+        // Get the Excel sheet
+        Sheet sheet = readExcelSheet(excelPath, sheetName);
+        DataDriven obj = new DataDriven();
+        
+        // Get sheet dimensions
+        int startRow = obj.getstartRowdata(sheet);
+        int lastRow = sheet.getLastRowNum();
+        int lastCell = sheet.getRow(startRow).getLastCellNum();
+        
+        List<Map<Integer, String>> excelData = new ArrayList<>();
+        
+        // Iterate through rows
+        for (int rowIndex = startRow; rowIndex <= lastRow; rowIndex++) {
+            Row currentRow = sheet.getRow(rowIndex);
+            if (currentRow == null) continue;
+            
+            Map<Integer, String> rowData = new HashMap<>();
+            
+            // Iterate through cells in the row
+            for (int columnIndex = 0; columnIndex < lastCell; columnIndex++) {
+                Cell cell = currentRow.getCell(columnIndex);
+                if (cell != null) {
+                    try {
+                        rowData.put(columnIndex, cell.getStringCellValue());
+                    } catch (IllegalStateException e) {
+                        // Handle non-string cell values
+                        LogUtils.warn("Non-string value found at row " + rowIndex + ", column " + columnIndex);
+                        rowData.put(columnIndex, String.valueOf(cell.getNumericCellValue()));
+                    }
+                }
+            }
+            excelData.add(rowData);
+        }
+        return excelData;
+    }
+
+    public int getstartRowdata(Sheet sheet) {
+        int startRow = 0;
+        int lastRow = sheet.getRow(0).getLastCellNum();
+       
+        for(int i = 0; i < lastRow; i++) {
+            if(sheet.getRow(i).getCell(i) != null) {
+                startRow = i;
+                break;
+            }
+        }
+        return startRow;
+    }
+}
