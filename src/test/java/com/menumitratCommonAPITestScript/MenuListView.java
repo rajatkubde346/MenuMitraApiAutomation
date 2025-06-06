@@ -29,6 +29,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -190,37 +191,51 @@ public class MenuListView extends APIBase
     private void verifyMenuListView(String apiName, String testCaseid, String testType, String description,
             String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
         
-        try {
+        try
+        {
             LogUtils.info("Menu list view test execution: " + description);
             ExtentReport.createTest("Menu list view test - " + testCaseid);
             ExtentReport.getTest().log(Status.INFO, "Menu list view test execution: " + description);
 
-            if(apiName.equalsIgnoreCase("menulistview")) {
+            if(apiName.equalsIgnoreCase("menulistview"))
+            {
                 requestBodyJson = new JSONObject(requestBody);
 
-                // Set request parameters
+                // Only set outlet_id as required
                 menuListViewRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
                 LogUtils.info("Constructed menu list view request"); 
                 ExtentReport.getTest().log(Status.INFO, "Constructed menu list view request");
 
-                // Make API call
                 response = ResponseUtil.getResponseWithAuth(baseURI, menuListViewRequest, httpsmethod, accessToken);
-                
-                // Log response
-                LogUtils.info("Response Status Code: " + response.getStatusCode());
-                LogUtils.info("Response Body: " + response.asString());
-                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Received response with status code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Received response with status code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
 
-                // Mark test as passed
-                LogUtils.success(logger, "Menu list view test completed successfully");
-                ExtentReport.getTest().log(Status.PASS, "Menu list view test completed successfully");
+                if(response.getStatusCode() == Integer.parseInt(statusCode))
+                {
+                    LogUtils.success(logger, "Menu list view API executed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu list view API executed successfully", ExtentColor.GREEN));
+                    // Only display response body without validation
+                    ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
+                }
+                else{
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asPrettyString());
+                    throw new customException(errorMsg);
+                }
             }
-        } catch(Exception e) {
-            String errorMsg = "Error in menu list view test: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            throw new customException(errorMsg);
+        }
+        catch(Exception e)
+        {
+            LogUtils.exception(logger, "Error in menu list view test", e);
+            ExtentReport.getTest().log(Status.ERROR, "Error in menu list view test: " + e.getMessage());
+            if(response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException("Error in menu list view test: " + e.getMessage());
         }
     }
 
@@ -380,7 +395,8 @@ public class MenuListView extends APIBase
                         }
                         
                         // Complete response validation
-                                            }
+                        validateResponseBody.handleResponseBody(response, expectedResponseBody);
+                    }
                     
                     LogUtils.success(logger, "Menu list view negative test completed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu list view negative test completed successfully", ExtentColor.GREEN));

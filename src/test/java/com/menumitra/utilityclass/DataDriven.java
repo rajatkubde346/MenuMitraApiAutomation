@@ -12,12 +12,16 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
+
 
 public class DataDriven 
 {
@@ -34,9 +38,9 @@ public class DataDriven
      * @param excelPath Path to the Excel file.
      * @param sheetName Name of the sheet to read.
      * @return Sheet object containing the data.
-     * @throws MenumitraException If there is an error while reading the file.
+     * @throws CustomExceptions If there is an error while reading the file.
      */
-    private static Sheet readExcelSheet(String excelPath, String sheetName) {
+    private static Sheet readExcelSheet(String excelPath, String sheetName) throws customException {
         try {
             fis = new FileInputStream(excelPath); // Open the file
             workbook = new XSSFWorkbook(fis); // Load the workbook
@@ -45,10 +49,10 @@ public class DataDriven
             return sheet;
         } catch (IOException e) {
             LogUtils.error("Error reading the Excel file: " + e.getMessage());
-            throw new MenumitraException("Error reading the Excel file: " + e.getMessage());
+            throw new customException("Error reading the Excel file: " + e.getMessage());
         } catch (Exception e) {
-            LogUtils.error("Unexpected error occurred while reading excel sheet " + e.getMessage());
-            throw new MenumitraException("Unexpected error occurred while reading excel sheet " + e.getMessage());
+            LogUtils.error("Unexpected error occured while reading excel sheet " + e.getMessage());
+            throw new customException("Unexpected error occured while reading excel sheet " + e.getMessage());
         } finally {
             try {
                 if (fis != null) {
@@ -57,9 +61,10 @@ public class DataDriven
                 }
             } catch (IOException e) {
                 LogUtils.error("Error closing excel file. ");
-                throw new MenumitraException("Error closing excel file: " + e.getMessage());
+                throw new customException("Error closing excel file: " + e.getMessage());
             }
         }
+
     }
 
     /**
@@ -68,70 +73,69 @@ public class DataDriven
      * @param excelPath Path to the Excel file.
      * @param sheetName Name of the sheet to read.
      * @return 2D array containing the sheet data.
-     * @throws MenumitraException If there is an error while reading the data.
+     * @throws CustomExceptions If there is an error while reading the data.
      */
-    public static Object[][] readExcelData(String excelPath, String sheetName) {
+    public static Object[][] readExcelData(String excelPath, String sheetName) throws customException {
         sheet = readExcelSheet(excelPath, sheetName);
 
-        int lastRow = sheet.getLastRowNum();
-        int lastCell = sheet.getRow(0).getLastCellNum();
-        
+        int lastRow = sheet.getLastRowNum(); // Get the last row index
+        int lastCell = sheet.getRow(0).getLastCellNum(); // Get the number of columns
+
         Object[][] data = new Object[lastRow + 1][lastCell];
 
         try {
             // Iterate over each row
             for (int i = 0; i <= lastRow; i++) {
                 row = sheet.getRow(i);
-                if (row == null) continue;
+                if (row == null) {
+                    // If row is null, fill with empty strings
+                    for (int j = 0; j < lastCell; j++) {
+                        data[i][j] = "";
+                    }
+                    continue;
+                }
 
                 // Iterate over each cell in the row
                 for (int j = 0; j < lastCell; j++) {
                     cell = row.getCell(j);
-                    if (cell != null) {
-                        CellType cellType = cell.getCellTypeEnum();
-                        if (cellType == CellType.STRING) {
-                            data[i][j] = cell.getStringCellValue();
-                        } else if (cellType == CellType.NUMERIC) {
-                            double numericValue = cell.getNumericCellValue();
-                            // Check if it's a whole number
-                            if (numericValue == Math.floor(numericValue)) {
-                                data[i][j] = String.valueOf((long)numericValue);
-                            } else {
-                                data[i][j] = String.valueOf(numericValue);
-                            }
-                        } else if (cellType == CellType.BOOLEAN) {
-                            data[i][j] = String.valueOf(cell.getBooleanCellValue());
-                        } else if (cellType == CellType.FORMULA) {
-                            try {
-                                data[i][j] = String.valueOf(cell.getStringCellValue());
-                            } catch (IllegalStateException e) {
-                                try {
-                                    double formulaNumericValue = cell.getNumericCellValue();
-                                    if (formulaNumericValue == Math.floor(formulaNumericValue)) {
-                                        data[i][j] = String.valueOf((long)formulaNumericValue);
-                                    } else {
-                                        data[i][j] = String.valueOf(formulaNumericValue);
-                                    }
-                                } catch (IllegalStateException e2) {
-                                    data[i][j] = String.valueOf(cell.getBooleanCellValue());
-                                }
-                            }
-                        } else if (cellType == CellType.BLANK) {
-                            data[i][j] = "";
-                        } else {
-                            data[i][j] = "";
-                        }
+
+                    // Handle cell data based on its type
+                    if (cell == null) {
+                        data[i][j] = ""; // Return empty string for null cells
                     } else {
-                        data[i][j] = "";
+                        switch (cell.getCellTypeEnum()) {
+                            case STRING:
+                                data[i][j] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                data[i][j] = String.valueOf((long) cell.getNumericCellValue());
+                                break;
+                            case BLANK:
+                                data[i][j] = "";
+                                break;
+                            default:
+                                data[i][j] = ""; // Handle other types as empty string
+                                break;
+                        }
                     }
                 }
             }
             LogUtils.info("Excel data read successfully.");
-            return data;
         } catch (Exception e) {
-            LogUtils.error("Unexpected error occurred while reading excel sheet: " + e.getMessage());
-            throw new MenumitraException("Unexpected error occurred while reading excel sheet: " + e.getMessage());
+            LogUtils.error("Unexpected error occurred while reading excel sheet " + e.getMessage());
+            throw new customException("Unexpected error occurred while reading excel sheet " + e.getMessage());
+        } finally {
+            try {
+                if (workbook != null) {
+                    workbook.close();
+                    LogUtils.info("Excel workbook closed successfully.");
+                }
+            } catch (IOException e) {
+                LogUtils.error("Error closing excel workbook. " + e.getMessage());
+                throw new customException("Error closing excel workbook. " + e.getMessage());
+            }
         }
+        return data;
     }
 
     /**
@@ -141,9 +145,9 @@ public class DataDriven
      * @param excelPath Path to the Excel file
      * @param sheetName Name of the sheet to read
      * @return List of maps containing row data
-     * @throws MenumitraException If there is an error reading the Excel file
+     * @throws customException If there is an error reading the Excel file
      */
-    public static List<Map<Integer, String>> readExcelDataAsMap(String excelPath, String sheetName) {
+    public static List<Map<Integer, String>> readExcelDataAsMap(String excelPath, String sheetName) throws customException {
         // Get the Excel sheet
         Sheet sheet = readExcelSheet(excelPath, sheetName);
         DataDriven obj = new DataDriven();
@@ -180,15 +184,18 @@ public class DataDriven
         return excelData;
     }
 
-    public int getstartRowdata(Sheet sheet) {
-        int startRow = 0;
-        int lastRow = sheet.getRow(0).getLastCellNum();
+    public  int getstartRowdata(Sheet sheet)
+    {
+        int startRow=0;
+        int lastRow=sheet.getRow(0).getLastCellNum();
        
-        for(int i = 0; i < lastRow; i++) {
-            if(sheet.getRow(i).getCell(i) != null) {
-                startRow = i;
-                break;
-            }
+        for(int i=0;i<lastRow;i++)
+        {
+           if(sheet.getRow(i).getCell(i)!=null)
+           {
+        	   startRow=i;
+        	   break;
+           }
         }
         return startRow;
     }

@@ -34,6 +34,7 @@ public class APIBase
 
 	// Excel file path and sheet name for test data
 	public static String excelSheetPathForGetApis = "src\\test\\resources\\excelsheet\\apiEndpoint.xlsx";
+	public static String excelSheetPathForPostApis = "src\\test\\resources\\excelsheet\\apiEndpoint.xlsx";
 	public static String appsheetName = "userapp";
 
 	// FileInputStream object for reading the properties file

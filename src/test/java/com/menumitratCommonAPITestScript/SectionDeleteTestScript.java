@@ -28,6 +28,8 @@ import com.menumitra.utilityclass.LogUtils;
 import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
+import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -46,32 +48,33 @@ public class SectionDeleteTestScript extends APIBase
     Logger logger = LogUtils.getLogger(SectionDeleteTestScript.class);
 
     @DataProvider(name="getSectionDeleteURL")
-    public Object[][] getSectionDeleteURL() throws Exception {
+    public Object[][] getSectionDeleteURL() throws customException {
         try {
             Object[][] readData = DataDriven.readExcelData(excelSheetPathForGetApis, "commonAPI");
             if(readData == null) {
                 LogUtils.failure(logger, "Error: Getting an error while read Section Delete URL Excel File");
-                throw new Exception("Error: Getting an error while read Section Delete URL Excel File");
+                throw new customException("Error: Getting an error while read Section Delete URL Excel File");
             }
             
             return Arrays.stream(readData)
                     .filter(row -> "sectiondelete".equalsIgnoreCase(row[0].toString()))
                     .toArray(Object[][]::new);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LogUtils.exception(logger, "Error: Getting an error while read Section Delete URL Excel File", e);
-            throw new Exception("Error: Getting an error while read Section Delete URL Excel File");
+            throw new customException("Error: Getting an error while read Section Delete URL Excel File");
         }
     }
 
     @DataProvider(name="getSectionDeletePositiveInputData")
-    private Object[][] getSectionDeletePositiveInputData() throws Exception {
+    private Object[][] getSectionDeletePositiveInputData() throws customException {
         try {
             LogUtils.info("Reading positive test scenario data for section delete API");
             Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, property.getProperty("CommonAPITestScenario"));
             
             if (testData == null || testData.length == 0) {
                 LogUtils.failure(logger, "No Section Delete API positive test scenario data found in Excel sheet");
-                throw new Exception("No Section Delete API Positive test scenario data found in Excel sheet");
+                throw new customException("No Section Delete API Positive test scenario data found in Excel sheet");
             }
             
             List<Object[]> filteredData = new ArrayList<>();
@@ -88,12 +91,41 @@ public class SectionDeleteTestScript extends APIBase
             return filteredData.toArray(new Object[0][]);
         } catch (Exception e) {
             LogUtils.exception(logger, "Failed to read section delete API positive test scenario data", e);
-            throw new Exception("Error reading section delete API positive test scenario data");
+            throw new customException("Error reading section delete API positive test scenario data");
+        }
+    }
+
+    @DataProvider(name="getSectionDeleteNegativeInputData") 
+    private Object[][] getSectionDeleteNegativeInputData() throws customException {
+        try {
+            LogUtils.info("Reading negative test scenario data for section delete API");
+            Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            
+            if (testData == null || testData.length == 0) {
+                LogUtils.failure(logger, "No section delete API negative test scenario data found in Excel sheet");
+                throw new customException("No section delete API negative test scenario data found in Excel sheet");
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < testData.length; i++) {
+                Object[] row = testData[i];
+                if (row != null && row.length >= 3 &&
+                    "sectiondelete".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+
+            return filteredData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            LogUtils.exception(logger, "Failed to read section delete API negative test scenario data", e);
+            throw new customException("Error reading section delete API negative test scenario data");
         }
     }
 
     @BeforeClass
-    private void sectionDeleteSetup() throws Exception {
+    private void sectionDeleteSetup() throws customException {
         try {
             LogUtils.info("Setting up test environment for section delete");
             ExtentReport.createTest("Start Section Delete");
@@ -111,7 +143,7 @@ public class SectionDeleteTestScript extends APIBase
                 LogUtils.info("Section Delete URL set to: " + baseUri);
             } else {
                 LogUtils.failure(logger, "No section delete URL found in test data");
-                throw new Exception("No section delete URL found in test data");
+                throw new customException("No section delete URL found in test data");
             }
 
             accessToken = TokenManagers.getJwtToken();
@@ -119,7 +151,7 @@ public class SectionDeleteTestScript extends APIBase
 
             if (accessToken.isEmpty()) {
                 LogUtils.failure(logger, "Required tokens not found");
-                throw new Exception("Required tokens not found");
+                throw new customException("Required tokens not found");
             }
 
             sectionrequest = new sectionRequest();
@@ -127,41 +159,89 @@ public class SectionDeleteTestScript extends APIBase
 
         } catch (Exception e) {
             LogUtils.exception(logger, "Error during section delete setup: " + e.getMessage(), e);
-            throw new Exception("Error during setup: " + e.getMessage());
+            throw new customException("Error during setup: " + e.getMessage());
         }
     }
 
     @Test(dataProvider = "getSectionDeletePositiveInputData", priority = 1)
     private void verifySectionDeleteUsingValidInputData(String apiName, String testCaseId,
             String testType, String description, String httpsMethod,
-            String requestBody, String expectedResponseBody, String statusCode) throws Exception {
+            String requestBody, String expectedResponseBody, String statusCode) throws customException {
         try {
-            LogUtils.info("Start section delete API test");
+            LogUtils.info("Start section delete API using valid input data");
             ExtentReport.createTest("Verify Section Delete API: " + description);
-            
-            requestBodyJson = new JSONObject(requestBody);
-            
-            sectionrequest.setSection_id(requestBodyJson.getString("section_id"));
-            sectionrequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
-            sectionrequest.setUser_id(String.valueOf(userId));
-            
-            // API call
-            response = ResponseUtil.getResponseWithAuth(baseUri, sectionrequest, httpsMethod, accessToken);
-            
-            // Log response
-            LogUtils.info("Response Status Code: " + response.getStatusCode());
-            LogUtils.info("Response Body: " + response.asString());
-            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
-            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
-            
-            // Mark test as passed
-            LogUtils.success(logger, "Section delete test completed");
-            ExtentReport.getTest().log(Status.PASS, "Section delete test completed");
-            
+            ExtentReport.getTest().log(Status.INFO, "====Start section delete using positive input data====");
+            ExtentReport.getTest().log(Status.INFO, "Constructed Base URI: " + baseUri);
+
+            if (apiName.contains("sectiondelete") && testType.contains("positive")) {
+                requestBodyJson = new JSONObject(requestBody);
+                expectedJson = new JSONObject(expectedResponseBody);
+                
+                sectionrequest.setSection_id(requestBodyJson.getString("section_id"));
+                sectionrequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                sectionrequest.setUser_id(String.valueOf(userId));
+                
+                LogUtils.info("Section delete payload prepared");
+                ExtentReport.getTest().log(Status.INFO, "Section delete payload prepared");
+
+                response = ResponseUtil.getResponseWithAuth(baseUri, sectionrequest, httpsMethod, accessToken);
+                LogUtils.info("Section delete API response: " + response.getBody().asString());
+                ExtentReport.getTest().log(Status.INFO, "Section delete API response: " + response.getBody().asString());
+
+                if (response.getStatusCode() == 200) {
+                    String responseBody = response.getBody().asString();
+                    if (responseBody != null && !responseBody.trim().isEmpty()) {
+                        validateResponseBody.handleResponseBody(response, expectedJson);
+                        LogUtils.success(logger, "Successfully validated section delete API");
+                        ExtentReport.getTest().log(Status.PASS, "Successfully validated section delete API");
+                    } else {
+                        LogUtils.failure(logger, "Empty response body received");
+                        throw new customException("Response body is empty");
+                    }
+                } else {
+                    LogUtils.failure(logger, "Invalid status code: " + response.getStatusCode());
+                    throw new customException("Expected status code 200 but got " + response.getStatusCode());
+                }
+            }
         } catch (Exception e) {
             LogUtils.exception(logger, "Error during section delete verification: " + e.getMessage(), e);
             ExtentReport.getTest().log(Status.FAIL, "Error during section delete verification: " + e.getMessage());
-            throw new Exception("Error during section delete verification");
+            throw new customException("Error during section delete verification");
+        }
+    }
+
+   // @Test(dataProvider = "getSectionDeleteNegativeInputData", priority = 2)
+    private void verifySectionDeleteUsingInvalidData(String apiName, String testCaseId,
+            String testType, String description, String httpsMethod,
+            String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Start section delete API using invalid input data");
+            ExtentReport.createTest("Verify Section Delete API with Invalid Data: " + description);
+            ExtentReport.getTest().log(Status.INFO, "====Start section delete using negative input data====");
+            ExtentReport.getTest().log(Status.INFO, "Constructed Base URI: " + baseUri);
+
+            if (apiName.contains("sectiondelete") && testType.contains("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+                expectedJson = new JSONObject(expectedResponseBody);
+                
+                sectionrequest.setSection_id(requestBodyJson.getString("section_id"));
+                sectionrequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                
+                LogUtils.info("Section delete payload prepared for negative test");
+                ExtentReport.getTest().log(Status.INFO, "Section delete payload prepared for negative test");
+
+                response = ResponseUtil.getResponseWithAuth(baseUri, sectionrequest, httpsMethod, accessToken);
+                LogUtils.info("Section delete API negative test response: " + response.getBody().asString());
+                ExtentReport.getTest().log(Status.INFO, "Section delete API negative test response: " + response.getBody().asString());
+
+                validateResponseBody.handleResponseBody(response, expectedJson);
+                LogUtils.success(logger, "Successfully validated section delete API negative test");
+                ExtentReport.getTest().log(Status.PASS, "Successfully validated section delete API negative test");
+            }
+        } catch (Exception e) {
+            LogUtils.exception(logger, "Error during section delete negative test: " + e.getMessage(), e);
+            ExtentReport.getTest().log(Status.FAIL, "Error during section delete negative test: " + e.getMessage());
+            throw new customException("Error during section delete negative test");
         }
     }
 
@@ -185,4 +265,3 @@ private void tearDown()
     }
 }
 }
-

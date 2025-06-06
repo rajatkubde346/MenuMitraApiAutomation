@@ -27,6 +27,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -193,7 +194,8 @@ public class UnlinkTables extends APIBase
                 {
                     LogUtils.success(logger, "Tables unlinked successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Tables unlinked successfully", ExtentColor.GREEN));
-                    //                    LogUtils.info("Response validation completed successfully");
+                    //validateResponseBody.handleResponseBody(response, expectedResponse);
+                    LogUtils.info("Response validation completed successfully");
                     ExtentReport.getTest().log(Status.PASS, "Response validation completed successfully");
                     ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
                 } 
@@ -301,7 +303,8 @@ public class UnlinkTables extends APIBase
                     LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
                     
                     // Perform detailed response validation
-                                        
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                    
                     ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
                     LogUtils.success(logger, "Response body validation passed successfully");
                     

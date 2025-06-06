@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -260,6 +261,131 @@ public class WaiterCreateTestScript extends APIBase
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
             }
             throw new customException("Error in waiter create test: " + e.getMessage());
+        }
+    }
+    
+    @DataProvider(name = "getWaiterCreateNegativeData")
+    public Object[][] getWaiterCreateNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading waiter create negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading waiter create negative test scenario data");
+
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (Object[] row : readExcelData) {
+                if (row != null && row.length >= 3 &&
+                    "waitercreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid waiter create negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            return filteredData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting waiter create negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting waiter create negative test data: " + e.getMessage());
+            throw new customException("Error in getting waiter create negative test data: " + e.getMessage());
+        }
+    }
+
+    private boolean validateResponseMessageSentences(String message) {
+        if (message == null || message.trim().isEmpty()) {
+            return true; // Empty message is considered valid
+        }
+        
+        // Split message into sentences using common sentence terminators
+        String[] sentences = message.split("[.!?]+");
+        return sentences.length <= 6;
+    }
+
+    @Test(dataProvider = "getWaiterCreateNegativeData")
+    public void waiterCreateNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting waiter create negative test case: " + testCaseid);
+            ExtentReport.createTest("Waiter Create Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            if (apiName.equalsIgnoreCase("waitercreate") && testType.equalsIgnoreCase("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+
+                // Set request parameters
+                waiterCreateRequest.setUser_id(String.valueOf(user_id));
+                waiterCreateRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                waiterCreateRequest.setName(requestBodyJson.getString("name"));
+                waiterCreateRequest.setMobile(requestBodyJson.getString("mobile"));
+                waiterCreateRequest.setAddress(requestBodyJson.optString("address"));
+                waiterCreateRequest.setAadhar_number(requestBodyJson.getString("aadhar_number"));
+                waiterCreateRequest.setDob(requestBodyJson.optString("dob"));
+                waiterCreateRequest.setEmail(requestBodyJson.optString("email"));
+
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+
+                response = ResponseUtil.getResponseWithAuth(baseURI, waiterCreateRequest, httpsmethod, accessToken);
+
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+
+                int expectedStatusCode = Integer.parseInt(statusCode);
+
+                // Validate status code
+                if (response.getStatusCode() != expectedStatusCode) {
+                    String errorMsg = "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
+
+                // Validate response body
+                actualJsonBody = new JSONObject(response.asString());
+                if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    JSONObject expectedResponseJson = new JSONObject(expectedResponseBody);
+
+                    // Validate response message sentences
+                    if (actualJsonBody.has("message")) {
+                        String message = actualJsonBody.getString("message");
+                        if (!validateResponseMessageSentences(message)) {
+                            String errorMsg = "Response message contains more than 6 sentences";
+                            LogUtils.failure(logger, errorMsg);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                            throw new customException(errorMsg);
+                        }
+                    }
+
+                    // Validate response body structure
+                    validateResponseBody.handleResponseBody(response, expectedResponseJson);
+                }
+
+                LogUtils.success(logger, "Waiter create negative test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Waiter create negative test completed successfully", ExtentColor.GREEN));
+            }
+        } catch (Exception e) {
+            String errorMsg = "Error in waiter create negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
         }
     }
 }

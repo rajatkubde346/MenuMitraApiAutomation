@@ -30,6 +30,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -326,7 +327,8 @@ public class EbillUrlTestScript extends APIBase {
 
                 ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
                 LogUtils.info("Performing detailed response validation");
-                
+                validateResponseBody.handleResponseBody(response, expectedResponse);
+
                 ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
                 LogUtils.success(logger, "Response body validation passed successfully");
             } else {

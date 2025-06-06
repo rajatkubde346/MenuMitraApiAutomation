@@ -1,0 +1,25 @@
+{
+  "outlet_id": "1",
+  "user_id": "2",
+  "table_id": 35,
+  "section_id": 1,
+  "order_type": "delivery",
+  "order_items": [
+    {
+      "menu_id": 1,
+      "quantity": 1,
+      "portion_name": "Half",
+      "comment": "Extra spicy please"
+    }
+  ],
+  "action": "print_and_settle",
+  "customer_name": "John Doe",
+  "customer_mobile": "9876543210",
+  "customer_address": "123 Main Street, City",
+  "customer_alternate_mobile": "8765432109",
+  "customer_landmark": "Near Central Park",
+  "special_discount": 10,
+  "charges": 5,
+  "tip": 20,
+  "order_payment_settle_type": "paid"
+} 

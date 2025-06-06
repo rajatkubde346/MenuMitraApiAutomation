@@ -24,6 +24,7 @@ import com.menumitra.utilityclass.customException;
 import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ExtentReport;
 import com.menumitra.utilityclass.HandelConnections;
+import com.menumitra.utilityclass.validateResponseBody;
 import com.menumitra.utilityclass.DataDriven;
 import com.menumitra.utilityclass.EnviromentChanges;
 import io.restassured.response.Response;
@@ -119,6 +120,51 @@ public class loginTestScript extends APIBase
         }
     }
 
+
+    /**
+     * Data provider for negative test scenarios
+     */
+    @DataProvider(name="getNegativeInputData")
+    private Object[][] getNegativeInputData() throws customException {
+        try {
+            LogUtils.info("=====Reading Login API Negative Test Data=====");
+            ExtentReport.getTest().log(Status.INFO, "Loading negative test scenarios for Login API");
+            
+            Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            
+            if (testData == null || testData.length == 0) {
+                LogUtils.failure(logger, "No negative test data found for Login API");
+                ExtentReport.getTest().log(Status.WARNING, MarkupHelper.createLabel("No negative test scenarios found", ExtentColor.AMBER));
+                throw new customException("No Login API negative test data found");
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < testData.length; i++) {
+                Object[] row = testData[i];
+                if (row != null && row.length >= 3 &&
+                    "login".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
+            }
+            
+            LogUtils.success(logger, "Successfully loaded " + obj.length + " negative test scenarios");
+            ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Loaded " + obj.length + " negative test scenarios", ExtentColor.GREEN));
+            return obj;
+            
+        } catch (Exception e) {
+            LogUtils.exception(logger, "Failed to read Login API negative test data", e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Failed to load negative test data: " + e.getMessage(), ExtentColor.RED));
+            throw new customException("Error reading Login API negative test data: " + e.getMessage());
+        }
+    }
+
     @BeforeClass
     private void LoginAPiTestSetup() throws customException 
     {
@@ -184,7 +230,9 @@ public class loginTestScript extends APIBase
                     String responseBody = response.getBody().asString();
                     if (responseBody != null && !responseBody.trim().isEmpty()) {
                         expectedResponse = new JSONObject(expectedResponseBody);
-                                                
+                        //
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        
                         LogUtils.success(logger, "Login API validation successful");
                         ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Login API validation successful", ExtentColor.GREEN));
                         ExtentReport.getTest().log(Status.INFO, "Expected Response: " + expectedResponseBody);
@@ -201,10 +249,84 @@ public class loginTestScript extends APIBase
                 }
             }
         }
-        catch (Exception e) {
-            LogUtils.exception(logger, "Login API test failed", e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test failed: " + e.getMessage(), ExtentColor.RED));
-            throw new customException("Login API test error: " + e.getMessage());
+        catch(Exception e)
+        {
+            LogUtils.exception(logger, "Login API test execution failed", e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test execution failed: " + e.getMessage(), ExtentColor.RED));
+            throw new customException("Login verification failed: " + e.getMessage());
         }
     }
+
+    
+
+    /**
+     * Test method for negative scenarios
+     */
+    @Test(dataProvider = "getNegativeInputData", priority = 2)
+    private void verifyLoginUsingInvalidInputData(String apiName, String testCaseId, 
+        String testType, String description, String httpsMethod, 
+        String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        
+        try {
+            LogUtils.info("=====Starting Login API Negative Test Case: " + testCaseId + "=====");
+            ExtentReport.createTest("Login API Negative Test - " + testCaseId);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            if (apiName.contains("login") && testType.contains("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+                expectedResponse = new JSONObject(expectedResponseBody);
+                
+                LogUtils.info("Sending request with test data: " + requestBodyJson.toString(2));
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString(2));
+                
+                loginrequest.setMobile(requestBodyJson.getString("mobile"));
+                response = ResponseUtil.getResponse(baseUri, loginrequest, httpsMethod);
+                
+                LogUtils.info("Response received - Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+                
+                switch (testCaseId) {
+                    case "login_002":
+                        LogUtils.info("Validating empty mobile number scenario");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        break;
+                        
+                    case "login_003":
+                        LogUtils.info("Validating mobile number length scenario");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        break;
+                        
+                    case "login_004":
+                        LogUtils.info("Validating special characters scenario");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        break;
+                        
+                    case "login_005":
+                        LogUtils.info("Validating invalid characters scenario");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        break;
+                        
+                    case "login_006":
+                        LogUtils.info("Validating unregistered number scenario");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        break;
+                        
+                    default:
+                        LogUtils.info("Validating general negative scenario");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                }
+                
+                LogUtils.success(logger, "Negative test case " + testCaseId + " executed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Test case executed successfully", ExtentColor.GREEN));
+                ExtentReport.getTest().log(Status.INFO, "Expected Response: " + expectedResponseBody);
+                ExtentReport.getTest().log(Status.INFO, "Actual Response: " + response.asPrettyString());
+            }
+        } catch (Exception e) {
+            LogUtils.exception(logger, "Negative test case " + testCaseId + " failed", e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test case failed: " + e.getMessage(), ExtentColor.RED));
+            throw new customException("Negative test case " + testCaseId + " failed: " + e.getMessage());
+        }
+    }
+
+   
 }

@@ -29,6 +29,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -178,41 +179,87 @@ public class InventoryCreateTestScript extends APIBase
             ExtentReport.getTest().log(Status.INFO, "Preparing request body");
             LogUtils.info("Preparing request body");
             requestBodyJson = new JSONObject(requestBodyPayload);
-            
             // Initialize inventory request with payload from Excel sheet
-            inventoryCreateRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
-            inventoryCreateRequest.setUser_id(String.valueOf(user_id));
-            inventoryCreateRequest.setName(requestBodyJson.getString("name"));
-            inventoryCreateRequest.setSupplier_id(requestBodyJson.getString("supplier_id"));
-            inventoryCreateRequest.setCategory_id(requestBodyJson.getString("category_id"));
-            inventoryCreateRequest.setDescription(requestBodyJson.getString("description"));
-            inventoryCreateRequest.setUnit_price(requestBodyJson.getString("unit_price"));
-            inventoryCreateRequest.setQuantity(requestBodyJson.getString("quantity"));
-            inventoryCreateRequest.setUnit_of_measure(requestBodyJson.getString("unit_of_measure"));
-            inventoryCreateRequest.setReorder_level(requestBodyJson.getString("reorder_level"));
-            inventoryCreateRequest.setBrand_name(requestBodyJson.getString("brand_name"));
-            inventoryCreateRequest.setTax_rate(requestBodyJson.getString("tax_rate"));
-            inventoryCreateRequest.setIn_or_out(requestBodyJson.getString("in_or_out"));
-            inventoryCreateRequest.setIn_date(requestBodyJson.getString("in_date"));
-            inventoryCreateRequest.setExpiration_date(requestBodyJson.getString("expiration_date"));
+           inventoryCreateRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+           inventoryCreateRequest.setUser_id(String.valueOf(user_id));
+           inventoryCreateRequest.setName(requestBodyJson.getString("name"));
+           inventoryCreateRequest.setSupplier_id(requestBodyJson.getString("supplier_id"));
+           inventoryCreateRequest.setCategory_id(requestBodyJson.getString("category_id"));
+           inventoryCreateRequest.setDescription(requestBodyJson.getString("description"));
+           inventoryCreateRequest.setUnit_price(requestBodyJson.getString("unit_price"));
+           inventoryCreateRequest.setQuantity(requestBodyJson.getString("quantity"));
+           inventoryCreateRequest.setUnit_of_measure(requestBodyJson.getString("unit_of_measure"));
+           inventoryCreateRequest.setReorder_level(requestBodyJson.getString("reorder_level"));
+           inventoryCreateRequest.setBrand_name(requestBodyJson.getString("brand_name"));
+           inventoryCreateRequest.setTax_rate(requestBodyJson.getString("tax_rate"));
+           inventoryCreateRequest.setIn_or_out(requestBodyJson.getString("in_or_out"));
+           inventoryCreateRequest.setIn_date(requestBodyJson.getString("in_date"));
+           inventoryCreateRequest.setExpiration_date(requestBodyJson.getString("expiration_date"));
             
+            LogUtils.info("Inventory request initialized with payload from Excel sheet");
+            ExtentReport.getTest().log(Status.INFO, "Inventory request initialized with payload from Excel sheet");
+            
+            LogUtils.info("Final Request Body prepared for inventory create");
+
             // API call
-            response = ResponseUtil.getResponseWithAuth(baseURI, inventoryCreateRequest, httpsmethod, accessToken);
+            ExtentReport.getTest().log(Status.INFO, "Making API call to endpoint: " + baseURI);
+            LogUtils.info("Making API call to endpoint: " + baseURI);
+            ExtentReport.getTest().log(Status.INFO, "Using access token: " + accessToken.substring(0, 15) + "...");
+            LogUtils.info("Using access token: " + accessToken.substring(0, 15) + "...");
             
-            // Log response
-            LogUtils.info("Response Status Code: " + response.getStatusCode());
-            LogUtils.info("Response Body: " + response.asString());
+            response = ResponseUtil.getResponseWithAuth(baseURI, inventoryCreateRequest, httpsmethod, accessToken); 
+            
+            // Response logging
             ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
-            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
-            
-            // Mark test as passed
-            LogUtils.success(logger, "Inventory create test completed");
-            ExtentReport.getTest().log(Status.PASS, "Inventory create test completed");
-            
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+
+            // Validation
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                actualResponseBody = new JSONObject(response.asString());
+                
+                if (!actualResponseBody.isEmpty()) {
+                    expectedResponse = new JSONObject(expectedResponseBody);
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Starting response body validation");
+                    LogUtils.info("Starting response body validation");
+                    ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                    LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                    ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                    LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
+                    LogUtils.info("Performing detailed response validation");
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                    
+                    ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                    LogUtils.success(logger, "Response body validation passed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Inventory created successfully", ExtentColor.GREEN));
+                } else {
+                    ExtentReport.getTest().log(Status.INFO, "Response body is empty");
+                    LogUtils.info("Response body is empty");
+                }
+            } else {
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+                throw new customException(errorMsg);
+            }
         } catch (Exception e) {
-            String errorMsg = "Error in inventory create test: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            LogUtils.error("Stack trace: " + Arrays.toString(e.getStackTrace()));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body:\n" + response.asPrettyString());
+                LogUtils.error("Failed Response Status Code: " + response.getStatusCode());
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+            }
             throw new customException(errorMsg);
         }
     }

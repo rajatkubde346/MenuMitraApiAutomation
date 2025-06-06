@@ -30,6 +30,7 @@ package com.menumitratCommonAPITestScript;
 	import com.menumitra.utilityclass.ResponseUtil;
 	import com.menumitra.utilityclass.TokenManagers;
 	import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -86,42 +87,47 @@ import io.restassured.response.Response;
 	    @DataProvider(name = "getSupplierViewValidData")
 	    public Object[][] getSupplierViewValidData() throws customException {
 	        try {
-	            LogUtils.info("Reading positive supplier view test scenario data");
-	            ExtentReport.getTest().log(Status.INFO, "Reading positive supplier view test scenario data");
+	            LogUtils.info("Reading supplier view valid data from Excel sheet");
+	            ExtentReport.getTest().log(Status.INFO, "Reading supplier view valid data from Excel sheet");
 
 	            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
 	            if (readExcelData == null) {
-	                String errorMsg = "No supplier view test scenario data found in Excel sheet";
-	                LogUtils.error(errorMsg);
-	                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+	                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+	                LogUtils.failure(logger, errorMsg);
+	                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
 	                throw new customException(errorMsg);
 	            }
+	            List<Object[]> filteredData = new ArrayList<>();
 
-	            // Filter for positive test cases only
-	            List<Object[]> positiveTestCases = new ArrayList<>();
-	            for (Object[] row : readExcelData) {
+	            for (int i = 0; i < readExcelData.length; i++) {
+	                Object[] row = readExcelData[i];
 	                if (row != null && row.length >= 3 &&
-	                    "supplierview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-	                    "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-	                    positiveTestCases.add(row);
+	                        "supplierview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+	                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+
+	                    filteredData.add(row);
 	                }
 	            }
 
-	            if (positiveTestCases.isEmpty()) {
-	                String errorMsg = "No positive supplier view test cases found in test data";
-	                LogUtils.error(errorMsg);
-	                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+	            if (filteredData.isEmpty()) {
+	                String errorMsg = "No valid supplier view test data found after filtering";
+	                LogUtils.failure(logger, errorMsg);
+	                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
 	                throw new customException(errorMsg);
 	            }
 
-	            Object[][] positiveTestData = positiveTestCases.toArray(new Object[0][]);
-	            LogUtils.info("Successfully retrieved " + positiveTestData.length + " positive supplier view test scenarios");
-	            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + positiveTestData.length + " positive supplier view test scenarios");
-	            return positiveTestData;
+	            Object[][] obj = new Object[filteredData.size()][];
+	            for (int i = 0; i < filteredData.size(); i++) {
+	                obj[i] = filteredData.get(i);
+	            }
+
+	            LogUtils.info("Successfully retrieved " + obj.length + " supplier view test scenarios");
+	            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + obj.length + " supplier view test scenarios");
+	            return obj;
 	        } catch (Exception e) {
-	            String errorMsg = "Error while reading positive supplier view test scenario data: " + e.getMessage();
-	            LogUtils.error(errorMsg);
-	            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+	            String errorMsg = "Error in getSupplierViewValidData: " + e.getMessage();
+	            LogUtils.exception(logger, errorMsg, e);
+	            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
 	            throw new customException(errorMsg);
 	        }
 	    }
@@ -193,14 +199,17 @@ import io.restassured.response.Response;
 	                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
 	                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
 
-	                // Only show response without validation
-	                actualJsonBody = new JSONObject(response.asString());
-	                LogUtils.info("Supplier view response received successfully");
-	                ExtentReport.getTest().log(Status.PASS, "Supplier view response received successfully");
-	                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
-	                
-	                LogUtils.success(logger, "Supplier view test completed successfully");
+	                // Validate status code
+	                if (response.getStatusCode() != Integer.parseInt(statusCode)) {
+	                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+	                    LogUtils.failure(logger, errorMsg);
+	                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+	                    throw new customException(errorMsg);
+	                }
+
+	                LogUtils.success(logger, "Supplier view test completed successfully\nResponse: " + response.asPrettyString());
 	                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Supplier view test completed successfully", ExtentColor.GREEN));
+	                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
 	            }
 	        } catch (Exception e) {
 	            String errorMsg = "Error in supplier view test: " + e.getMessage();
@@ -211,6 +220,52 @@ import io.restassured.response.Response;
 	                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
 	            }
 	            throw new customException(errorMsg);
+	        }
+	    }
+	    
+	    @DataProvider(name = "getSupplierViewNegativeData")
+	    public Object[][] getSupplierViewNegativeData() throws customException {
+	        try {
+	            LogUtils.info("Reading supplier view negative test scenario data");
+	            ExtentReport.getTest().log(Status.INFO, "Reading supplier view negative test scenario data");
+	            
+	            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+	            if (readExcelData == null) {
+	                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+	                LogUtils.failure(logger, errorMsg);
+	                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+	                throw new customException(errorMsg);
+	            }
+	            
+	            List<Object[]> filteredData = new ArrayList<>();
+	            
+	            for (int i = 0; i < readExcelData.length; i++) {
+	                Object[] row = readExcelData[i];
+	                if (row != null && row.length >= 3 &&
+	                        "supplierview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+	                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+	                    
+	                    filteredData.add(row);
+	                }
+	            }
+	            
+	            if (filteredData.isEmpty()) {
+	                String errorMsg = "No valid supplier view negative test data found after filtering";
+	                LogUtils.failure(logger, errorMsg);
+	                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+	                throw new customException(errorMsg);
+	            }
+	            
+	            Object[][] result = new Object[filteredData.size()][];
+	            for (int i = 0; i < filteredData.size(); i++) {
+	                result[i] = filteredData.get(i);
+	            }
+	            
+	            return result;
+	        } catch (Exception e) {
+	            LogUtils.failure(logger, "Error in getting supplier view negative test data: " + e.getMessage());
+	            ExtentReport.getTest().log(Status.FAIL, "Error in getting supplier view negative test data: " + e.getMessage());
+	            throw new customException("Error in getting supplier view negative test data: " + e.getMessage());
 	        }
 	    }
 	    
@@ -339,7 +394,8 @@ import io.restassured.response.Response;
 	                        }
 	                        
 	                        // Complete response validation
-	                        	                    }
+	                        validateResponseBody.handleResponseBody(response, expectedResponseJson);
+	                    }
 	                }
 	                
 	                LogUtils.success(logger, "Supplier view negative test completed successfully");
@@ -363,5 +419,4 @@ import io.restassured.response.Response;
 	    
 	    
 	}
-
 

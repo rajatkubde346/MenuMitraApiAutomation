@@ -27,6 +27,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -220,6 +221,156 @@ public class CreateTicketTestScript extends APIBase
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test execution failed", ExtentColor.RED));
             ExtentReport.getTest().log(Status.FAIL, "Error details: " + e.getMessage());
             throw new customException("Error during create ticket test execution: " + e.getMessage());
+        }
+    }
+    
+    
+    @DataProvider(name = "getCreateTicketNegativeData")
+    public Object[][] getCreateTicketNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading create ticket negative test scenario data");
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            for (Object[] row : readExcelData) {
+                if (row != null && row.length >= 3 &&
+                    "createticket".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+            
+            return filteredData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            LogUtils.error("Error reading create ticket negative test data: " + e.getMessage());
+            throw new customException("Error reading create ticket negative test data: " + e.getMessage());
+        }
+    }
+    
+    
+    @Test(dataProvider = "getCreateTicketNegativeData")
+    public void createTicketNegative(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+            throws customException {
+        try {
+            LogUtils.info("Starting create ticket negative test case: " + testCaseid);
+            LogUtils.info("Test Description: " + description);
+            ExtentReport.createTest("Create Ticket Negative Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            // Validate API name and test type
+            if (!"createticket".equalsIgnoreCase(apiName)) {
+                String errorMsg = "Invalid API name for create ticket test: " + apiName;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            if (!"negative".equalsIgnoreCase(testType)) {
+                String errorMsg = "Invalid test type for create ticket negative test: " + testType;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            // Request preparation
+            requestBodyJson = new JSONObject(requestBodyPayload.replace("\\", "\\\\"));
+            
+            request = RestAssured.given();
+            request.header("Authorization", "Bearer " + accessToken);
+            request.contentType("multipart/form-data");
+            
+            // Set form data
+            request.multiPart("user_id", userId);
+            request.multiPart("outlet_id", requestBodyJson.getString("outlet_id"));
+            request.multiPart("title", requestBodyJson.getString("title"));
+            request.multiPart("description", requestBodyJson.getString("description"));
+            request.multiPart("status", requestBodyJson.getString("status"));
+            
+            // Handle attachments if present
+            if (requestBodyJson.has("attachment_1") && !requestBodyJson.getString("attachment_1").isEmpty()) {
+                File attachment = new File(requestBodyJson.getString("attachment_1"));
+                if (attachment.exists()) {
+                    request.multiPart("attachment_1", attachment);
+                }
+            }
+            
+            // API call
+            LogUtils.info("Sending POST request to endpoint: " + baseUri);
+            ExtentReport.getTest().log(Status.INFO, "Sending POST request to endpoint: " + baseUri);
+            
+            response = request.when().post(baseUri).then().extract().response();
+            
+            // Response logging
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+            
+            // Status code validation
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + statusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+            
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                
+                actualResponseBody = new JSONObject(response.asString());
+                expectedResponse = new JSONObject(expectedResponseBody);
+                
+                // Validate response message sentence count
+                if (actualResponseBody.has("message")) {
+                    String message = actualResponseBody.getString("message");
+                    String[] sentences = message.split("[.!?]+");
+                    int sentenceCount = 0;
+                    
+                    for (String sentence : sentences) {
+                        if (!sentence.trim().isEmpty()) {
+                            sentenceCount++;
+                        }
+                    }
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Response message contains " + sentenceCount + " sentences");
+                    LogUtils.info("Response message contains " + sentenceCount + " sentences");
+                    
+                    if (sentenceCount > 6) {
+                        String errorMsg = "Response message contains more than 6 sentences (" + sentenceCount + "), which exceeds the limit";
+                        ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                        LogUtils.failure(logger, errorMsg);
+                        throw new customException(errorMsg);
+                    } else {
+                        ExtentReport.getTest().log(Status.PASS, "Response message sentence count validation passed: " + sentenceCount + " sentences");
+                        LogUtils.success(logger, "Response message sentence count validation passed: " + sentenceCount + " sentences");
+                    }
+                }
+                
+                // Perform detailed response validation
+                ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
+                LogUtils.info("Performing detailed response validation");
+                validateResponseBody.handleResponseBody(response, expectedResponse);
+                
+                ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                LogUtils.success(logger, "Response body validation passed successfully");
+                
+            } else {
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+                throw new customException(errorMsg);
+            }
+        } catch (Exception e) {
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            LogUtils.error("Stack trace: " + Arrays.toString(e.getStackTrace()));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body:\n" + response.asPrettyString());
+                LogUtils.error("Failed Response Status Code: " + response.getStatusCode());
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+            }
+            throw new customException(errorMsg);
         }
     }
 

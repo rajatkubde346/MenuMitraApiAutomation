@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -71,43 +72,39 @@ public class InventoryDeleteTestScript extends APIBase
     @DataProvider(name = "getInventoryDeleteData")
     public static Object[][] getInventoryDeleteData() throws customException {
         try {
-            LogUtils.info("Reading positive inventory delete test scenario data");
-            ExtentReport.getTest().log(Status.INFO, "Reading positive inventory delete test scenario data");
+            LogUtils.info("Reading inventory delete test scenario data");
 
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             if (readExcelData == null || readExcelData.length == 0) {
-                String errorMsg = "No inventory delete test scenario data found in Excel sheet";
-                LogUtils.error(errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                throw new customException(errorMsg);
+                LogUtils.error("No inventory delete test scenario data found in Excel sheet");
+                throw new customException("No inventory delete test scenario data found in Excel sheet");
             }
 
-            // Filter for positive test cases only
-            List<Object[]> positiveTestCases = new ArrayList<>();
-            for (Object[] row : readExcelData) {
-                if (row != null && row.length >= 3 &&
-                    "inventoryDelete".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-                    "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-                    positiveTestCases.add(row);
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 2 &&
+                        "inventoryDelete".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+
+                    filteredData.add(row);
                 }
             }
 
-            if (positiveTestCases.isEmpty()) {
-                String errorMsg = "No positive inventory delete test cases found in test data";
-                LogUtils.error(errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                throw new customException(errorMsg);
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
             }
 
-            Object[][] positiveTestData = positiveTestCases.toArray(new Object[0][]);
-            LogUtils.info("Successfully retrieved " + positiveTestData.length + " positive inventory delete test scenarios");
-            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + positiveTestData.length + " positive inventory delete test scenarios");
-            return positiveTestData;
+            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for inventory delete");
+            return obj;
         } catch (Exception e) {
-            String errorMsg = "Error while reading positive inventory delete test scenario data: " + e.getMessage();
-            LogUtils.error(errorMsg);
-            ExtentReport.getTest().log(Status.FAIL, errorMsg);
-            throw new customException(errorMsg);
+            LogUtils.error("Error while reading inventory delete test scenario data from Excel sheet: " + e.getMessage());
+            ExtentReport.getTest().log(Status.ERROR,
+                    "Error while reading inventory delete test scenario data: " + e.getMessage());
+            throw new customException(
+                    "Error while reading inventory delete test scenario data from Excel sheet: " + e.getMessage());
         }
     }
 
@@ -168,44 +165,287 @@ public class InventoryDeleteTestScript extends APIBase
      * Test method to delete inventory
      */
     @Test(dataProvider = "getInventoryDeleteData")
-    private void inventoryDeleteTest(String apiName, String testCaseid, String testType, String description,
-            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+    private void deleteInventory(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+            throws customException {
         try {
-            LogUtils.info("Starting inventory delete test case: " + testCaseid);
-            ExtentReport.createTest("Inventory Delete Test - " + testCaseid);
+            LogUtils.info("Starting inventory deletion test case: " + testCaseid);
+            LogUtils.info("Test Description: " + description);
+            ExtentReport.createTest("Inventory Deletion Test - " + testCaseid);
             ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
             
-            if (apiName.equalsIgnoreCase("inventorydelete")) {
-                requestBodyJson = new JSONObject(requestBody);
+            // Request preparation
+            ExtentReport.getTest().log(Status.INFO, "Preparing request body");
+            LogUtils.info("Preparing request body");
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            
+            inventoryDeleteRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            inventoryDeleteRequest.setUser_id(String.valueOf(user_id));
+            
+            // Set inventory_id which is required for deletion
+            inventoryDeleteRequest.setInventory_id(requestBodyJson.getString("inventory_id"));
+            
+            LogUtils.info("Request Body: " + requestBodyJson.toString());
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+            
+            // API call
+            ExtentReport.getTest().log(Status.INFO, "Making API call to endpoint: " + baseURI);
+            LogUtils.info("Making API call to endpoint: " + baseURI);
+            ExtentReport.getTest().log(Status.INFO, "Using access token: " + accessToken.substring(0, 15) + "...");
+            LogUtils.info("Using access token: " + accessToken.substring(0, 15) + "...");
+            
+            response = ResponseUtil.getResponseWithAuth(baseURI, inventoryDeleteRequest, httpsmethod, accessToken);
+            
+            // Response logging
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+
+            // Validation
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
                 
-                // Set request parameters
-                inventoryDeleteRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
-                inventoryDeleteRequest.setInventory_id(requestBodyJson.getString("inventory_id"));
+                if (response.asString() != null && !response.asString().isEmpty()) {
+                    actualResponseBody = new JSONObject(response.asString());
+                    
+                    if (!actualResponseBody.isEmpty() && expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                        expectedResponse = new JSONObject(expectedResponseBody);
+                        
+                        ExtentReport.getTest().log(Status.INFO, "Starting response body validation");
+                        LogUtils.info("Starting response body validation");
+                        ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                        LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                        ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                        LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+                        
+                        ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
+                        LogUtils.info("Performing detailed response validation");
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        
+                        ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                        LogUtils.success(logger, "Response body validation passed successfully");
+                    }
+                }
                 
-                LogUtils.info("Request Body: " + requestBodyJson.toString());
-                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
-                
-                // Make API call
-                response = ResponseUtil.getResponseWithAuth(baseURI, inventoryDeleteRequest, httpsmethod, accessToken);
-                
-                // Log response
-                LogUtils.info("Response Status Code: " + response.getStatusCode());
-                LogUtils.info("Response Body: " + response.asString());
-                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
-                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
-                
-                // Mark test as passed
-                LogUtils.success(logger, "Inventory delete test completed successfully");
-                ExtentReport.getTest().log(Status.PASS, "Inventory delete test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Inventory deleted successfully", ExtentColor.GREEN));
+                LogUtils.success(logger, "Inventory deleted successfully");
+            } else {
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+                throw new customException(errorMsg);
             }
         } catch (Exception e) {
-            String errorMsg = "Error in inventory delete test: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            LogUtils.error("Stack trace: " + Arrays.toString(e.getStackTrace()));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body:\n" + response.asPrettyString());
+                LogUtils.error("Failed Response Status Code: " + response.getStatusCode());
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+            }
             throw new customException(errorMsg);
         }
     }
 
+
+    /**
+     * Data provider for inventory delete negative test scenarios
+     */
+    @DataProvider(name = "getInventoryDeleteNegativeData")
+    public Object[][] getInventoryDeleteNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading inventory delete negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading inventory delete negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null || readExcelData.length == 0) {
+                LogUtils.error("No inventory delete test scenario data found in Excel sheet");
+                throw new customException("No inventory delete test scenario data found in Excel sheet");
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "inventorydelete".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid inventory delete negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            LogUtils.info("Successfully retrieved " + result.length + " test scenarios for inventory delete negative testing");
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting inventory delete negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting inventory delete negative test data: " + e.getMessage());
+            throw new customException("Error in getting inventory delete negative test data: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Test method for negative inventory delete scenarios
+     */
+    @Test(dataProvider = "getInventoryDeleteNegativeData")
+    public void deleteInventoryNegative(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+            throws customException {
+        try {
+            LogUtils.info("Starting inventory delete negative test case: " + testCaseid);
+            LogUtils.info("Test Description: " + description);
+            ExtentReport.createTest("Inventory Delete Negative Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            // Validate API name and test type
+            if (!"inventorydelete".equalsIgnoreCase(apiName)) {
+                String errorMsg = "Invalid API name for inventory delete test: " + apiName;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            if (!"negative".equalsIgnoreCase(testType)) {
+                String errorMsg = "Invalid test type for inventory delete negative test: " + testType;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            // Request preparation
+            ExtentReport.getTest().log(Status.INFO, "Preparing request body");
+            LogUtils.info("Preparing request body");
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            
+            // Initialize inventory request with payload from Excel sheet
+            inventoryDeleteRequest = new InventoryRequest();
+            
+            if (requestBodyJson.has("inventory_id")) {
+                inventoryDeleteRequest.setInventory_id(requestBodyJson.getString("inventory_id"));
+            }
+            
+            if (requestBodyJson.has("outlet_id")) {
+                inventoryDeleteRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            }
+            
+            if (requestBodyJson.has("user_id")) {
+                inventoryDeleteRequest.setUser_id(requestBodyJson.getString("user_id"));
+            } else {
+                inventoryDeleteRequest.setUser_id(String.valueOf(user_id));
+            }
+            
+            LogUtils.info("Request Body: " + requestBodyJson.toString());
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+            
+            // API call
+            response = ResponseUtil.getResponseWithAuth(baseURI, inventoryDeleteRequest, httpsmethod, accessToken);
+            
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Body: " + response.asString());
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+            
+            int expectedStatusCode = Integer.parseInt(statusCode);
+            
+            // Report actual vs expected status code
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+            
+            // Check for server errors
+            if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+            }
+            // Validate status code
+            else if (response.getStatusCode() != expectedStatusCode) {
+                LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+            }
+            else {
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                
+                // Validate response body
+                actualResponseBody = new JSONObject(response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedResponseBody);
+                ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualResponseBody.toString());
+                
+                if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    expectedResponse = new JSONObject(expectedResponseBody);
+                    
+                    // Validate response message
+                    if (expectedResponse.has("detail") && actualResponseBody.has("detail")) {
+                        String expectedDetail = expectedResponse.getString("detail");
+                        String actualDetail = actualResponseBody.getString("detail");
+                        
+                        // Count and validate sentence count (maximum 6 sentences allowed)
+                        int sentenceCount = countSentences(actualDetail);
+                        
+                        // Validate sentence count - 6 or fewer sentences required
+                        if (sentenceCount > 6) {
+                            String errorMsg = "Response message contains more than 6 sentences. Found: " + sentenceCount;
+                            LogUtils.failure(logger, errorMsg);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                        } else {
+                            LogUtils.info("Sentence count validation passed. Found: " + sentenceCount + " sentences (maximum 6 allowed)");
+                            ExtentReport.getTest().log(Status.PASS, "Sentence count validation passed. Found: " + sentenceCount + " sentences (maximum 6 allowed)");
+                        }
+                        
+                        // Validate message content
+                        if (expectedDetail.equals(actualDetail)) {
+                            LogUtils.info("Error message validation passed: " + actualDetail);
+                            ExtentReport.getTest().log(Status.PASS, "Error message validation passed: " + actualDetail);
+                        } else {
+                            LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                            ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                        }
+                    }
+                    
+                    // Complete response validation
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                }
+                
+                LogUtils.success(logger, "Inventory delete negative test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Inventory delete negative test completed successfully", ExtentColor.GREEN));
+            }
+            
+            // Always log the full response
+            ExtentReport.getTest().log(Status.INFO, "Full Response:");
+            ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+            
+        } catch (Exception e) {
+            String errorMsg = "Error in inventory delete negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+    
     /**
      * Helper method to count sentences in a string
      */

@@ -29,6 +29,8 @@ import com.menumitra.utilityclass.LogUtils;
 import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
+import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -50,14 +52,14 @@ public class sectionCreateTestScript extends APIBase
 
 
     @DataProvider(name="getSectionCreateURL")
-    public Object[][] getSectionCreateURL() throws Exception
+    public Object[][] getSectionCreateURL() throws customException
     {
         try{
             Object[][] readData=DataDriven.readExcelData(excelSheetPathForGetApis,"commonAPI");
             if(readData==null)
             {
                 LogUtils.failure(logger, "Error: Getting an error while read Section URL Excel File");
-                throw new Exception("Error: Getting an error while read Section URL Excel File");
+                throw new customException("Error: Getting an error while read Section URL Excel File");
             }
             
             return Arrays.stream(readData)
@@ -66,12 +68,12 @@ public class sectionCreateTestScript extends APIBase
         }
         catch (Exception e) {
             LogUtils.exception(logger, "Error: Getting an error while read Section URL Excel File", e);
-            throw new Exception("Error: Getting an error while read Section URL Excel File");
+            throw new customException("Error: Getting an error while read Section URL Excel File");
         }
     }
 
     @DataProvider(name="getSectionCreatePositiveInputData") 
-    private Object[][] getSectionCreatePositiveInputData() throws Exception {
+    private Object[][] getSectionCreatePositiveInputData() throws customException {
         try {
             LogUtils.info("Reading positive test scenario data for section create API from Excel sheet");
             Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis,property.getProperty("CommonAPITestScenario"));
@@ -79,7 +81,7 @@ public class sectionCreateTestScript extends APIBase
             if (testData == null || testData.length == 0)
              {
             	LogUtils.failure(logger, "No Section Create API positive test scenario data found in Excel sheet");
-                throw new Exception("No Section Create API Positive test scenario data found in Excel sheet");
+                throw new customException("No Section Create API Positive test scenario data found in Excel sheet");
             }         
             
             List<Object[]> filteredData = new ArrayList<>();
@@ -109,19 +111,19 @@ public class sectionCreateTestScript extends APIBase
         }
         catch (Exception e) {
             LogUtils.exception(logger, "Failed to read Section Create API positive test scenario data: " + e.getMessage(), e);
-            throw new Exception("Error reading Section Create API positive test scenario data from Excel sheet: " + e.getMessage());
+            throw new customException("Error reading Section Create API positive test scenario data from Excel sheet: " + e.getMessage());
         }
     }
 
     @DataProvider(name="getverifyOTPInvalidData")
-    private Object[][] getverifyOTPInvalidData() throws Exception {
+    private Object[][] getverifyOTPInvalidData() throws customException {
         try {
             LogUtils.info("Reading negative test scenario data for verify OTP API");
             Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             
             if (testData == null || testData.length == 0) {
                 LogUtils.failure(logger, "No verify OTP API negative test scenario data found in Excel sheet");
-                throw new Exception("No verify OTP API negative test scenario data found in Excel sheet");
+                throw new customException("No verify OTP API negative test scenario data found in Excel sheet");
             }
             
             List<Object[]> filteredData = new ArrayList<>();
@@ -145,12 +147,12 @@ public class sectionCreateTestScript extends APIBase
             return obj;
         } catch (Exception e) {
             LogUtils.exception(logger, "Failed to read verify OTP API negative test scenario data: " + e.getMessage(), e);
-            throw new Exception("Error reading verify OTP API negative test scenario data: " + e.getMessage());
+            throw new customException("Error reading verify OTP API negative test scenario data: " + e.getMessage());
         }
     }
 
     @BeforeClass
-    private void sectionCreateSetup() throws Exception 
+    private void sectionCreateSetup() throws customException 
     {
         try {
             LogUtils.info("Setting up test environment");
@@ -170,7 +172,7 @@ public class sectionCreateTestScript extends APIBase
                 LogUtils.info("Section Create URL set to: " + baseUri);
             } else {
                 LogUtils.failure(logger, "No section create URL found in test data");
-                throw new Exception("No section create URL found in test data");
+                throw new customException("No section create URL found in test data");
             }
 
             // Get tokens from TokenManager
@@ -179,7 +181,7 @@ public class sectionCreateTestScript extends APIBase
 
             if (accessToken.isEmpty()) {
                 LogUtils.failure(logger, "Error: Required tokens not found. Please ensure login and OTP verification is completed");
-                throw new Exception("Required tokens not found. Please ensure login and OTP verification is completed");
+                throw new customException("Required tokens not found. Please ensure login and OTP verification is completed");
             }
 
             sectionrequest=new sectionRequest();
@@ -188,14 +190,14 @@ public class sectionCreateTestScript extends APIBase
         } catch (Exception e) {
             LogUtils.exception(logger, "Error during section create setup: " + e.getMessage(), e);
             //ExtentReport.getTest().log(Status.FAIL, "Error during section create setup: " + e.getMessage());
-            throw new Exception("Error during setup: " + e.getMessage());
+            throw new customException("Error during setup: " + e.getMessage());
         }
     }
 
     @Test(dataProvider = "getSectionCreatePositiveInputData",priority = 1)
     private void verifySectionUsingValidInputData(String apiName, String testCaseId, 
     	    String testType, String description, String httpsMethod, 
-    	    String requestBody, String expectedResponseBody, String statusCode ) throws Exception
+    	    String requestBody, String expectedResponseBody, String statusCode ) throws customException
     {
         try
         {
@@ -221,24 +223,25 @@ public class sectionCreateTestScript extends APIBase
                 LogUtils.info("Response body: " + response.asPrettyString());
                 ExtentReport.getTest().log(Status.INFO, "Response received from section create API");
                 
-                if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                if (response.getStatusCode() == 200) {
                     String responseBody = response.getBody().asString();
                     if (responseBody != null && !responseBody.trim().isEmpty()) {
                         expectedJsonBody=new JSONObject(expectedResponseBody);
                      
-                                                LogUtils.success(logger,"Section created successfully");
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                        LogUtils.success(logger,"Section created successfully");
                         ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Section created successfully", ExtentColor.GREEN));
                         ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
                     } else {
                         LogUtils.failure(logger, "Section creation failed - Empty response body received");
                         ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Empty response body received", ExtentColor.RED));
-                        throw new Exception("Response body is empty");
+                        throw new customException("Response body is empty");
                     }
                 } else {
                     LogUtils.failure(logger, "Section creation failed with status code: " + response.getStatusCode());
                     ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Section creation failed", ExtentColor.RED));
                     ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
-                    throw new Exception("Expected status code " + statusCode + " but got " + response.getStatusCode());
+                    throw new customException("Expected status code 200 but got " + response.getStatusCode());
                 }                
                 
             }
@@ -249,7 +252,48 @@ public class sectionCreateTestScript extends APIBase
             LogUtils.error("Error during section creation test execution: " + e.getMessage());
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test execution failed", ExtentColor.RED));
             ExtentReport.getTest().log(Status.FAIL, "Error details: " + e.getMessage());
-            throw new Exception("Error during section creation test execution: " + e.getMessage());
+            throw new customException("Error during section creation test execution: " + e.getMessage());
+        }
+    }
+
+    @DataProvider(name="getSectionCreateNegativeData")
+    private Object[][] getSectionCreateNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading negative test scenario data for section create API");
+            Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            
+            if (testData == null || testData.length == 0) {
+                LogUtils.failure(logger, "No section create API negative test scenario data found in Excel sheet");
+                throw new customException("No section create API negative test scenario data found in Excel sheet");
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            // Filter for section create API negative test cases
+            for (int i = 0; i < testData.length; i++) {
+                Object[] row = testData[i];
+                if (row != null && row.length >= 3 &&
+                    "sectioncreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+
+            if (filteredData.isEmpty()) {
+                LogUtils.failure(logger, "No section create API negative test data found after filtering");
+                throw new customException("No section create API negative test data found after filtering");
+            }
+
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
+            }
+            
+            return obj;
+        } catch (Exception e) {
+            LogUtils.exception(logger, "Failed to read section create API negative test scenario data: " + e.getMessage(), e);
+            throw new customException("Error reading section create API negative test scenario data: " + e.getMessage());
         }
     }
 
@@ -269,6 +313,156 @@ public class sectionCreateTestScript extends APIBase
         String[] sentences = pattern.split(text);
         return sentences.length;
     }
+    
+    @Test(dataProvider = "getSectionCreateNegativeData", priority = 2)
+    public void sectionCreateNegativeTest(String apiName, String testCaseId, 
+            String testType, String description, String httpsMethod, 
+            String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        
+        try {
+            LogUtils.info("Starting section create negative test case: " + testCaseId);
+            ExtentReport.createTest("Section Create Negative Test - " + testCaseId + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            ExtentReport.getTest().log(Status.INFO, "Base URI: " + baseUri);
+            
+            // Verify this is the right API and test type
+            if (!"sectioncreate".equalsIgnoreCase(apiName) || !"negative".equalsIgnoreCase(testType)) {
+                String errorMsg = "Invalid test configuration. API Name must be 'sectioncreate' and Test Type must be 'negative'";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            // Parse request body
+            requestBodyJson = new JSONObject(requestBody);
+            
+            LogUtils.info("Request Body: " + requestBodyJson.toString());
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+            
+            // Set up request parameters
+            sectionrequest = new sectionRequest();
+            if (requestBodyJson.has("outlet_id")) {
+                sectionrequest.setOutlet_id(String.valueOf(requestBodyJson.get("outlet_id")));
+            }
+            
+            if (requestBodyJson.has("user_id")) {
+                sectionrequest.setUser_id(String.valueOf(requestBodyJson.get("user_id")));
+            } else {
+                sectionrequest.setUser_id(String.valueOf(userId));
+            }
+            
+            if (requestBodyJson.has("section_name")) {
+                sectionrequest.setSection_name(requestBodyJson.getString("section_name"));
+            }
+            
+            if (requestBodyJson.has("section_id")) {
+                sectionrequest.setSection_id(requestBodyJson.getString("section_id"));
+            }
+            
+            // Send request
+            response = ResponseUtil.getResponseWithAuth(baseUri, sectionrequest, httpsMethod, accessToken);
+            
+            // Log response details
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Body: " + response.asString());
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            
+            // Parse expected status code
+            int expectedStatusCode = Integer.parseInt(statusCode);
+            
+            // Start validation - capture both actual and expected values for reporting
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+            
+            // Check for server errors
+            if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+            }
+            // Validate status code
+            else if (response.getStatusCode() != expectedStatusCode) {
+                LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+            }
+            else {
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                
+                // Validate response body if exists
+                String responseBody = response.getBody().asString();
+                if (responseBody != null && !responseBody.trim().isEmpty()) {
+                    actualResponseBody = new JSONObject(responseBody);
+                    
+                    // Log actual response body for reporting
+                    ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualResponseBody.toString(2));
+                    
+                    if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                        expectedJsonBody = new JSONObject(expectedResponseBody);
+                        
+                        // Log expected response body for reporting
+                        ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedJsonBody.toString(2));
+                        
+                        // Check response message sentence count if it has a detail field
+                        if (actualResponseBody.has("detail")) {
+                            String detailMessage = actualResponseBody.getString("detail");
+                            int sentenceCount = countSentences(detailMessage);
+                            
+                            ExtentReport.getTest().log(Status.INFO, "Response message sentence count: " + sentenceCount);
+                            
+                            if (sentenceCount > 6) {
+                                String errorMsg = "Response message contains more than 6 sentences. Found: " + sentenceCount;
+                                LogUtils.failure(logger, errorMsg);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                            } else {
+                                LogUtils.success(logger, "Response message sentence count validation passed: " + sentenceCount);
+                                ExtentReport.getTest().log(Status.PASS, "Response message sentence count validation passed: " + sentenceCount);
+                            }
+                            
+                            // Validate message matches expected
+                            if (expectedJsonBody.has("detail")) {
+                                String expectedDetail = expectedJsonBody.getString("detail");
+                                
+                                if (detailMessage.equals(expectedDetail)) {
+                                    LogUtils.success(logger, "Response message matches expected message");
+                                    ExtentReport.getTest().log(Status.PASS, "Response message matches expected message");
+                                } else {
+                                    LogUtils.failure(logger, "Response message mismatch - Expected: '" + expectedDetail + "', Actual: '" + detailMessage + "'");
+                                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Response message mismatch", ExtentColor.RED));
+                                    ExtentReport.getTest().log(Status.FAIL, "Expected: '" + expectedDetail + "'");
+                                    ExtentReport.getTest().log(Status.FAIL, "Actual: '" + detailMessage + "'");
+                                }
+                            }
+                        }
+                        
+                        // Perform full response validation
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    }
+                } else {
+                    LogUtils.info("Empty response body received");
+                    ExtentReport.getTest().log(Status.WARNING, "Empty response body received");
+                }
+                
+                LogUtils.success(logger, "Section create negative test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Section create negative test completed successfully", ExtentColor.GREEN));
+            }
+            
+            // Always log the full response for debugging
+            ExtentReport.getTest().log(Status.INFO, "Full Response:");
+            ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+            
+        } catch (Exception e) {
+            String errorMsg = "Error in section create negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+
 
 //@AfterClass
 private void tearDown()
@@ -291,4 +485,3 @@ private void tearDown()
 }
 
 }
-

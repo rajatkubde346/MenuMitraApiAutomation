@@ -27,6 +27,7 @@ import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
 import com.menumitra.utilityclass.RequestValidator;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -104,6 +105,42 @@ public class ResendOTPTestScript extends APIBase
     }
 
     
+    @DataProvider(name="getNegativeResendOPTData")
+    private Object[][] getNegativeResendOPTData() throws customException {
+        try {
+            LogUtils.info("Reading negative test scenario data for resend OTP API");
+            Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            
+            if (testData == null || testData.length == 0) {
+                LogUtils.error("No resend OTP API negative test scenario data found in Excel sheet");
+                throw new customException("No resend OTP API negative test scenario data found in Excel sheet");
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            // Filter for resend OTP API negative test cases
+            for (int i = 0; i < testData.length; i++) {
+                Object[] row = testData[i];
+                if (row != null && row.length >= 3 &&
+                    "resendotp".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
+            }
+            
+            return obj;
+        } catch (Exception e) {
+            LogUtils.error("Failed to read resend OTP API negative test scenario data: " + e.getMessage());
+            throw new customException("Error reading resend OTP API negative test scenario data: " + e.getMessage());
+        }
+    }
+    
     @BeforeClass
     private void setupResendOTP() throws customException 
     {
@@ -168,7 +205,8 @@ public class ResendOTPTestScript extends APIBase
     			{
     				actualResponseBody = new JSONObject(response.getBody().asString());
 					expectedResponse=new JSONObject(expectedResponseBody);
-					//					LogUtils.success(logger, "resend OTP API responded with status code: "+response.getStatusCode());
+					//validateResponseBody.handleResponseBody(response, expectedResponse);
+					LogUtils.success(logger, "resend OTP API responded with status code: "+response.getStatusCode());
 					ExtentReport.getTest().log(Status.PASS, "resend OTP API responded with status code: "+response.getStatusCode());
 
     			}
@@ -186,4 +224,79 @@ public class ResendOTPTestScript extends APIBase
 		}
         
     }
+    
+/**
+ * Test method for negative scenarios of Resend OTP API
+ */
+@Test(dataProvider = "getNegativeResendOPTData", priority = 2)
+private void resendOTPusingInvalidData(String apiName, String testCaseId, 
+    String testType, String description, String httpsMethod, 
+    String requestBody, String expectedResponseBody, String statusCode) throws customException 
+    {
+    
+    try {
+        LogUtils.info("=====Starting Resend OTP API negative test=====");
+        ExtentReport.createTest("Resend OTP using InValid Input data: "+description);
+        ExtentReport.getTest().log(Status.INFO,"====Resend OTP using Valid Input data====");
+        ExtentReport.getTest().log(Status.INFO, "Constructed Resend OTP Base URI: " + baseUri);
+        if (apiName.contains("resendotp") && testType.contains("negative")) 
+        {
+            // Parse request and expected response
+            requestBodyJson = new JSONObject(requestBody);
+            expectedResponse = new JSONObject(expectedResponseBody);
+            
+            resendOTPRequest = new ResendOTPRequest();
+            resendOTPRequest.setMobile(requestBodyJson.getString("mobile"));
+            LogUtils.info("Resend OTP payload prepared ");
+            ExtentReport.getTest().log(Status.INFO, "Resend OTP payload prepared ");
+            
+            // Make API call
+            response = ResponseUtil.getResponse(baseUri, resendOTPRequest, httpsMethod);
+            LogUtils.info("POST request executed for Resend OTP API");
+            ExtentReport.getTest().log(Status.INFO, "POST request executed for Resend OTP API");
+           
+            // Validate response based on test case
+            switch (testCaseId)
+             {
+                case "resendotp_002": // Empty mobile number
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        LogUtils.success(logger,"Resend OTP API responded with status code 200");
+                        ExtentReport.getTest().log(Status.PASS, "Resend OTP API responded with status code 200");
+                    break;
+                    
+                case "resendotp_003": // Less than 10 digits
+                            validateResponseBody.handleResponseBody(response, expectedResponse);
+                            LogUtils.success(logger,"Resend OTP API responded with status code 200");
+                            ExtentReport.getTest().log(Status.PASS, "Resend OTP API responded with status code 200");
+                    break;
+                    
+                case "resendotp_004": // Special characters
+                            validateResponseBody.handleResponseBody(response, expectedResponse);
+                            LogUtils.success(logger,"Resend OTP API responded with status code 200");
+                            ExtentReport.getTest().log(Status.PASS, "Resend OTP API responded with status code 200");
+                    break;
+                    
+                case "resendotp_005": // Invalid characters
+                        validateResponseBody.handleResponseBody(response, expectedResponse);
+                        LogUtils.success(logger,"Resend OTP API responded with status code 200");
+                        ExtentReport.getTest().log(Status.PASS, "Resend OTP API responded with status code 200");
+                    break;
+                    
+                default:
+                    
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                    LogUtils.success(logger,"Resend OTP API responded with status code 200");
+                    ExtentReport.getTest().log(Status.PASS, "Resend OTP API responded with status code 200");
+            }
+            
+            LogUtils.success(logger,"Successfully validated Resend OTP API negative test case: "+testCaseId);
+            ExtentReport.getTest().log(Status.PASS, "Successfully validated Resend OTP API negative test case: " + testCaseId);
+        }
+    } catch (Exception e) {
+        LogUtils.error("Error in negative test case " + testCaseId + ": " + e.getMessage());
+        ExtentReport.getTest().log(Status.FAIL, "Error in negative test case " + testCaseId + ": " + e.getMessage());
+        throw new customException("Error in negative test case " + testCaseId + ": " + e.getMessage());
+    }
+}
+    
 }

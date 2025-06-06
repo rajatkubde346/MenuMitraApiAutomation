@@ -22,24 +22,7 @@ public class OrderRequest {
     private String order_id;
     private String order_status;
     private String order_number;
-    private String payment_status;
-    private String payment_mode;
-
-    public String getPayment_status() {
-        return payment_status;
-    }
-
-    public void setPayment_status(String payment_status) {
-        this.payment_status = payment_status;
-    }
-
-    public String getPayment_mode() {
-        return payment_mode;
-    }
-
-    public void setPayment_mode(String payment_mode) {
-        this.payment_mode = payment_mode;
-    }
+    private String order_payment_settle_type;
 
     public String getOrder_id() {
 		return order_id;
@@ -232,6 +215,14 @@ public class OrderRequest {
 	public void setOrder_number(String order_number) {
 		this.order_number = order_number;
 	}
+
+    public String getOrder_payment_settle_type() {
+        return order_payment_settle_type;
+    }
+
+    public void setOrder_payment_settle_type(String order_payment_settle_type) {
+        this.order_payment_settle_type = order_payment_settle_type;
+    }
     
     
     

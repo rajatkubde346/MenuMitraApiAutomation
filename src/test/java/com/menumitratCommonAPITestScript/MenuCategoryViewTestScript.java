@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -216,17 +217,168 @@ public class MenuCategoryViewTestScript extends APIBase
                 ExtentReport.getTest().log(Status.INFO, "Received response with status code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
 
-                // Only show response without validation
-                actualJsonBody = new JSONObject(response.asString());
-                LogUtils.info("Menu category view response received successfully");
-                ExtentReport.getTest().log(Status.PASS, "Menu category view response received successfully");
-                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
-                
-                LogUtils.success(logger, "Menu category view test completed successfully");
-                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu category view test completed successfully", ExtentColor.GREEN));
+                if(response.getStatusCode() == Integer.parseInt(statusCode))
+                {
+                    LogUtils.success(logger, "Menu category view API executed successfully");
+                    LogUtils.info("Status Code: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu category view API executed successfully", ExtentColor.GREEN));
+                    ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
+                    
+                    // Validate response body if expected response is provided
+                    actualJsonBody = new JSONObject(response.asString());
+                    if(expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                        expectedJsonBody = new JSONObject(expectedResponseBody);
+                        
+                      
+                       
+                    }
+                    
+                    // Make sure to use Status.PASS for the response to show in the report
+                    ExtentReport.getTest().log(Status.PASS, "Full Response:");
+                    ExtentReport.getTest().log(Status.PASS, response.asPrettyString());
+                    
+                    // Add a screenshot or additional details that might help visibility
+                    ExtentReport.getTest().log(Status.INFO, MarkupHelper.createLabel("Test completed successfully", ExtentColor.GREEN));
+                }
+                else{
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    LogUtils.info("Response Body: " + response.asString());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asPrettyString());
+                    throw new customException(errorMsg);
+                }
             }
+        }
+        catch(Exception e)
+        {
+            LogUtils.exception(logger, "Error in menu category view test", e);
+            ExtentReport.getTest().log(Status.ERROR, "Error in menu category view test: " + e.getMessage());
+            if(response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException("Error in menu category view test: " + e.getMessage());
+        }
+    }
+    
+    
+    @DataProvider(name = "getMenuCategoryViewNegativeData")
+    public Object[][] getMenuCategoryViewNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading menu category view negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading menu category view negative test scenario data");
+
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (Object[] row : readExcelData) {
+                if (row != null && row.length >= 3 &&
+                    "menucategoryview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid menu category view negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            return filteredData.toArray(new Object[0][]);
         } catch (Exception e) {
-            String errorMsg = "Error in menu category view test: " + e.getMessage();
+            String errorMsg = "Error in getting menu category view negative test data: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            throw new customException(errorMsg);
+        }
+    }
+
+    @Test(dataProvider = "getMenuCategoryViewNegativeData")
+    public void menuCategoryViewNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting menu category view negative test case: " + testCaseid);
+            ExtentReport.createTest("Menu Category View Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            if (!"menucategoryview".equalsIgnoreCase(apiName) || !"negative".equalsIgnoreCase(testType)) {
+                String errorMsg = "Invalid API name or test type";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            requestBodyJson = new JSONObject(requestBody);
+            menuCategoryViewRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            menuCategoryViewRequest.setMenu_cat_id(requestBodyJson.getString("menu_cat_id"));
+            menuCategoryViewRequest.setUser_id(String.valueOf(user_id));
+
+            LogUtils.info("Request Body: " + requestBodyJson.toString());
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+
+            response = ResponseUtil.getResponseWithAuth(baseURI, menuCategoryViewRequest, httpsmethod, accessToken);
+
+            int expectedStatusCode = Integer.parseInt(statusCode);
+            int actualStatusCode = response.getStatusCode();
+
+            // Log status code comparison
+            LogUtils.info("Expected Status Code: " + expectedStatusCode);
+            LogUtils.info("Actual Status Code: " + actualStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + actualStatusCode);
+
+            // Validate status code
+            if (actualStatusCode != expectedStatusCode) {
+                String errorMsg = "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + actualStatusCode;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            // Validate response body
+            actualJsonBody = new JSONObject(response.asString());
+            expectedJsonBody = new JSONObject(expectedResponseBody);
+
+            // Log response body comparison
+            LogUtils.info("Expected Response Body: " + expectedResponseBody);
+            LogUtils.info("Actual Response Body: " + response.asString());
+            ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedResponseBody);
+            ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + response.asString());
+
+            // Validate response message length
+            if (actualJsonBody.has("message")) {
+                String message = actualJsonBody.getString("message");
+                int sentenceCount = countSentences(message);
+                
+                if (sentenceCount > 6) {
+                    String errorMsg = "Response message exceeds 6 sentences. Current count: " + sentenceCount;
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
+                
+                LogUtils.info("Message sentence count: " + sentenceCount);
+                ExtentReport.getTest().log(Status.INFO, "Message sentence count: " + sentenceCount);
+            }
+
+            // Validate response body structure
+            validateResponseBody.handleResponseBody(response, expectedJsonBody);
+
+            LogUtils.success(logger, "Menu category view negative test completed successfully");
+            ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu category view negative test completed successfully", ExtentColor.GREEN));
+
+        } catch (Exception e) {
+            String errorMsg = "Error in menu category view negative test: " + e.getMessage();
             LogUtils.exception(logger, errorMsg, e);
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
             if (response != null) {
@@ -235,5 +387,11 @@ public class MenuCategoryViewTestScript extends APIBase
             }
             throw new customException(errorMsg);
         }
+    }
+
+    private int countSentences(String text) {
+        // Split text into sentences using common sentence ending punctuation
+        String[] sentences = text.split("[.!?]+");
+        return sentences.length;
     }
 }

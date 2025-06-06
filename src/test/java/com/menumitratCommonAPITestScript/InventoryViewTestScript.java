@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -174,40 +175,60 @@ public class InventoryViewTestScript extends APIBase
     }
 
     @Test(dataProvider = "getInventoryViewData")
-    private void inventoryViewTest(String apiName, String testCaseid, String testType, String description,
+    private void verifyInventoryView(String apiName, String testCaseid, String testType, String description,
             String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
         try {
             LogUtils.info("Starting inventory view test case: " + testCaseid);
             ExtentReport.createTest("Inventory View Test - " + testCaseid);
             ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
-            
+
             if (apiName.equalsIgnoreCase("inventoryview")) {
                 requestBodyJson = new JSONObject(requestBody);
-                
-                // Set request parameters
+                inventoryViewRequest.setInventory_id(String.valueOf(requestBodyJson.getString("inventory_id")));
                 inventoryViewRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
-                inventoryViewRequest.setInventory_id(requestBodyJson.getString("inventory_id"));
-                
+
                 LogUtils.info("Request Body: " + requestBodyJson.toString());
                 ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
-                
-                // Make API call
+
                 response = ResponseUtil.getResponseWithAuth(baseURI, inventoryViewRequest, httpsmethod, accessToken);
-                
-                // Log response
+
                 LogUtils.info("Response Status Code: " + response.getStatusCode());
                 LogUtils.info("Response Body: " + response.asString());
                 ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+
+                // Validate status code
+                if (response.getStatusCode() != Integer.parseInt(statusCode)) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
                 
-                // Mark test as passed
+                // Only log response information to the report
+                actualJsonBody = new JSONObject(response.asString());
+                if(expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    expectedJsonBody = new JSONObject(expectedResponseBody);
+                    
+                    // Log response information to report without validation
+                    LogUtils.info("Response received successfully");
+                    ExtentReport.getTest().log(Status.PASS, "Response received successfully");
+                    ExtentReport.getTest().log(Status.INFO, "Expected response structure available in test data");
+                }
+
                 LogUtils.success(logger, "Inventory view test completed successfully");
-                ExtentReport.getTest().log(Status.PASS, "Inventory view test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Inventory view test completed successfully", ExtentColor.GREEN));
+                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             String errorMsg = "Error in inventory view test: " + e.getMessage();
             LogUtils.exception(logger, errorMsg, e);
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
             throw new customException(errorMsg);
         }
     }

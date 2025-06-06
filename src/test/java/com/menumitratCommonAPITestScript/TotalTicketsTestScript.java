@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -126,38 +127,97 @@ public class TotalTicketsTestScript extends APIBase
     public Object[][] getTotalTicketsData() throws customException {
         try {
             LogUtils.info("Reading total tickets test scenario data");
-
+            ExtentReport.getTest().log(Status.INFO, "Reading total tickets test scenario data");
+            
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
-            if (readExcelData == null || readExcelData.length == 0) {
-                LogUtils.error("No total tickets test scenario data found in Excel sheet");
-                throw new customException("No total tickets test scenario data found in Excel sheet");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
-
+            
             List<Object[]> filteredData = new ArrayList<>();
-
+            
             for (int i = 0; i < readExcelData.length; i++) {
                 Object[] row = readExcelData[i];
-                if (row != null && row.length >= 2 &&
+                if (row != null && row.length >= 3 &&
                         "totaltickets".equalsIgnoreCase(Objects.toString(row[0], "")) &&
                         "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-
+                    
                     filteredData.add(row);
                 }
             }
-
-            Object[][] obj = new Object[filteredData.size()][];
-            for (int i = 0; i < filteredData.size(); i++) {
-                obj[i] = filteredData.get(i);
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid total tickets test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
-
-            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for total tickets");
-            return obj;
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
         } catch (Exception e) {
-            LogUtils.error("Error while reading total tickets test scenario data: " + e.getMessage());
-            ExtentReport.getTest().log(Status.ERROR,
-                    "Error while reading total tickets test scenario data: " + e.getMessage());
-            throw new customException(
-                    "Error while reading total tickets test scenario data: " + e.getMessage());
+            LogUtils.failure(logger, "Error in getting total tickets test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting total tickets test data: " + e.getMessage());
+            throw new customException("Error in getting total tickets test data: " + e.getMessage());
+        }
+    }
+    
+    @Test(dataProvider = "getTotalTicketsData")
+    public void totalTicketsTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting total tickets test case: " + testCaseid);
+            ExtentReport.createTest("Total Tickets Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            if (apiName.equalsIgnoreCase("totaltickets")) {
+                requestBodyJson = new JSONObject(requestBody);
+                totalTicketsRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                
+                
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+                
+                response = ResponseUtil.getResponseWithAuth(baseURI, totalTicketsRequest, httpsmethod, accessToken);
+                
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+                
+                // Validate status code
+                if (response.getStatusCode() != Integer.parseInt(statusCode)) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
+                
+                // Only show response without validation
+                actualJsonBody = new JSONObject(response.asString());
+                LogUtils.info("Total tickets response received successfully");
+                ExtentReport.getTest().log(Status.PASS, "Total tickets response received successfully");
+                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
+                
+                LogUtils.success(logger, "Total tickets test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Total tickets test completed successfully", ExtentColor.GREEN));
+            }
+        } catch (Exception e) {
+            String errorMsg = "Error in total tickets test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
         }
     }
     
@@ -301,7 +361,8 @@ public class TotalTicketsTestScript extends APIBase
                         }
                         
                         // Complete response validation
-                                            }
+                        validateResponseBody.handleResponseBody(response, expectedResponseJson);
+                    }
                     
                     LogUtils.success(logger, "Total tickets negative test completed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Total tickets negative test completed successfully", ExtentColor.GREEN));

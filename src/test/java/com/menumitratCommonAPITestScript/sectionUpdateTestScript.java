@@ -29,6 +29,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 @Listeners(Listener.class)
@@ -47,14 +48,14 @@ public class sectionUpdateTestScript extends APIBase
 
 
     @DataProvider(name="getSectionUpdateURL")
-    public Object[][] getSectionUpdateURL() throws Exception
+    public Object[][] getSectionUpdateURL() throws customException
     {
         try{
             Object[][] readData=DataDriven.readExcelData(excelSheetPathForGetApis,"commonAPI");
             if(readData==null)
             {
-                LogUtils.failure(logger, "Error: Getting an error while read Section Update URL Excel File");
-                throw new Exception("Error: Getting an error while read Section Update URL Excel File");
+                LogUtils.error("Error: Getting an error while read Section URL Excel File");
+                throw new customException("Error: Getting an error while read Section URL Excel File");
             }
             
             return Arrays.stream(readData)
@@ -62,22 +63,22 @@ public class sectionUpdateTestScript extends APIBase
                     .toArray(Object[][]::new);
         }
         catch (Exception e) {
-            LogUtils.exception(logger, "Error: Getting an error while read Section Update URL Excel File", e);
-            throw new Exception("Error: Getting an error while read Section Update URL Excel File");
+            LogUtils.error("Error: Getting an error while read Section URL Excel File");
+            throw new customException("Error: Getting an error while read Section URL Excel File");
         }
     }
 
 
     @DataProvider(name="getSectionUpdatePositiveInputData")
-    private Object[][] getSectionUpdatePositiveInputData() throws Exception {
+    private Object[][] getSectionUpdatePositiveInputData() throws customException {
         try {
-            LogUtils.info("Reading positive test scenario data for section update API");
+            LogUtils.info("Reading positive test scenario data for section update API from Excel sheet");
             Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, property.getProperty("CommonAPITestScenario"));
             
             if (testData == null || testData.length == 0)
             {
                 LogUtils.failure(logger, "No Section Update API positive test scenario data found in Excel sheet");
-                throw new Exception("No Section Update API Positive test scenario data found in Excel sheet");
+                throw new customException("No Section Update API Positive test scenario data found in Excel sheet");
             }         
             
             List<Object[]> filteredData = new ArrayList<>();
@@ -106,20 +107,20 @@ public class sectionUpdateTestScript extends APIBase
             return obj;
         }
         catch (Exception e) {
-            LogUtils.exception(logger, "Failed to read section update API positive test scenario data", e);
-            throw new Exception("Error reading section update API positive test scenario data");
+            LogUtils.exception(logger, "Failed to read Section Update API positive test scenario data: " + e.getMessage(), e);
+            throw new customException("Error reading Section Update API positive test scenario data from Excel sheet: " + e.getMessage());
         }
     }
 
     @DataProvider(name="getSectionUpdateNegativeInputData")
-    private Object[][] getSectionUpdateNegativeInputData() throws Exception {
+    private Object[][] getSectionUpdateNegativeInputData() throws customException {
         try {
             LogUtils.info("Reading negative test scenario data for section update API");
             Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             
             if (testData == null || testData.length == 0) {
                 LogUtils.failure(logger, "No section update API negative test scenario data found in Excel sheet");
-                throw new Exception("No section update API negative test scenario data found in Excel sheet");
+                throw new customException("No section update API negative test scenario data found in Excel sheet");
             }
             
             List<Object[]> filteredData = new ArrayList<>();
@@ -147,13 +148,13 @@ public class sectionUpdateTestScript extends APIBase
             return obj;
         }
         catch (Exception e) {
-            LogUtils.exception(logger, "Failed to read section update API negative test scenario data", e);
-            throw new Exception("Error reading section update API negative test scenario data");
+            LogUtils.exception(logger, "Failed to read section update API negative test scenario data: " + e.getMessage(), e);
+            throw new customException("Error reading section update API negative test scenario data from Excel sheet: " + e.getMessage());
         }
     }
 
     @BeforeClass
-    private void sectionUpdateSetup() throws Exception 
+    private void sectionUpdateSetup() throws customException 
     {
         try {
             LogUtils.info("Setting up test environment for section update");
@@ -174,7 +175,7 @@ public class sectionUpdateTestScript extends APIBase
                 LogUtils.info("Section Update URL set to: " + baseUri);
             } else {
                 LogUtils.failure(logger, "No section update URL found in test data");
-                throw new Exception("No section update URL found in test data");
+                throw new customException("No section update URL found in test data");
             }
 
             // Get tokens from TokenManager
@@ -182,8 +183,8 @@ public class sectionUpdateTestScript extends APIBase
             userId = TokenManagers.getUserId();
 
             if (accessToken.isEmpty()) {
-                LogUtils.failure(logger, "Required tokens not found");
-                throw new Exception("Required tokens not found");
+                LogUtils.failure(logger, "Error: Required tokens not found. Please ensure login and OTP verification is completed");
+                throw new customException("Required tokens not found. Please ensure login and OTP verification is completed");
             }
 
             sectionrequest = new sectionRequest();
@@ -192,7 +193,7 @@ public class sectionUpdateTestScript extends APIBase
 
         } catch (Exception e) {
             LogUtils.exception(logger, "Error during section update setup: " + e.getMessage(), e);
-            throw new Exception("Error during setup: " + e.getMessage());
+            throw new customException("Error during setup: " + e.getMessage());
         }
     }
 
@@ -201,7 +202,7 @@ public class sectionUpdateTestScript extends APIBase
 @Test(dataProvider = "getSectionUpdatePositiveInputData", priority = 1)
 private void verifySectionUpdateUsingValidInputData(String apiName, String testCaseId, 
     String testType, String description, String httpsMethod, 
-    String requestBody, String expectedResponseBody, String statusCode) throws Exception
+    String requestBody, String expectedResponseBody, String statusCode) throws customException
 {
     try
     {
@@ -237,17 +238,18 @@ private void verifySectionUpdateUsingValidInputData(String apiName, String testC
                 if (responseBody != null && !responseBody.trim().isEmpty()) {
                     expectedJsonBody=new JSONObject(expectedResponseBody);
                     
-                                        LogUtils.success(logger,"Successfully Validate Section Update Api By using Positive Input data");
+                    validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    LogUtils.success(logger,"Successfully Validate Section Update Api By using Positive Input data");
                     ExtentReport.getTest().log(Status.PASS,"Successfully Validate Section Update Api By using Positive Input data");
                 } else {
                     LogUtils.failure(logger, "Empty response body received");
                     ExtentReport.getTest().log(Status.FAIL, "Empty response body received");
-                    throw new Exception("Response body is empty");
+                    throw new customException("Response body is empty");
                 }
             } else {
                 LogUtils.failure(logger, "Invalid status code to check section update api using positive input data: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.FAIL, "Invalid status code to check section update api using positive input data: " + response.getStatusCode());
-                throw new Exception("In section update api using positive input test case Expected status code 200 but got " + response.getStatusCode());
+                throw new customException("In section update api using positive input test case Expected status code 200 but got " + response.getStatusCode());
             }                
             
         }
@@ -257,14 +259,14 @@ private void verifySectionUpdateUsingValidInputData(String apiName, String testC
     {
         LogUtils.exception(logger, "An error occurred during section update verification: "+e.getMessage(), e);
         ExtentReport.getTest().log(Status.FAIL,"An error occurred during section update verification: "+e.getMessage());
-        throw new Exception("An error occurred during section update verification");
+        throw new customException("An error occurred during section update verification");
     }
 }
 
 @Test(dataProvider = "getSectionUpdateNegativeInputData", priority = 2)
 private void verifySectionCreateUsingInvalidData(String apiName, String testCaseId, 
     String testType, String description, String httpsMethod, 
-    String requestBody, String expectedResponseBody, String statusCode) throws Exception 
+    String requestBody, String expectedResponseBody, String statusCode) throws customException 
     {
     
     try {
@@ -297,7 +299,8 @@ private void verifySectionCreateUsingInvalidData(String apiName, String testCase
             switch (testCaseId)
              {
                 case "sectioncreate_002": 
-                                                LogUtils.success(logger,"Section create API responded with status code 200");
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                        LogUtils.success(logger,"Section create API responded with status code 200");
                         ExtentReport.getTest().log(Status.PASS, "Section create API responded with status code 200");
                     break;
                     
@@ -305,7 +308,8 @@ private void verifySectionCreateUsingInvalidData(String apiName, String testCase
               
                 default:
                     
-                                        LogUtils.success(logger,"Section create API responded with status code 200");
+                    validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    LogUtils.success(logger,"Section create API responded with status code 200");
                     ExtentReport.getTest().log(Status.PASS, "Section create API responded with status code 200");
             }
             
@@ -315,14 +319,14 @@ private void verifySectionCreateUsingInvalidData(String apiName, String testCase
     } catch (Exception e) {
         LogUtils.exception(logger, "Error in negative test case " + testCaseId + ": " + e.getMessage(), e);
         ExtentReport.getTest().log(Status.FAIL, "Error in negative test case " + testCaseId + ": " + e.getMessage());
-        throw new Exception("Error in negative test case " + testCaseId + ": " + e.getMessage());
+        throw new customException("Error in negative test case " + testCaseId + ": " + e.getMessage());
     }
 }
 
 
 
 @DataProvider(name = "getSectionUpdateNegativeData")
-public Object[][] getSectionUpdateNegativeData() throws Exception {
+public Object[][] getSectionUpdateNegativeData() throws customException {
     try {
         LogUtils.info("Reading section update negative test scenario data");
         ExtentReport.getTest().log(Status.INFO, "Reading section update negative test scenario data");
@@ -332,7 +336,7 @@ public Object[][] getSectionUpdateNegativeData() throws Exception {
             String errorMsg = "Error fetching data from Excel sheet - Data is null";
             LogUtils.failure(logger, errorMsg);
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            throw new Exception(errorMsg);
+            throw new customException(errorMsg);
         }
         
         List<Object[]> filteredData = new ArrayList<>();
@@ -351,7 +355,7 @@ public Object[][] getSectionUpdateNegativeData() throws Exception {
             String errorMsg = "No valid section update negative test data found after filtering";
             LogUtils.failure(logger, errorMsg);
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            throw new Exception(errorMsg);
+            throw new customException(errorMsg);
         }
         
         Object[][] result = new Object[filteredData.size()][];
@@ -363,13 +367,13 @@ public Object[][] getSectionUpdateNegativeData() throws Exception {
     } catch (Exception e) {
         LogUtils.failure(logger, "Error in getting section update negative test data: " + e.getMessage());
         ExtentReport.getTest().log(Status.FAIL, "Error in getting section update negative test data: " + e.getMessage());
-        throw new Exception("Error in getting section update negative test data: " + e.getMessage());
+        throw new customException("Error in getting section update negative test data: " + e.getMessage());
     }
 }
 
 @Test(dataProvider = "getSectionUpdateNegativeData")
 public void sectionUpdateNegativeTest(String apiName, String testCaseid, String testType, String description,
-        String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws Exception {
+        String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
     try {
         LogUtils.info("Starting section update negative test case: " + testCaseid);
         ExtentReport.createTest("Section Update Negative Test - " + testCaseid + ": " + description);
@@ -402,21 +406,60 @@ public void sectionUpdateNegativeTest(String apiName, String testCaseid, String 
             ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
             ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
             
-            if (response.getStatusCode() == expectedStatusCode) {
-                String responseBody = response.getBody().asString();
-                if (responseBody != null && !responseBody.trim().isEmpty()) {
-                                        LogUtils.success(logger, "Successfully validated section update API");
-                    ExtentReport.getTest().log(Status.PASS, "Successfully validated section update API");
-                } else {
-                    LogUtils.failure(logger, "Empty response body received");
-                    ExtentReport.getTest().log(Status.FAIL, "Empty response body received");
-                    throw new Exception("Response body is empty");
-                }
-            } else {
-                LogUtils.failure(logger, "Invalid status code: " + response.getStatusCode());
-                ExtentReport.getTest().log(Status.FAIL, "Invalid status code: " + response.getStatusCode());
-                throw new Exception("Expected status code " + expectedStatusCode + " but got " + response.getStatusCode());
+            // Check for server errors
+            if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
             }
+            // Validate status code
+            else if (response.getStatusCode() != expectedStatusCode) {
+                LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+            }
+            else {
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                
+                // Validate response body
+                actualResponseBody = new JSONObject(response.asString());
+                
+                // Log expected vs actual response body
+                LogUtils.info("Expected Response Body: " + expectedResponseBody);
+                LogUtils.info("Actual Response Body: " + actualResponseBody.toString());
+                ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedResponseBody);
+                ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualResponseBody.toString());
+                
+                if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    expectedJsonBody = new JSONObject(expectedResponseBody);
+                    
+                    // Validate response message if detail field exists
+                    if (expectedJsonBody.has("detail") && actualResponseBody.has("detail")) {
+                        String expectedDetail = expectedJsonBody.getString("detail");
+                        String actualDetail = actualResponseBody.getString("detail");
+                        
+                        if (expectedDetail.equals(actualDetail)) {
+                            LogUtils.info("Error message validation passed: " + actualDetail);
+                            ExtentReport.getTest().log(Status.PASS, "Error message validation passed: " + actualDetail);
+                        } else {
+                            LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                            ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                        }
+                    }
+                    
+                    // Complete response validation
+                    validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                }
+                
+                LogUtils.success(logger, "Section update negative test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Section update negative test completed successfully", ExtentColor.GREEN));
+            }
+            
+            // Always log the full response
+            ExtentReport.getTest().log(Status.INFO, "Full Response:");
+            ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
         }
     } catch (Exception e) {
         String errorMsg = "Error in section update negative test: " + e.getMessage();
@@ -426,7 +469,7 @@ public void sectionUpdateNegativeTest(String apiName, String testCaseid, String 
             ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
             ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
         }
-        throw new Exception(errorMsg);
+        throw new customException(errorMsg);
     }
 }
 
@@ -454,4 +497,3 @@ private void tearDown()
 }
 
 }
-

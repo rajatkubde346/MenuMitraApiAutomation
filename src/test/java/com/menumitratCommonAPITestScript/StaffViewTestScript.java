@@ -29,6 +29,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -267,20 +268,38 @@ public class StaffViewTestScript extends APIBase
                 ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
                 
-                // Only show response without validation
-                actualResponseBody = new JSONObject(response.asString());
-                LogUtils.info("Staff view response received successfully");
-                ExtentReport.getTest().log(Status.PASS, "Staff view response received successfully");
-                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
+                // Validate status code
+                if(response.getStatusCode() != Integer.parseInt(statusCode)) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
                 
-                LogUtils.success(logger, "Staff view test completed successfully");
+                // Validate response body if expected response is provided
+                if(expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    JSONObject expectedJson = new JSONObject(expectedResponseBody);
+                    JSONObject actualJson = new JSONObject(response.asString());
+                    
+                    if(!expectedJson.similar(actualJson)) {
+                        String errorMsg = "Response body mismatch\nExpected: " + expectedJson.toString(2) + "\nActual: " + actualJson.toString(2);
+                        LogUtils.failure(logger, errorMsg);
+                        ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                        throw new customException(errorMsg);
+                    }
+                }
+                
+                LogUtils.success(logger, "Staff view test completed successfully\nResponse: " + response.asPrettyString());
                 ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Staff view test completed successfully", ExtentColor.GREEN));
+                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             String errorMsg = "Error in staff view test: " + e.getMessage();
             LogUtils.exception(logger, errorMsg, e);
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            if (response != null) {
+            if(response != null) {
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
             }
@@ -358,7 +377,8 @@ public class StaffViewTestScript extends APIBase
                             actualResponseBody = new JSONObject(response.asString());
                             
                             // Use validateResponseBody to validate the full response body structure
-                                                        
+                            validateResponseBody.handleResponseBody(response, expectedResponseJson);
+                            
                             // For more visible validation of specific error fields
                             if(expectedResponseJson.has("detail") && actualResponseBody.has("detail")) {
                                 String expectedDetail = expectedResponseJson.getString("detail");
@@ -420,5 +440,4 @@ public class StaffViewTestScript extends APIBase
         }
     }
 }
-
 

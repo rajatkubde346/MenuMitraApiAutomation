@@ -3,7 +3,9 @@ package com.menumitratCommonAPITestScript;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -17,7 +19,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.menumitra.apiRequest.MenuRequest;
 import com.menumitra.superclass.APIBase;
 import com.menumitra.utilityclass.ActionsMethods;
 import com.menumitra.utilityclass.DataDriven;
@@ -28,6 +29,7 @@ import com.menumitra.utilityclass.LogUtils;
 import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -35,63 +37,16 @@ import io.restassured.specification.RequestSpecification;
 
 @Listeners(Listener.class)
 public class MenuUpdate extends APIBase {
-    private MenuRequest menuRequest;
     private Response response;
+    private String baseURI;
     private JSONObject requestBodyJson;
-    private JSONObject actualResponseBody;
-    private JSONObject expectedResponse;
-    private String baseUri = null;
     private URL url;
+    private int user_id;
     private String accessToken;
-    private int userId;
+    private Logger logger = LogUtils.getLogger(MenuUpdate.class);
     private RequestSpecification request;
-    private static Logger logger = LogUtils.getLogger(MenuUpdate.class);
-
-    /**
-     * Helper method to safely convert Excel cell value to String
-     */
-    private static String safeConvertToString(Object value) {
-        if (value == null) {
-            return "";
-        }
-        try {
-            if (value instanceof Number) {
-                // Handle numeric values without decimal places
-                if (value instanceof Double && ((Double) value) == ((Double) value).intValue()) {
-                    return String.valueOf(((Double) value).intValue());
-                }
-                // Handle numeric values with decimal places
-                return String.valueOf(value);
-            } else if (value instanceof Boolean) {
-                return String.valueOf(value);
-            } else if (value instanceof String) {
-                String strValue = ((String) value).trim();
-                // Try to parse numeric strings and convert them to proper format
-                try {
-                    // Check if it's a decimal number
-                    if (strValue.contains(".")) {
-                        double doubleValue = Double.parseDouble(strValue);
-                        if (doubleValue == (int) doubleValue) {
-                            return String.valueOf((int) doubleValue);
-                        }
-                        return String.valueOf(doubleValue);
-                    }
-                    // Check if it's an integer
-                    long longValue = Long.parseLong(strValue);
-                    return String.valueOf(longValue);
-                } catch (NumberFormatException e) {
-                    // If parsing fails, return the original string
-                    return strValue;
-                }
-            } else {
-                return String.valueOf(value).trim();
-            }
-        } catch (Exception e) {
-            LogUtils.error("Error converting value to string: " + e.getMessage());
-            return "";
-        }
-    }
-
+    private JSONObject expectedResponseJson;
+    private JSONObject actualJsonBody;
     /**
      * Data provider for menu update API endpoint URLs
      */
@@ -99,38 +54,16 @@ public class MenuUpdate extends APIBase {
     public static Object[][] getMenuUpdateUrl() throws customException {
         try {
             LogUtils.info("Reading Menu Update API endpoint data from Excel sheet");
-            ExtentReport.getTest().log(Status.INFO, "Reading Menu Update API endpoint data from Excel sheet");
-
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "commonAPI");
-            
-            if (readExcelData == null || readExcelData.length == 0) {
-                throw new customException("No data found in Excel sheet or sheet is empty");
-            }
 
-            List<Object[]> filteredData = new ArrayList<>();
-            for (Object[] row : readExcelData) {
-                if (row != null && row.length >= 3) {
-                    String apiName = safeConvertToString(row[0]);
-                    if ("menuUpdate".equalsIgnoreCase(apiName)) {
-                        Object[] convertedRow = new Object[row.length];
-                        for (int i = 0; i < row.length; i++) {
-                            convertedRow[i] = safeConvertToString(row[i]);
-                        }
-                        filteredData.add(convertedRow);
-                    }
-                }
-            }
-
-            if (filteredData.isEmpty()) {
-                throw new customException("No valid menu update API endpoint data found in Excel sheet");
-            }
-
-            return filteredData.toArray(new Object[0][]);
+            return Arrays.stream(readExcelData)
+                    .filter(row -> "menuUpdate".equalsIgnoreCase(row[0].toString()))
+                    .toArray(Object[][]::new);
         } catch (Exception e) {
-            String errorMsg = "Error While Reading Menu Update API endpoint data from Excel sheet: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.ERROR, errorMsg);
-            throw new customException(errorMsg);
+            LogUtils.error("Error While Reading Menu Update API endpoint data from Excel sheet: " + e.getMessage());
+            ExtentReport.getTest().log(Status.ERROR,
+                    "Error While Reading Menu Update API endpoint data from Excel sheet: " + e.getMessage());
+            throw new customException("Error While Reading Menu Update API endpoint data from Excel sheet: " + e.getMessage());
         }
     }
 
@@ -141,77 +74,38 @@ public class MenuUpdate extends APIBase {
     public static Object[][] getMenuUpdateData() throws customException {
         try {
             LogUtils.info("Reading menu update test scenario data");
-            ExtentReport.getTest().log(Status.INFO, "Reading menu update test scenario data");
 
-            Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
-
-            if (testData == null || testData.length == 0) {
-                throw new customException("No data found in Excel sheet or sheet is empty");
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null || readExcelData.length == 0) {
+                LogUtils.error("No menu update test scenario data found in Excel sheet");
+                throw new customException("No menu update test scenario data found in Excel sheet");
             }
 
             List<Object[]> filteredData = new ArrayList<>();
 
-            for (Object[] row : testData) {
-                if (row != null && row.length >= 3) {
-                    String apiName = safeConvertToString(row[0]);
-                    String testType = safeConvertToString(row[2]);
-                    String testCaseId = safeConvertToString(row[1]);
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 2 &&
+                        "menuUpdate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
 
-                    if ("menuUpdate".equalsIgnoreCase(apiName) && 
-                        "positive".equalsIgnoreCase(testType) &&
-                        "menuupdate_001".equalsIgnoreCase(testCaseId)) {
-                        
-                        Object[] convertedRow = new Object[row.length];
-                        for (int i = 0; i < row.length; i++) {
-                            convertedRow[i] = safeConvertToString(row[i]);
-                        }
-                        
-                        // Validate required fields for menuupdate_001
-                        boolean isValidRow = true;
-                        String[] requiredFields = {"menu_id", "outlet_id", "menu_cat_id", "name", "food_type", 
-                                                 "description", "spicy_index", "portion_data"};
-                        
-                        try {
-                            JSONObject requestBody = new JSONObject(convertedRow[5].toString());
-                            for (String field : requiredFields) {
-                                if (!requestBody.has(field) || requestBody.isNull(field) || 
-                                    requestBody.getString(field).trim().isEmpty()) {
-                                    isValidRow = false;
-                                    LogUtils.warn("Required field '" + field + "' is missing or empty in menuupdate_001");
-                                    break;
-                                }
-                            }
-                            
-                            // Validate portion_data array
-                            if (isValidRow && requestBody.has("portion_data")) {
-                                JSONArray portionData = requestBody.getJSONArray("portion_data");
-                                if (portionData.length() == 0) {
-                                    isValidRow = false;
-                                    LogUtils.warn("portion_data array is empty in menuupdate_001");
-                                }
-                            }
-                        } catch (Exception e) {
-                            isValidRow = false;
-                            LogUtils.error("Error validating request body for menuupdate_001: " + e.getMessage());
-                        }
-                        
-                        if (isValidRow) {
-                            filteredData.add(convertedRow);
-                        }
-                    }
+                    filteredData.add(row);
                 }
             }
 
-            if (filteredData.isEmpty()) {
-                throw new customException("No valid menu update test scenario data found for menuupdate_001");
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
             }
 
-            return filteredData.toArray(new Object[0][]);
+            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for menu update");
+            return obj;
         } catch (Exception e) {
-            String errorMsg = "Error while reading menu update test scenario data: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.ERROR, errorMsg);
-            throw new customException(errorMsg);
+            LogUtils.error("Error while reading menu update test scenario data from Excel sheet: " + e.getMessage());
+            ExtentReport.getTest().log(Status.ERROR,
+                    "Error while reading menu update test scenario data: " + e.getMessage());
+            throw new customException(
+                    "Error while reading menu update test scenario data from Excel sheet: " + e.getMessage());
         }
     }
 
@@ -230,17 +124,17 @@ public class MenuUpdate extends APIBase {
             ActionsMethods.verifyOTP();
 
             // Get base URL
-            baseUri = EnviromentChanges.getBaseUrl();
-            LogUtils.info("Base URL retrieved: " + baseUri);
+            baseURI = EnviromentChanges.getBaseUrl();
+            LogUtils.info("Base URL retrieved: " + baseURI);
 
             // Get and set menu update URL
             Object[][] menuUpdateData = getMenuUpdateUrl();
-            if (menuUpdateData != null && menuUpdateData.length > 0) {
-                String endpoint = String.valueOf(menuUpdateData[0][2]);
+            if (menuUpdateData.length > 0) {
+                String endpoint = menuUpdateData[0][2].toString();
                 url = new URL(endpoint);
-                baseUri = RequestValidator.buildUri(endpoint, baseUri);
-                LogUtils.info("Constructed base URI for menu update: " + baseUri);
-                ExtentReport.getTest().log(Status.INFO, "Constructed base URI: " + baseUri);
+                baseURI = RequestValidator.buildUri(endpoint, baseURI);
+                LogUtils.info("Constructed base URI for menu update: " + baseURI);
+                ExtentReport.getTest().log(Status.INFO, "Constructed base URI: " + baseURI);
             } else {
                 LogUtils.failure(logger, "No menu update URL found in test data");
                 ExtentReport.getTest().log(Status.FAIL, "No menu update URL found in test data");
@@ -249,14 +143,13 @@ public class MenuUpdate extends APIBase {
 
             // Get tokens from TokenManager
             accessToken = TokenManagers.getJwtToken();
-            userId = TokenManagers.getUserId();
+            user_id = TokenManagers.getUserId();
 
             if (accessToken.isEmpty()) {
                 LogUtils.error("Error: Required tokens not found. Please ensure login and OTP verification is completed");
                 throw new customException("Required tokens not found. Please ensure login and OTP verification is completed");
             }
 
-            menuRequest = new MenuRequest();
             LogUtils.success(logger, "Menu Update Setup completed successfully");
             ExtentReport.getTest().log(Status.PASS, "Menu Update Setup completed successfully");
 
@@ -276,7 +169,6 @@ public class MenuUpdate extends APIBase {
             throws customException {
         
         RequestSpecification request = null;
-        String menuId = null;
         
         try {
             LogUtils.info("Starting menu update test case: " + testCaseid);
@@ -288,78 +180,6 @@ public class MenuUpdate extends APIBase {
             try {
                 requestBodyJson = new JSONObject(requestBodyPayload);
                 LogUtils.info("Request payload parsed successfully");
-                
-                // Validate required fields
-                String[] requiredFields = {"menu_id", "outlet_id", "menu_cat_id", "name", "food_type", 
-                                         "description", "spicy_index"};
-                for (String field : requiredFields) {
-                    if (!requestBodyJson.has(field) || requestBodyJson.isNull(field) || 
-                        requestBodyJson.getString(field).trim().isEmpty()) {
-                        throw new customException("Required field '" + field + "' is missing or empty");
-                    }
-                }
-
-                // Validate numeric fields
-                String[] numericFields = {"spicy_index", "rating", "cgst", "sgst"};
-                for (String field : numericFields) {
-                    if (requestBodyJson.has(field) && !requestBodyJson.isNull(field)) {
-                        try {
-                            double value = Double.parseDouble(requestBodyJson.getString(field));
-                            if (value < 0) {
-                                throw new customException(field + " cannot be negative");
-                            }
-                        } catch (NumberFormatException e) {
-                            throw new customException("Invalid " + field + " format. Must be a number.");
-                        }
-                    }
-                }
-                
-                // Validate menu_id
-                menuId = requestBodyJson.getString("menu_id");
-                if (menuId == null || menuId.trim().isEmpty()) {
-                    throw new customException("Menu ID is required and cannot be empty");
-                }
-                
-                // For menuupdate_001, validate menu ID exists before proceeding
-                if ("menuupdate_001".equalsIgnoreCase(testCaseid)) {
-                    if (!validateMenuId(menuId)) {
-                        String errorMsg = "Menu ID " + menuId + " does not exist in the system";
-                        LogUtils.error(errorMsg);
-                        ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                        throw new customException(errorMsg);
-                    }
-                }
-                
-                // Validate portion data
-                if (requestBodyJson.has("portion_data")) {
-                    JSONArray portionData = requestBodyJson.getJSONArray("portion_data");
-                    if (portionData.length() == 0) {
-                        throw new customException("portion_data array cannot be empty");
-                    }
-                    
-                    for (int i = 0; i < portionData.length(); i++) {
-                        JSONObject portion = portionData.getJSONObject(i);
-                        String[] portionRequiredFields = {"portion_name", "price", "unit_value", "unit_type", "flag"};
-                        
-                        for (String field : portionRequiredFields) {
-                            if (!portion.has(field) || portion.isNull(field) || 
-                                portion.getString(field).trim().isEmpty()) {
-                                throw new customException("Required field '" + field + "' is missing in portion_data at index " + i);
-                            }
-                        }
-                        
-                        // Validate price is numeric and positive
-                        try {
-                            double price = Double.parseDouble(portion.getString("price"));
-                            if (price <= 0) {
-                                throw new customException("Price must be greater than 0 in portion_data at index " + i);
-                            }
-                        } catch (NumberFormatException e) {
-                            throw new customException("Invalid price format in portion_data at index " + i);
-                        }
-                    }
-                }
-                
             } catch (Exception e) {
                 LogUtils.error("Failed to parse request payload: " + e.getMessage());
                 ExtentReport.getTest().log(Status.ERROR, "Failed to parse request payload: " + e.getMessage());
@@ -380,50 +200,23 @@ public class MenuUpdate extends APIBase {
                 if (requestBodyJson.has("user_id")) {
                     request.multiPart("user_id", requestBodyJson.getString("user_id"));
                 } else {
-                    request.multiPart("user_id", String.valueOf(userId));
+                    request.multiPart("user_id", String.valueOf(user_id));
                 }
                 
                 // Add required fields
-                request.multiPart("menu_id", menuId);
                 request.multiPart("outlet_id", requestBodyJson.getString("outlet_id"));
+                request.multiPart("menu_id", requestBodyJson.getString("menu_id"));
                 request.multiPart("menu_cat_id", requestBodyJson.getString("menu_cat_id"));
                 request.multiPart("name", requestBodyJson.getString("name"));
                 request.multiPart("food_type", requestBodyJson.getString("food_type"));
                 request.multiPart("description", requestBodyJson.getString("description"));
                 request.multiPart("spicy_index", requestBodyJson.getString("spicy_index"));
-                
-                // Handle portion data
-                if (requestBodyJson.has("portion_data")) {
-                    JSONArray portionData = requestBodyJson.getJSONArray("portion_data");
-                    request.multiPart("portion_data", portionData.toString());
-                    
-                    // Add individual portion fields for backward compatibility
-                    JSONObject firstPortion = portionData.getJSONObject(0);
-                    request.multiPart("portion_name", firstPortion.getString("portion_name"));
-                    request.multiPart("price", firstPortion.getString("price"));
-                    request.multiPart("unit_value", firstPortion.getString("unit_value"));
-                    request.multiPart("unit_type", firstPortion.getString("unit_type"));
-                    request.multiPart("flag", firstPortion.getString("flag"));
-                }
-                
-                // Add optional fields if present
-                if (requestBodyJson.has("ingredients")) {
-                    request.multiPart("ingredients", requestBodyJson.getString("ingredients"));
-                }
-                if (requestBodyJson.has("offer")) {
-                    request.multiPart("offer", requestBodyJson.getString("offer"));
-                }
-                if (requestBodyJson.has("rating")) {
-                    request.multiPart("rating", requestBodyJson.getString("rating"));
-                }
-                if (requestBodyJson.has("cgst")) {
-                    request.multiPart("cgst", requestBodyJson.getString("cgst"));
-                }
-                if (requestBodyJson.has("sgst")) {
-                    request.multiPart("sgst", requestBodyJson.getString("sgst"));
-                }
-                
-                // Handle existing image IDs
+                request.multiPart("portion_data", requestBodyJson.getJSONArray("portion_data").toString());
+                request.multiPart("ingredients", requestBodyJson.getString("ingredients"));
+                request.multiPart("offer", requestBodyJson.getString("offer"));
+                request.multiPart("rating", requestBodyJson.getString("rating"));
+                request.multiPart("cgst", requestBodyJson.getString("cgst"));
+                request.multiPart("sgst", requestBodyJson.getString("sgst"));
                 if (requestBodyJson.has("existing_image_ids")) {
                     JSONArray array = requestBodyJson.getJSONArray("existing_image_ids");
                     for (int i = 0; i < array.length(); i++) {
@@ -449,8 +242,8 @@ public class MenuUpdate extends APIBase {
             ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString(2));
             
             // Send the request
-            LogUtils.info("Sending PUT request to " + baseUri);
-            response = request.put(baseUri);
+            LogUtils.info("Sending POST request to " + baseURI);
+            response = request.put(baseURI);
             
             // Log response details
             int actualStatusCode = response.getStatusCode();
@@ -460,29 +253,20 @@ public class MenuUpdate extends APIBase {
             ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + actualStatusCode);
             ExtentReport.getTest().log(Status.INFO, "Response Body: " + responseBody);
             
-            // Validate response
+            // Validate response status code
             if (actualStatusCode == Integer.parseInt(statusCode)) {
-                JSONObject responseJson = new JSONObject(responseBody);
+                LogUtils.success(logger, "Menu update test passed - Status Code matches: " + actualStatusCode);
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu updated successfully", ExtentColor.GREEN));
                 
-                // For positive test cases
-                if ("menuupdate_001".equalsIgnoreCase(testCaseid)) {
-                    if (responseJson.has("message")) {
-                        String message = responseJson.getString("message");
-                        if (message.contains("success") || message.contains("updated")) {
-                            LogUtils.success(logger, "Menu update test passed - Status Code and message match");
-                            ExtentReport.getTest().log(Status.PASS, 
-                                MarkupHelper.createLabel("Menu updated successfully", ExtentColor.GREEN));
-                        } else {
-                            String errorMsg = "Unexpected response message: " + message;
-                            LogUtils.failure(logger, errorMsg);
-                            ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                            throw new customException(errorMsg);
-                        }
-                    } else {
-                        String errorMsg = "Response missing expected 'message' field";
-                        LogUtils.failure(logger, errorMsg);
-                        ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                        throw new customException(errorMsg);
+                // Validate response body if expected
+                if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    JSONObject expectedJson = new JSONObject(expectedResponseBody);
+                    JSONObject actualJson = new JSONObject(responseBody);
+                    
+                    // Check for success message
+                    if (actualJson.has("message")) {
+                        LogUtils.info("Response message: " + actualJson.getString("message"));
+                        ExtentReport.getTest().log(Status.INFO, "Response message: " + actualJson.getString("message"));
                     }
                 }
             } else {
@@ -542,27 +326,225 @@ public class MenuUpdate extends APIBase {
             LogUtils.error("Error adding image to request: " + e.getMessage());
         }
     }
-
-    /**
-     * Helper method to validate menu ID before update
-     */
-    private boolean validateMenuId(String menuId) {
+    @DataProvider(name = "getMenuUpdateNegativeData")
+    public Object[][] getMenuUpdateNegativeData() throws customException {
         try {
-            // Create a GET request to check if menu exists
-            Response checkResponse = RestAssured.given()
-                    .header("Authorization", "Bearer " + accessToken)
-                    .get(baseUri + "/" + menuId);
+            LogUtils.info("Reading menu update negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading menu update negative test scenario data");
 
-            if (checkResponse.getStatusCode() == 200) {
-                LogUtils.info("Menu ID " + menuId + " exists and is valid");
-                return true;
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "menuupdate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+
+                    filteredData.add(row);
+                }
+            }
+
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid menu update negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting menu update negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting menu update negative test data: " + e.getMessage());
+            throw new customException("Error in getting menu update negative test data: " + e.getMessage());
+        }
+    }
+
+    // Helper method to count sentences in a string
+    private int countSentences(String text) {
+        if (text == null || text.isEmpty()) {
+            return 0;
+        }
+        // Pattern to match sentences ending with . ! ? followed by space or end of string
+        Pattern pattern = Pattern.compile("[.!?][ $]");
+        String[] sentences = pattern.split(text);
+        return sentences.length;
+    }
+
+    @Test(dataProvider = "getMenuUpdateNegativeData")
+    public void menuUpdateNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting menu update negative test case: " + testCaseid);
+            ExtentReport.createTest("Menu Update Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            if (apiName.equalsIgnoreCase("menuupdate") && testType.equalsIgnoreCase("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+
+                request = RestAssured.given()
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType("multipart/form-data");
+                
+                // Add form fields from Excel data
+                try {
+                    LogUtils.info("Adding form fields from Excel data");
+                    
+                    // Add user_id (use from token if not in payload)
+                    if (requestBodyJson.has("user_id")) {
+                        request.multiPart("user_id", requestBodyJson.getString("user_id"));
+                    } else {
+                        request.multiPart("user_id", String.valueOf(user_id));
+                    }
+                    
+                    // Add required fields
+                    request.multiPart("outlet_id", requestBodyJson.getString("outlet_id"));
+                    request.multiPart("menu_id", requestBodyJson.getString("menu_id"));
+                    request.multiPart("menu_cat_id", requestBodyJson.getString("menu_cat_id"));
+                    request.multiPart("name", requestBodyJson.getString("name"));
+                    request.multiPart("food_type", requestBodyJson.getString("food_type"));
+                    request.multiPart("description", requestBodyJson.getString("description"));
+                    request.multiPart("spicy_index", requestBodyJson.getString("spicy_index"));
+                    request.multiPart("portion_data", requestBodyJson.getJSONArray("portion_data").toString());
+                    request.multiPart("ingredients", requestBodyJson.getString("ingredients"));
+                    request.multiPart("offer", requestBodyJson.getString("offer"));
+                    request.multiPart("rating", requestBodyJson.getString("rating"));
+                    request.multiPart("cgst", requestBodyJson.getString("cgst"));
+                    request.multiPart("sgst", requestBodyJson.getString("sgst"));
+                    if (requestBodyJson.has("existing_image_ids")) {
+                        JSONArray array = requestBodyJson.getJSONArray("existing_image_ids");
+                        for (int i = 0; i < array.length(); i++) {
+                            request.multiPart("existing_image_ids[]", array.get(i).toString());
+                        }
+                    }
+                    
+                    // Process images if present
+                    if (requestBodyJson.has("images") && !requestBodyJson.isNull("images")) {
+                        JSONArray imagesArray = requestBodyJson.getJSONArray("images");
+                        processImageArray(request, imagesArray);
+                    }
+                    
+                    LogUtils.info("All form fields added successfully");
+                } catch (Exception e) {
+                    LogUtils.error("Error adding form fields: " + e.getMessage());
+                    ExtentReport.getTest().log(Status.ERROR, "Error adding form fields: " + e.getMessage());
+                    throw new customException("Error adding form fields: " + e.getMessage());
+                }
+                
+                // Log the prepared request
+                LogUtils.info("Request prepared successfully");
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString(2));
+                
+                // Send the request
+                LogUtils.info("Sending POST request to " + baseURI);
+                response = request.put(baseURI);
+                
+
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+
+                int expectedStatusCode = Integer.parseInt(statusCode);
+                
+                // Report actual vs expected status code
+                ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+                ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+
+                // Check for server errors
+                if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                    LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+                }
+                // Validate status code
+                else if (response.getStatusCode() != expectedStatusCode) {
+                    LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                }
+                else {
+                    LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+
+                    // Validate response body
+                    actualJsonBody = new JSONObject(response.asString());
+                    ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualJsonBody.toString(2));
+
+                    if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                        expectedResponseJson = new JSONObject(expectedResponseBody);
+                        ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedResponseJson.toString(2));
+
+                        // Validate response message sentence count
+                        if (actualJsonBody.has("detail")) {
+                            String detailMessage = actualJsonBody.getString("detail");
+                            int sentenceCount = countSentences(detailMessage);
+                            
+                            ExtentReport.getTest().log(Status.INFO, "Response message sentence count: " + sentenceCount);
+                            
+                            if (sentenceCount > 6) {
+                                String errorMsg = "Response message contains more than 6 sentences: " + sentenceCount;
+                                LogUtils.failure(logger, errorMsg);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Response message: " + detailMessage);
+                            } else {
+                                LogUtils.success(logger, "Response message sentence count validation passed: " + sentenceCount);
+                                ExtentReport.getTest().log(Status.PASS, "Response message sentence count validation passed: " + sentenceCount);
+                            }
+                        }
+
+                        // Validate response message
+                        if (expectedResponseJson.has("detail") && actualJsonBody.has("detail")) {
+                            String expectedDetail = expectedResponseJson.getString("detail");
+                            String actualDetail = actualJsonBody.getString("detail");
+
+                            if (expectedDetail.equals(actualDetail)) {
+                                LogUtils.info("Error message validation passed: " + actualDetail);
+                                ExtentReport.getTest().log(Status.PASS, "Error message validation passed: " + actualDetail);
+                            } else {
+                                LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                            }
+                        }
+
+                        // Complete response validation
+                        validateResponseBody.handleResponseBody(response, expectedResponseJson);
+                    }
+
+                    LogUtils.success(logger, "Menu update negative test completed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu update negative test completed successfully", ExtentColor.GREEN));
+                }
+
+                // Always log the full response
+                ExtentReport.getTest().log(Status.INFO, "Full Response:");
+                ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
             } else {
-                LogUtils.error("Menu ID " + menuId + " does not exist or is invalid");
-                return false;
+                String errorMsg = "Test case is not marked as a menu update negative test or has incorrect API name";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
             }
         } catch (Exception e) {
-            LogUtils.error("Error validating menu ID: " + e.getMessage());
-            return false;
+            String errorMsg = "Error in menu update negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
         }
     }
 }

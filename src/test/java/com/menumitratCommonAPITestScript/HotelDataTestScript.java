@@ -29,6 +29,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -196,7 +197,8 @@ public class HotelDataTestScript extends APIBase {
                     ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
                     LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
                     
-                                    }
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                }
             } else {
                 String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
                 ExtentReport.getTest().log(Status.FAIL, errorMsg);
@@ -217,7 +219,156 @@ public class HotelDataTestScript extends APIBase {
         }
     }
 
-    @AfterClass
+    /**
+     * Data provider for hotel data negative test scenarios
+     */
+    @DataProvider(name = "getHotelDataNegativeTestData")
+    public  Object[][] getHotelDataNegativeTestData() throws customException {
+        try {
+            LogUtils.info("Reading hotel data negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading hotel data negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (Object[] row : readExcelData) {
+                if (row != null && row.length >= 3 &&
+                    "gethoteldata".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid hotel data negative test data found";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            return filteredData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting hotel data negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting hotel data negative test data: " + e.getMessage());
+            throw new customException("Error in getting hotel data negative test data: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Test method for negative test scenarios
+     */
+    @Test(dataProvider = "getHotelDataNegativeTestData")
+    public void hotelDataNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode) 
+            throws customException {
+        try {
+            LogUtils.info("Starting hotel data negative test: " + description);
+            ExtentReport.createTest("Hotel Data Negative Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            // Request preparation
+            ExtentReport.getTest().log(Status.INFO, "Preparing request body");
+            LogUtils.info("Preparing request body");
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            
+            // Set request payload
+            hotelDataRequest.setUser_id(requestBodyJson.getString("user_id"));
+            hotelDataRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+
+            // Log request details
+            ExtentReport.getTest().log(Status.INFO, "Request Payload: " + requestBodyJson.toString(2));
+            LogUtils.info("Request Payload: " + requestBodyJson.toString(2));
+
+            // API call
+            ExtentReport.getTest().log(Status.INFO, "Making API call to endpoint: " + baseURI);
+            LogUtils.info("Making API call to endpoint: " + baseURI);
+            
+            response = ResponseUtil.getResponseWithAuth(baseURI, hotelDataRequest, httpsmethod, accessToken);
+            
+            // Response logging
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+            
+            // Validation
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + statusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+            
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                
+                actualResponseBody = new JSONObject(response.asString());
+                expectedResponse = new JSONObject(expectedResponseBody);
+                
+                ExtentReport.getTest().log(Status.INFO, "Starting response body validation");
+                LogUtils.info("Starting response body validation");
+                ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+                
+                // Validate response message sentence count
+                if (actualResponseBody.has("message")) {
+                    String message = actualResponseBody.getString("message");
+                    String[] sentences = message.split("[.!?]+");
+                    int sentenceCount = 0;
+                    
+                    for (String sentence : sentences) {
+                        if (!sentence.trim().isEmpty()) {
+                            sentenceCount++;
+                        }
+                    }
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Response message contains " + sentenceCount + " sentences");
+                    LogUtils.info("Response message contains " + sentenceCount + " sentences");
+                    
+                    if (sentenceCount > 6) {
+                        String errorMsg = "Response message contains more than 6 sentences (" + sentenceCount + "), which exceeds the limit";
+                        ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                        LogUtils.failure(logger, errorMsg);
+                        throw new customException(errorMsg);
+                    } else {
+                        ExtentReport.getTest().log(Status.PASS, "Response message sentence count validation passed: " + sentenceCount + " sentences");
+                        LogUtils.success(logger, "Response message sentence count validation passed: " + sentenceCount + " sentences");
+                    }
+                }
+                
+                // Perform detailed response validation
+                ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
+                LogUtils.info("Performing detailed response validation");
+                validateResponseBody.handleResponseBody(response, expectedResponse);
+                
+                ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                LogUtils.success(logger, "Response body validation passed successfully");
+                
+            } else {
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+                throw new customException(errorMsg);
+            }
+        } catch (Exception e) {
+            String errorMsg = "Error in hotel data negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+   // @AfterClass
     private void tearDown() {
         try {
             LogUtils.info("===Test environment tear down started===");

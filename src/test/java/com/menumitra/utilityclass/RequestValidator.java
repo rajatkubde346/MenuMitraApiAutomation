@@ -7,7 +7,7 @@ public class RequestValidator
 {
 	private static URL url;
 	
-	public static String buildUri(String endpoint,String baseUri) throws MenumitraException
+	public static String buildUri(String endpoint,String baseUri) throws customException
 	{
 		try
 		{
@@ -15,11 +15,11 @@ public class RequestValidator
 		}
 		catch (MalformedURLException e) 
 		{
-			throw new MenumitraException("Malformed URL Exception occurred..");
+			throw new customException("Malformed URL Exception occured..");
 		}
 		catch (Exception e) 
 		{
-			throw new MenumitraException("unexpected error occurred");
+			throw new customException("unexpected error occured");
 		}
 		return baseUri+""+url.getPath();	
 	}

@@ -11,14 +11,18 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>verifyOTPUsingValidInputData</td>
+<td>verifyOTPusingInvalidData</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>verifyOTPAPiUsingValidInputData</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>verifyOTPSetup</td>
+<td>setup</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeMethod</td>
@@ -37,7 +41,11 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>verifyOrderView</td>
+<td>orderViewTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>orderViewNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -66,6 +74,10 @@
 <td>deleteChef</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>chefDeleteNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -90,6 +102,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>getStaffListWithRoleTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>staffListWithRoleNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -145,7 +161,11 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>updateWaiter</td>
+<td>verifyWaiterUpdate</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>waiterUpdateNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -260,6 +280,10 @@
 <td>verifyWaiterCreate</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>waiterCreateNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -286,6 +310,10 @@
 <td>activityLogTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>activityLogNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -302,11 +330,45 @@
 <td align='center' colspan='3'>@AfterClass</td>
 </tr>
 <tr>
+<td>com.menumitratCommonAPITestScript.MakeMenuSpecialNonSpecial</td>
+<td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr>
+<td align='center' colspan='3'>@Test</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>verifyMakeMenuSpecialNonSpecial</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>makeMenuSpecialNonSpecialNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td align='center' colspan='3'>@BeforeClass</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>makeMenuSpecialNonSpecialSetUp</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td align='center' colspan='3'>@BeforeMethod</td>
+</tr>
+<tr>
+<td align='center' colspan='3'>@AfterMethod</td>
+</tr>
+<tr>
+<td align='center' colspan='3'>@AfterClass</td>
+</tr>
+<tr>
 <td>com.menumitratCommonAPITestScript.MenuCategoryCreateTestScript</td>
 <td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>menuCategoryCreateNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>createMenuCategoryUsingValidInputData</td>
@@ -372,53 +434,15 @@
 <td>ticketViewTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>ticketViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
 <td>ticketViewSetUp</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td align='center' colspan='3'>@BeforeMethod</td>
-</tr>
-<tr>
-<td align='center' colspan='3'>@AfterMethod</td>
-</tr>
-<tr>
-<td align='center' colspan='3'>@AfterClass</td>
-</tr>
-<tr>
-<td>com.menumitratCommonAPITestScript.CreateOrderTestScript</td>
-<td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr>
-<td align='center' colspan='3'>@Test</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>createParcelOrderString</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>createCounterOrder</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>createDriveThroughOrder</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>createDeliveryOrder</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>createDineInOrder</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td align='center' colspan='3'>@BeforeClass</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>createOrderSetUp</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeMethod</td>
@@ -440,6 +464,10 @@
 <td>createSupplier</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>supplierCreateNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -456,15 +484,15 @@
 <td align='center' colspan='3'>@AfterClass</td>
 </tr>
 <tr>
-<td>&nbsp;</td>
-<td>tearDown</td>
-<td>&nbsp;</td></tr>
-<tr>
 <td>com.menumitratCommonAPITestScript.SendQRLinkTestScript</td>
 <td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>sendQRLinkNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>sendQRLinkTest</td>
@@ -491,6 +519,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>captainViewNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>captainViewTest</td>
@@ -522,6 +554,10 @@
 <td>verifyTableListView</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>tableListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -548,6 +584,10 @@
 <td>viewTemplatesTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>viewTemplatesNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -569,6 +609,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>supplierListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifySupplierListViewUsingPositiveData</td>
@@ -600,6 +644,10 @@
 <td>verifyWaiterView</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>waiterViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -623,7 +671,11 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>inventoryDeleteTest</td>
+<td>deleteInventory</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>deleteInventoryNegative</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -647,6 +699,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>menuUpdateNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>updateMenu</td>
@@ -673,6 +729,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>menuCategoryListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifyMenuCategoryListView</td>
@@ -731,6 +791,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>joinTablesNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>joinTables</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -757,7 +821,7 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>inventoryViewTest</td>
+<td>verifyInventoryView</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -842,6 +906,10 @@
 <td>verifySectionListViewUsingValidInputData</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>sectionListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -868,6 +936,10 @@
 <td>getAllMenuListByCategory</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>getAllMenuListByCategoryNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -889,6 +961,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>createInventoryCategoryNegative</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>createInventoryCategory</td>
@@ -920,6 +996,10 @@
 <td>ownerDetailsTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>ownerDetailsNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -944,10 +1024,6 @@
 <tr>
 <td>&nbsp;</td>
 <td>staffDeleteNegativeTest</td>
-<td>&nbsp;</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td>testStaffDelete</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -1003,6 +1079,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>resendOTPusingInvalidData</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>verifyRessendOTPUSingPositiveInputData</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1022,6 +1102,32 @@
 <td align='center' colspan='3'>@AfterClass</td>
 </tr>
 <tr>
+<td>com.menumitratCommonAPITestScript.UdhariCreateTestScript</td>
+<td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr>
+<td align='center' colspan='3'>@Test</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>testCreateUdhariLedger</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td align='center' colspan='3'>@BeforeClass</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>udhariCreateSetUp</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td align='center' colspan='3'>@BeforeMethod</td>
+</tr>
+<tr>
+<td align='center' colspan='3'>@AfterMethod</td>
+</tr>
+<tr>
+<td align='center' colspan='3'>@AfterClass</td>
+</tr>
+<tr>
 <td>com.menumitratCommonAPITestScript.SearchMenu</td>
 <td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
@@ -1030,6 +1136,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>verifySearchMenu</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>searchMenuNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -1053,6 +1163,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>outletSettingsViewNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>outletSettingsView</td>
@@ -1133,6 +1247,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>menuViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>verifyMenuView</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1160,6 +1278,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>verifyViewProfile</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>viewProfileNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -1211,6 +1333,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>verifyLoginUsingInvalidInputData</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>verifyloginUsingValidInputData</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1237,7 +1363,11 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>inventoryListViewTest</td>
+<td>verifyInventoryList</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>inventoryListViewNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -1289,6 +1419,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>menuCategoriesNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>verifyMenuCategorys</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1313,6 +1447,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>updateTableNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>updateTableUsingValidInputData</td>
@@ -1345,6 +1483,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>captainCreateNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>captainCreateTest</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1369,6 +1511,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>orderListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>orderListViewTest</td>
@@ -1400,6 +1546,10 @@
 <td>checkIfTableIsReserved</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>checkTableIsReservedNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -1424,6 +1574,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>setTableIsReserved</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>tableIsReservedNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -1501,6 +1655,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>menuDeleteNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>deleteMenu</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1530,6 +1688,10 @@
 <td>testSupplierDelete</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>supplierDeleteNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -1551,6 +1713,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>chefUpdateNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>updateChef</td>
@@ -1631,6 +1797,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>changeSettingsNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>changeSettingsTest</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1655,6 +1825,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>addMenusToOrderNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifyAddMenusToOrder</td>
@@ -1707,6 +1881,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>createTicketNegative</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>createTicketUsingValidInputData</td>
@@ -1765,6 +1943,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>deleteTemplatesNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>deleteTemplatesTest</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -1792,6 +1974,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>selectTemplateUsingValidInputData</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>selectTemplateNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -1850,6 +2036,10 @@
 <td>verifyMenuCategoryDelete</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>menuCategoryListDeleteNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -1906,6 +2096,10 @@
 <td>verifyUpdateProfileDetail</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>updateProfileDetailNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -1932,6 +2126,10 @@
 <td>getAvailableTablesTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>getAvailableTablesNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -1953,6 +2151,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>tableDeleteNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifyTableDelete</td>
@@ -1979,6 +2181,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>totalTicketsTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>totalTicketsNegativeTest</td>
@@ -2036,6 +2242,10 @@
 <td>updateActiveStatusTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>updateActiveStatusNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -2057,6 +2267,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>captainUpdateNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>captainUpdateTest</td>
@@ -2105,7 +2319,7 @@
 <td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
-<td>updateOrder</td>
+<td>updateOrderNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -2157,6 +2371,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>selectOutletNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>selectOutletTest</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -2181,6 +2399,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>sectionCreateNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifySectionUsingValidInputData</td>
@@ -2209,6 +2431,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>forceCancelOrderNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>forceCancelOrderTest</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -2235,6 +2461,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>removeTemplateNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>removeTemplate</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -2259,6 +2489,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>viewOutletNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifyViewOutlet</td>
@@ -2288,6 +2522,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>verifyTableView</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>tableViewNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -2342,6 +2580,10 @@
 <td>verifyTableListView</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>tableListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -2391,6 +2633,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>sectionViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>verifySectionViewUsingValidInputData</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -2418,6 +2664,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>waiterListViewTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>waiterListViewNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -2473,6 +2723,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>verifyStaffCreateNegativeCases</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>createStaff</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -2526,6 +2780,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>createMenuUsigValidInputData</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>createMenuNegative</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -2662,6 +2920,10 @@
 <td>defaultSetting</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>defaultSettingsNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -2692,6 +2954,10 @@
 <td>staffRoleListTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>staffRoleListNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -2715,7 +2981,11 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>createTable</td>
+<td>verifyTableCreateNegative</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>verifyTableCreate</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -2744,6 +3014,10 @@
 <td>captainListViewTest</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>captainListViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -2770,6 +3044,10 @@
 <td>verifyUpdateOutlet</td>
 <td>&nbsp;</td></tr>
 <tr>
+<td>&nbsp;</td>
+<td>updateOutletNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
 <td align='center' colspan='3'>@BeforeClass</td>
 </tr>
 <tr>
@@ -2791,6 +3069,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>chefCreateNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>createChef</td>
@@ -2819,7 +3101,11 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td>verifyChefListView</td>
+<td>chefListViewTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>chefListViewNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -2869,6 +3155,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>getSupplierListNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>getSupplierList</td>
@@ -2957,6 +3247,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>chefViewNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>chefViewTest</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -2984,6 +3278,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>checkVersionTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>checkVersionNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>
@@ -3043,6 +3341,10 @@
 </tr>
 <tr>
 <td>&nbsp;</td>
+<td>captainDeleteNegativeTest</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
 <td>deleteCaptain</td>
 <td>&nbsp;</td></tr>
 <tr>
@@ -3067,6 +3369,10 @@
 <tr>
 <td align='center' colspan='3'>@Test</td>
 </tr>
+<tr>
+<td>&nbsp;</td>
+<td>menuCategoryViewNegativeTest</td>
+<td>&nbsp;</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>verifyMenuCategoryView</td>
@@ -3096,6 +3402,10 @@
 <tr>
 <td>&nbsp;</td>
 <td>verifyMenuList</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>getMenuListNegativeTest</td>
 <td>&nbsp;</td></tr>
 <tr>
 <td align='center' colspan='3'>@BeforeClass</td>

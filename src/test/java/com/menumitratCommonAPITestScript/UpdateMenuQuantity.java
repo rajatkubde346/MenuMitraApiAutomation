@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -401,7 +402,8 @@ public class UpdateMenuQuantity extends APIBase
                         }
                         
                         // Complete response validation
-                                            }
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    }
                     
                     LogUtils.success(logger, "Update menu quantity negative test completed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Update menu quantity negative test completed successfully", ExtentColor.GREEN));

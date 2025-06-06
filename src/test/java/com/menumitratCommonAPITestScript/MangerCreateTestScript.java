@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
@@ -27,198 +28,264 @@ import com.menumitra.utilityclass.LogUtils;
 import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
+import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
 @Listeners(Listener.class)
 public class MangerCreateTestScript extends APIBase {
-    private MangerCreateRequest managerCreateRequest;
+    private MangerCreateRequest mangerCreateRequest;
     private Response response;
-    private JSONObject requestBodyJson;
-    private JSONObject expectedJsonBody;
+    private JSONObject actualResponseBody;
+    private JSONObject expectedResponse;
     private String baseURI;
+    private JSONObject requestBodyJson;
     private URL url;
-    private int userId;
+    private int user_id;
     private String accessToken;
     private Logger logger = LogUtils.getLogger(MangerCreateTestScript.class);
 
-    @DataProvider(name = "getManagerCreateUrl")
-    public Object[][] getManagerCreateUrl() throws Exception {
+    @DataProvider(name = "getMangerCreateUrl")
+    public static Object[][] getMangerCreateUrl() throws customException {
         try {
-            LogUtils.info("Reading Manager Create API endpoint data from Excel sheet");
+            LogUtils.info("Reading Manger Create API endpoint data from Excel sheet");
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "commonAPI");
-
             return Arrays.stream(readExcelData)
-                    .filter(row -> "managercreate".equalsIgnoreCase(row[0].toString()))
+                    .filter(row -> "mangercreate".equalsIgnoreCase(row[0].toString()))
                     .toArray(Object[][]::new);
         } catch (Exception e) {
-            LogUtils.error("Error While Reading Manager Create API endpoint data from Excel sheet");
-            ExtentReport.getTest().log(Status.ERROR,
-                    "Error While Reading Manager Create API endpoint data from Excel sheet");
-            throw new Exception("Error While Reading Manager Create API endpoint data from Excel sheet");
+            LogUtils.error("Error While Reading Manger Create API endpoint data from Excel sheet");
+            ExtentReport.getTest().log(Status.ERROR, "Error While Reading Manger Create API endpoint data from Excel sheet");
+            throw new customException("Error While Reading Manger Create API endpoint data from Excel sheet");
         }
     }
 
-    @DataProvider(name = "getManagerCreateData")
-    public Object[][] getManagerCreateData() throws Exception {
+    @DataProvider(name = "getMangerCreateData")
+    public static Object[][] getMangerCreateData() throws customException {
         try {
-            LogUtils.info("Reading manager create test scenario data");
-
+            LogUtils.info("Reading manger create test scenario data");
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             if (readExcelData == null || readExcelData.length == 0) {
-                LogUtils.error("No manager create test scenario data found in Excel sheet");
-                throw new Exception("No manager create test scenario data found in Excel sheet");
+                LogUtils.error("No manger create test scenario data found in Excel sheet");
+                throw new customException("No manger create test scenario data found in Excel sheet");
             }
-
             List<Object[]> filteredData = new ArrayList<>();
-
-            for (int i = 0; i < readExcelData.length; i++) {
-                Object[] row = readExcelData[i];
+            for (Object[] row : readExcelData) {
                 if (row != null && row.length >= 2 &&
-                        "managercreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "mangercreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
                         "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-
                     filteredData.add(row);
                 }
             }
-
             Object[][] obj = new Object[filteredData.size()][];
             for (int i = 0; i < filteredData.size(); i++) {
                 obj[i] = filteredData.get(i);
             }
-
-            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for manager create");
+            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for manger create");
             return obj;
         } catch (Exception e) {
-            LogUtils.error("Error while reading manager create test scenario data from Excel sheet: " + e.getMessage());
-            ExtentReport.getTest().log(Status.ERROR,
-                    "Error while reading manager create test scenario data: " + e.getMessage());
-            throw new Exception(
-                    "Error while reading manager create test scenario data from Excel sheet: " + e.getMessage());
+            LogUtils.error("Error while reading manger create test scenario data from Excel sheet: " + e.getMessage());
+            ExtentReport.getTest().log(Status.ERROR, "Error while reading manger create test scenario data: " + e.getMessage());
+            throw new customException("Error while reading manger create test scenario data from Excel sheet: " + e.getMessage());
+        }
+    }
+
+    @DataProvider(name = "getMangerCreateNegativeData")
+    public static Object[][] getMangerCreateNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading manger create negative test scenario data");
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                throw new customException("Error fetching data from Excel sheet - Data is null");
+            }
+            List<Object[]> filteredData = new ArrayList<>();
+            for (Object[] row : readExcelData) {
+                if (row != null && row.length >= 3 &&
+                        "mangercreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+            if (filteredData.isEmpty()) {
+                throw new customException("No valid manger create negative test data found");
+            }
+            return filteredData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            throw new customException("Error in getting manger create negative test data: " + e.getMessage());
         }
     }
 
     @BeforeClass
-    private void setup() throws Exception {
+    private void setup() throws customException {
         try {
-            LogUtils.info("====Starting setup for manager create test====");
-            ExtentReport.createTest("Manager Create Setup"); 
-            
-            LogUtils.info("Initiating login process");
+            LogUtils.info("====Starting setup for manger create test====");
+            ExtentReport.createTest("Manger Create Setup");
             ActionsMethods.login();
-            LogUtils.info("Login successful, proceeding with OTP verification");
             ActionsMethods.verifyOTP();
-            
-            // Get base URL
             baseURI = EnviromentChanges.getBaseUrl();
-            LogUtils.info("Base URL retrieved: " + baseURI);
-           
-            // Get and set manager create URL
-            Object[][] managerCreateData = getManagerCreateUrl();
-            if (managerCreateData.length > 0) {
-                String endpoint = managerCreateData[0][2].toString();
+            Object[][] mangerCreateData = getMangerCreateUrl();
+            if (mangerCreateData.length > 0) {
+                String endpoint = mangerCreateData[0][2].toString();
                 url = new URL(endpoint);
                 baseURI = RequestValidator.buildUri(endpoint, baseURI);
-                LogUtils.info("Constructed base URI for manager create: " + baseURI);
+                LogUtils.info("Constructed base URI for manger create: " + baseURI);
                 ExtentReport.getTest().log(Status.INFO, "Constructed base URI: " + baseURI);
             } else {
-                LogUtils.failure(logger, "No manager create URL found in test data");
-                ExtentReport.getTest().log(Status.FAIL, "No manager create URL found in test data");
-                throw new Exception("No manager create URL found in test data");
+                throw new customException("No manger create URL found in test data");
             }
-
-            // Get tokens from TokenManager
             accessToken = TokenManagers.getJwtToken();
-            userId = TokenManagers.getUserId();
-
+            user_id = TokenManagers.getUserId();
             if (accessToken.isEmpty()) {
-                LogUtils.error("Error: Required tokens not found. Please ensure login and OTP verification is completed");
-                throw new Exception("Required tokens not found. Please ensure login and OTP verification is completed");
+                throw new customException("Required tokens not found. Please ensure login and OTP verification is completed");
             }
-            
-            managerCreateRequest = new MangerCreateRequest();
-            LogUtils.success(logger, "Manager Create Setup completed successfully");
-            ExtentReport.getTest().log(Status.PASS, "Manager Create Setup completed successfully");
-
+            mangerCreateRequest = new MangerCreateRequest();
+            LogUtils.success(logger, "Manger Create Setup completed successfully");
+            ExtentReport.getTest().log(Status.PASS, "Manger Create Setup completed successfully");
         } catch (Exception e) {
-            LogUtils.failure(logger, "Error during manager create setup: " + e.getMessage());
-            ExtentReport.getTest().log(Status.FAIL, "Error during manager create setup: " + e.getMessage());
-            throw new Exception("Error during setup: " + e.getMessage());
+            throw new customException("Error during setup: " + e.getMessage());
         }
     }
 
-    @Test(dataProvider = "getManagerCreateData")
-    private void createManager(String apiName, String testCaseid, String testType, String description,
+    @Test(dataProvider = "getMangerCreateData")
+    private void createManger(String apiName, String testCaseid, String testType, String description,
             String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
-            throws Exception {
+            throws customException {
         try {
-            LogUtils.info("Starting manager creation test case: " + testCaseid);
-            LogUtils.info("Test Description: " + description);
-            ExtentReport.createTest("Manager Creation Test - " + testCaseid);
+            LogUtils.info("Starting manger create test case: " + testCaseid);
+            ExtentReport.createTest("Manger Create Test - " + testCaseid);
             ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
-            
-            // Request preparation
-            ExtentReport.getTest().log(Status.INFO, "Preparing request body");
-            LogUtils.info("Preparing request body");
-            JSONObject requestBodyJson = new JSONObject(requestBodyPayload);
-            
-            ExtentReport.getTest().log(Status.INFO, "Setting outlet_id in request");
-            LogUtils.info("Setting outlet_id in request");
-            managerCreateRequest.setOutlet_id(String.valueOf(requestBodyJson.getInt("outlet_id")));
-            
-            ExtentReport.getTest().log(Status.INFO, "Setting user_id in request: " + userId);
-            LogUtils.info("Setting user_id in request: " + userId);
-            managerCreateRequest.setUser_id(String.valueOf(userId));
-            
-            ExtentReport.getTest().log(Status.INFO, "Setting manager name in request");
-            LogUtils.info("Setting manager name in request");
-            managerCreateRequest.setName(requestBodyJson.getString("name"));
-            
-            ExtentReport.getTest().log(Status.INFO, "Setting mobile number in request");
-            LogUtils.info("Setting mobile number in request");
-            managerCreateRequest.setMobile(requestBodyJson.getString("mobile_number"));
-            
-            ExtentReport.getTest().log(Status.INFO, "Setting address in request");
-            LogUtils.info("Setting address in request");
-            managerCreateRequest.setAddress(requestBodyJson.getString("address"));
-            
-            LogUtils.info("Request Body: " + requestBodyJson.toString());
-            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
-            
-            // API call
-            response = ResponseUtil.getResponseWithAuth(baseURI, managerCreateRequest, httpsmethod, accessToken);
-            
-            LogUtils.info("Response Status Code: " + response.getStatusCode());
-            LogUtils.info("Response Body: " + response.asString());
-            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
-            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
-            
-            int expectedStatusCode = Integer.parseInt(statusCode);
-            
-            // Report actual vs expected status code
-            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
-            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
-            
-            if (response.getStatusCode() == expectedStatusCode) {
-                String responseBody = response.getBody().asString();
-                if (responseBody != null && !responseBody.trim().isEmpty()) {
-                    expectedJsonBody = new JSONObject(expectedResponseBody);
-                                        LogUtils.success(logger, "Successfully created manager");
-                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Successfully created manager", ExtentColor.GREEN));
+
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            mangerCreateRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            mangerCreateRequest.setUser_id(requestBodyJson.getString("user_id"));
+            mangerCreateRequest.setName(requestBodyJson.getString("name"));
+            mangerCreateRequest.setMobile(requestBodyJson.getString("mobile"));
+            mangerCreateRequest.setAddress(requestBodyJson.getString("address"));
+            mangerCreateRequest.setAadhar_number(requestBodyJson.getString("aadhar_number"));
+
+            // Log payload and request body
+            ExtentReport.getTest().log(Status.INFO, "Payload: " + requestBodyPayload);
+            LogUtils.info("Payload: " + requestBodyPayload);
+
+            response = ResponseUtil.getResponseWithAuth(baseURI, mangerCreateRequest, httpsmethod, accessToken);
+
+            // Log response body
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+
+         // Validation
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                actualResponseBody = new JSONObject(response.asString());
+                
+                if (!actualResponseBody.isEmpty()) {
+                    expectedResponse = new JSONObject(expectedResponseBody);
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Starting response body validation");
+                    LogUtils.info("Starting response body validation");
+                    ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                    LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                    ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                    LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
+                    LogUtils.info("Performing detailed response validation");
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                    
+                    ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                    LogUtils.success(logger, "Response body validation passed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Inventory created successfully", ExtentColor.GREEN));
                 } else {
-                    LogUtils.failure(logger, "Empty response body received");
-                    ExtentReport.getTest().log(Status.FAIL, "Empty response body received");
-                    throw new Exception("Response body is empty");
+                    ExtentReport.getTest().log(Status.INFO, "Response body is empty");
+                    LogUtils.info("Response body is empty");
                 }
             } else {
-                LogUtils.failure(logger, "Invalid status code: " + response.getStatusCode());
-                ExtentReport.getTest().log(Status.FAIL, "Invalid status code: " + response.getStatusCode());
-                throw new Exception("Expected status code " + expectedStatusCode + " but got " + response.getStatusCode());
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+                throw new customException(errorMsg);
             }
         } catch (Exception e) {
-            LogUtils.exception(logger, "Error during manager creation: " + e.getMessage(), e);
-            ExtentReport.getTest().log(Status.FAIL, "Error during manager creation: " + e.getMessage());
-            throw new Exception("Error during manager creation: " + e.getMessage());
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            throw new customException(errorMsg);
+        }
+    }
+
+    @Test(dataProvider = "getMangerCreateNegativeData")
+    public void mangerCreateNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+            throws customException {
+        try {
+            LogUtils.info("Starting manger create negative test case: " + testCaseid);
+            ExtentReport.createTest("Manger Create Negative Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            mangerCreateRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            mangerCreateRequest.setUser_id(requestBodyJson.getString("user_id"));
+            mangerCreateRequest.setName(requestBodyJson.getString("name"));
+            mangerCreateRequest.setMobile(requestBodyJson.getString("mobile"));
+            mangerCreateRequest.setAddress(requestBodyJson.getString("address"));
+            mangerCreateRequest.setAadhar_number(requestBodyJson.getString("aadhar_number"));
+
+            // Log payload and request body
+            ExtentReport.getTest().log(Status.INFO, "Payload: " + requestBodyPayload);
+            LogUtils.info("Payload: " + requestBodyPayload);
+
+            response = ResponseUtil.getResponseWithAuth(baseURI, mangerCreateRequest, httpsmethod, accessToken);
+
+            // Log response body
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+
+            // Validate status code
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                actualResponseBody = new JSONObject(response.asString());
+                expectedResponse = new JSONObject(expectedResponseBody);
+
+                // Log actual and expected response
+                ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+
+                // Validate response body
+                validateResponseBody.handleResponseBody(response, expectedResponse);
+                ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                LogUtils.success(logger, "Response body validation passed successfully");
+            } else {
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                throw new customException(errorMsg);
+            }
+        } catch (Exception e) {
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            throw new customException(errorMsg);
+        }
+    }
+
+    //@AfterClass
+    private void tearDown() {
+        try {
+            LogUtils.info("===Test environment tear down started===");
+            ExtentReport.createTest("Manger Create Test Teardown");
+            ActionsMethods.logout();
+            TokenManagers.clearTokens();
+            LogUtils.info("===Test environment tear down completed successfully===");
+            ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Test environment tear down successfully", ExtentColor.GREEN));
+        } catch (Exception e) {
+            LogUtils.exception(logger, "Error during test environment tear down", e);
+            ExtentReport.getTest().log(Status.FAIL, "Error during test environment tear down: " + e.getMessage());
         }
     }
 }

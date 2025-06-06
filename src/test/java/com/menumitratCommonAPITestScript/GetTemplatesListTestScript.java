@@ -185,17 +185,17 @@ public class GetTemplatesListTestScript extends APIBase
     private void verifyTemplatesList(String apiName, String testCaseid, String testType, String description,
             String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
         
-        try {
+        try
+        {
             LogUtils.info("Templates list test execution: " + description);
             ExtentReport.createTest("Templates List Test - " + testCaseid);
             ExtentReport.getTest().log(Status.INFO, "Templates list test execution: " + description);
 
-            if(apiName.equalsIgnoreCase("gettemplateslist")) {
+            if(apiName.equalsIgnoreCase("gettemplateslist"))
+            {
                 // No payload needed for this API
                 LogUtils.info("Requesting templates list"); 
                 ExtentReport.getTest().log(Status.INFO, "Requesting templates list");
-                
-                // Make API call
                 response = RestAssured.given()
                         .contentType(ContentType.JSON)
                         .header("Authorization", "Bearer " + accessToken)
@@ -206,21 +206,51 @@ public class GetTemplatesListTestScript extends APIBase
                         .extract()
                         .response();
                 
-                // Log response
-                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Received response with status code: " + response.getStatusCode());
                 LogUtils.info("Response Body: " + response.asString());
-                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Received response with status code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
-                
-                // Mark test as passed
-                LogUtils.success(logger, "Templates list test completed successfully");
-                ExtentReport.getTest().log(Status.PASS, "Templates list test completed successfully");
+
+                if(response.getStatusCode() == Integer.parseInt(statusCode))
+                {
+                    LogUtils.success(logger, "Templates list API executed successfully");
+                    LogUtils.info("Status Code: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Templates list API executed successfully", ExtentColor.GREEN));
+                    ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
+                    
+                    // Only show response without validation
+                    actualJsonBody = new JSONObject(response.asString());
+                    LogUtils.info("Response received successfully");
+                    LogUtils.info("Response Body: " + actualJsonBody.toString());
+                    ExtentReport.getTest().log(Status.PASS, "Response received successfully");
+                    ExtentReport.getTest().log(Status.PASS, "Response Body: " + actualJsonBody.toString());
+                    
+                    // Make sure to use Status.PASS for the response to show in the report
+                    ExtentReport.getTest().log(Status.PASS, "Full Response:");
+                    ExtentReport.getTest().log(Status.PASS, response.asPrettyString());
+                    
+                    // Add a screenshot or additional details that might help visibility
+                    ExtentReport.getTest().log(Status.INFO, MarkupHelper.createLabel("Test completed successfully", ExtentColor.GREEN));
+                }
+                else{
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    LogUtils.info("Response Body: " + response.asString());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asPrettyString());
+                    throw new customException(errorMsg);
+                }
             }
-        } catch(Exception e) {
-            String errorMsg = "Error in templates list test: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            throw new customException(errorMsg);
+        }
+        catch(Exception e)
+        {
+            LogUtils.exception(logger, "Error in templates list test", e);
+            ExtentReport.getTest().log(Status.ERROR, "Error in templates list test: " + e.getMessage());
+            if(response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException("Error in templates list test: " + e.getMessage());
         }
     }
 }

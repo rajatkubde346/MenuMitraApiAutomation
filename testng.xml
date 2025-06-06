@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="classes">
-  <test name="MenuMitra API Tests">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="false
+" verbose="1">
+  <test name="Test">
     <classes>
       <class name="com.menumitra.superclass.APIBase"/>
-      <class name="com.menumitratCommonAPITestScript.TableListViewTestScript"/>
+      
+     
+      <class name="com.menumitratCommonAPITestScript.UdhariCreateTestScript"/>
+   
+
+
+    <class name="com.menumitratCommonAPITestScript.TableListViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.ActivityLogTestScript"/>
+      
       <class name="com.menumitratCommonAPITestScript.ChefViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.GetStaffListWithRole"/>
       <class name="com.menumitratCommonAPITestScript.MakeMenuSpecialNonSpecial"/>
@@ -16,7 +24,6 @@
       <class name="com.menumitratCommonAPITestScript.orderListViewSetUp"/>
       <class name="com.menumitratCommonAPITestScript.SendQRLinkTestScript"/>
       <class name="com.menumitratCommonAPITestScript.ChefDeleteTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.WaiterViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.OrderViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.DefaultSettingTestScript"/>
@@ -24,7 +31,6 @@
       <class name="com.menumitratCommonAPITestScript.CaptainListViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.CaptainDeleteTestScript"/>
       <class name="com.menumitratCommonAPITestScript.TableCreateTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.GetInventoryCategoryList"/>
       <class name="com.menumitratCommonAPITestScript.OutletSettingsViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.MenuCategoryViewTestScript"/>
@@ -32,7 +38,6 @@
       <class name="com.menumitratCommonAPITestScript.SupplierCreditRatingChoicesTestScript"/>
       <class name="com.menumitratCommonAPITestScript.verifyOTPTestScript"/>
       <class name="com.menumitratCommonAPITestScript.MenuCategoryUpdateTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.GetRatingList"/>
       <class name="com.menumitratCommonAPITestScript.WaiterListViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.SearchMenu"/>
@@ -51,18 +56,16 @@
       <class name="com.menumitratCommonAPITestScript.CaptainCreateTestScript"/>
       <class name="com.menumitratCommonAPITestScript.UpdateTableTestScript"/>
       <class name="com.menumitratCommonAPITestScript.SectionViewTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.CheckTableIsReservedTestScript"/>
       <class name="com.menumitratCommonAPITestScript.InventoryCreateTestScript"/>
       <class name="com.menumitratCommonAPITestScript.GetTemplatesListTestScript"/>
-      <class name="com.menumitratCommonAPITestScript.CreateOrderTestScript"/>
+      
       <class name="com.menumitratCommonAPITestScript.JoinTablesTestScript"/>
       <class name="com.menumitratCommonAPITestScript.StaffViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.sectionListViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.ViewTemplatesTestScript"/>
       <class name="com.menumitratCommonAPITestScript.GetOutletListTestScript"/>
       <class name="com.menumitratCommonAPITestScript.CaptainUpdateTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.WaiterUpdateTestScript"/>
       <class name="com.menumitratCommonAPITestScript.MenuListView"/>
       <class name="com.menumitratCommonAPITestScript.RemoveTemplateTestScript"/>
@@ -73,7 +76,6 @@
       <class name="com.menumitratCommonAPITestScript.UpdateMenuQuantity"/>
       <class name="com.menumitratCommonAPITestScript.CaptainViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.SupplierCreateTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.CreateQRTemplatesTestScript"/>
       <class name="com.menumitratCommonAPITestScript.SelectTemplateTestScript"/>
       <class name="com.menumitratCommonAPITestScript.SelectOutletTestScript"/>
@@ -81,7 +83,6 @@
       <class name="com.menumitratCommonAPITestScript.ContinueChatTestScript"/>
       <class name="com.menumitratCommonAPITestScript.DeleteTemplatesTestScript"/>
       <class name="com.menumitratCommonAPITestScript.UpdateProfileDetailTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.TicketListViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.PosDetailsTestScript"/>
       <class name="com.menumitratCommonAPITestScript.TableDeleteTestScript"/>
@@ -92,7 +93,6 @@
       <class name="com.menumitratCommonAPITestScript.ChefUpdateTestScript"/>
       <class name="com.menumitratCommonAPITestScript.ListViewOutletTestScript"/>
       <class name="com.menumitratCommonAPITestScript.TableIsReservedTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.AddMenusToOrder"/>
       <class name="com.menumitratCommonAPITestScript.SupplierStatusChoicesTestScript"/>
       <class name="com.menumitratCommonAPITestScript.MenuDelete"/>
@@ -118,7 +118,6 @@
       <class name="com.menumitratCommonAPITestScript.OutletTypeTestScript"/>
       <class name="com.menumitratCommonAPITestScript.InventoryDeleteTestScript"/>
       <class name="com.menumitratCommonAPITestScript.InventoryUpdateTestScript"/>
-      
       <class name="com.menumitratCommonAPITestScript.supplierViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.InventoryViewTestScript"/>
       <class name="com.menumitratCommonAPITestScript.MenuCategoryListViewTestScript"/>
@@ -132,5 +131,5 @@
       <class name="com.menumitratCommonAPITestScript.StaffUpdateTestScript"/>
       <class name="com.menumitratCommonAPITestScript.GetTemplates"/>
     </classes>
-  </test>
-</suite>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

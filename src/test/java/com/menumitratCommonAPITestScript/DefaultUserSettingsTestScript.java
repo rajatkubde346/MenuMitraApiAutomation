@@ -195,6 +195,14 @@ public class DefaultUserSettingsTestScript extends APIBase
                 ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
                 
+                // Validate status code
+                if (response.getStatusCode() != Integer.parseInt(statusCode)) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
+                
                 // Only show response without validation
                 actualJsonBody = new JSONObject(response.asString());
                 LogUtils.info("Default user settings response received successfully");

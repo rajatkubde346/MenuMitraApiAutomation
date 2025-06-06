@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -141,42 +142,48 @@ public class UpdateOutletTestScript extends APIBase
     @DataProvider(name = "getUpdateOutletData") 
     public Object[][] getUpdateOutletData() throws customException {
         try {
-            LogUtils.info("Reading positive update outlet test scenario data");
-            ExtentReport.getTest().log(Status.INFO, "Reading positive update outlet test scenario data");
+            LogUtils.info("Reading update outlet test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading update outlet test scenario data");
 
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             if (readExcelData == null || readExcelData.length == 0) {
                 String errorMsg = "No update outlet test scenario data found in Excel sheet";
-                LogUtils.error(errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
                 throw new customException(errorMsg);
             }
 
-            // Filter for positive test cases only
-            List<Object[]> positiveTestCases = new ArrayList<>();
-            for (Object[] row : readExcelData) {
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
                 if (row != null && row.length >= 3 &&
-                    "updateoutlet".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-                    "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-                    positiveTestCases.add(row);
+                        "updateoutlet".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+
+                    filteredData.add(row);
                 }
             }
 
-            if (positiveTestCases.isEmpty()) {
-                String errorMsg = "No positive update outlet test cases found in test data";
-                LogUtils.error(errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid update outlet test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
                 throw new customException(errorMsg);
             }
 
-            Object[][] positiveTestData = positiveTestCases.toArray(new Object[0][]);
-            LogUtils.info("Successfully retrieved " + positiveTestData.length + " positive update outlet test scenarios");
-            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + positiveTestData.length + " positive update outlet test scenarios");
-            return positiveTestData;
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
+            }
+
+            LogUtils.info("Successfully retrieved " + obj.length + " update outlet test scenarios");
+            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + obj.length + " update outlet test scenarios");
+            return obj;
         } catch (Exception e) {
-            String errorMsg = "Error while reading positive update outlet test scenario data: " + e.getMessage();
-            LogUtils.error(errorMsg);
-            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            String errorMsg = "Error in getUpdateOutletData: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
             throw new customException(errorMsg);
         }
     }
@@ -268,5 +275,203 @@ public class UpdateOutletTestScript extends APIBase
             }
             throw new customException("Error in update outlet test: " + e.getMessage());
         }
+    }
+    
+    
+    @DataProvider(name = "getUpdateOutletNegativeData")
+    public Object[][] getUpdateOutletNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading update outlet negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading update outlet negative test scenario data");
+
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null || readExcelData.length == 0) {
+                String errorMsg = "No update outlet test scenario data found in Excel sheet";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "updateoutlet".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid update outlet negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+
+            return result;
+        } catch (Exception e) {
+            String errorMsg = "Error in getting update outlet negative test data: " + e.getMessage();
+            LogUtils.failure(logger, errorMsg);
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting update outlet negative test data: " + e.getMessage());
+            throw new customException(errorMsg);
+        }
+    }
+
+    @Test(dataProvider = "getUpdateOutletNegativeData")
+    public void updateOutletNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting update outlet negative test case: " + testCaseid);
+            ExtentReport.createTest("Update Outlet Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            // Verify API name and test type
+            if (!apiName.equalsIgnoreCase("updateoutlet")) {
+                String errorMsg = "Invalid API name: " + apiName + ". Expected 'updateoutlet'";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            if (!testType.equalsIgnoreCase("negative")) {
+                String errorMsg = "Invalid test type: " + testType + ". Expected 'negative'";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+
+            requestBodyJson = new JSONObject(requestBody);
+            
+            LogUtils.info("Request Body: " + requestBodyJson.toString());
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+
+            // Set up request parameters
+            updateOutletRequest = new UpdateOutletRequest();
+            updateOutletRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            updateOutletRequest.setUser_id(String.valueOf(user_id));
+            updateOutletRequest.setName(requestBodyJson.getString("name"));
+            updateOutletRequest.setOutlet_type(requestBodyJson.getString("outlet_type"));
+            updateOutletRequest.setFssainumber(requestBodyJson.getString("fssainumber"));
+            updateOutletRequest.setGstnumber(requestBodyJson.getString("gstnumber"));
+            updateOutletRequest.setMobile(requestBodyJson.getString("mobile"));
+            updateOutletRequest.setVeg_nonveg(requestBodyJson.getString("veg_nonveg"));
+            updateOutletRequest.setService_charges(requestBodyJson.getString("service_charges"));
+            updateOutletRequest.setGst(requestBodyJson.getString("gst"));
+            updateOutletRequest.setAddress(requestBodyJson.getString("address"));
+            updateOutletRequest.setIs_open(requestBodyJson.getBoolean("is_open"));
+            updateOutletRequest.setUpi_id(requestBodyJson.optString("upi_id"));
+            updateOutletRequest.setWebsite(requestBodyJson.getString("website"));
+            updateOutletRequest.setWhatsapp(requestBodyJson.getString("whatsapp"));
+            updateOutletRequest.setFacebook(requestBodyJson.getString("facebook"));
+            updateOutletRequest.setInstagram(requestBodyJson.getString("instagram"));
+            updateOutletRequest.setGoogle_business_link(requestBodyJson.getString("google_business_link"));
+            updateOutletRequest.setGoogle_review(requestBodyJson.getString("google_review"));
+
+            response = ResponseUtil.getResponseWithAuth(baseURI, updateOutletRequest, httpsmethod, accessToken);
+
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Body: " + response.asString());
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+
+            int expectedStatusCode = Integer.parseInt(statusCode);
+
+            // Log expected vs actual status code
+            LogUtils.info("Expected Status Code: " + expectedStatusCode);
+            LogUtils.info("Actual Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+
+            // Check for server errors
+            if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+            }
+            // Validate status code
+            else if (response.getStatusCode() != expectedStatusCode) {
+                LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+            } else {
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+
+                // Validate response body
+                actualJsonBody = new JSONObject(response.asString());
+
+                if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    expectedJsonBody = new JSONObject(expectedResponseBody);
+
+                    // Validate response message length
+                    if (actualJsonBody.has("message")) {
+                        String message = actualJsonBody.getString("message");
+                        int sentenceCount = countSentences(message);
+                        
+                        if (sentenceCount > 6) {
+                            String errorMsg = "Response message exceeds 6 sentences. Current count: " + sentenceCount;
+                            LogUtils.failure(logger, errorMsg);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                            throw new customException(errorMsg);
+                        } else {
+                            LogUtils.success(logger, "Message sentence count validation passed: " + sentenceCount + " sentences");
+                            ExtentReport.getTest().log(Status.PASS, "Message sentence count validation passed: " + sentenceCount + " sentences");
+                        }
+                    }
+
+                    // Validate response message content
+                    if (expectedJsonBody.has("message") && actualJsonBody.has("message")) {
+                        String expectedMessage = expectedJsonBody.getString("message");
+                        String actualMessage = actualJsonBody.getString("message");
+
+                        if (expectedMessage.equals(actualMessage)) {
+                            LogUtils.success(logger, "Response message validation passed");
+                            ExtentReport.getTest().log(Status.PASS, "Response message validation passed");
+                        } else {
+                            LogUtils.failure(logger, "Response message mismatch - Expected: " + expectedMessage + ", Actual: " + actualMessage);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Response message mismatch", ExtentColor.RED));
+                            ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedMessage + ", Actual: " + actualMessage);
+                        }
+                    }
+
+                    // Complete response validation
+                    validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                }
+
+                LogUtils.success(logger, "Update outlet negative test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Update outlet negative test completed successfully", ExtentColor.GREEN));
+            }
+
+            // Always log the full response
+            ExtentReport.getTest().log(Status.INFO, "Full Response:");
+            ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+
+        } catch (Exception e) {
+            String errorMsg = "Error in update outlet negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+
+    // Helper method to count sentences in a message
+    private int countSentences(String message) {
+        if (message == null || message.trim().isEmpty()) {
+            return 0;
+        }
+        // Split by common sentence endings and count
+        String[] sentences = message.split("[.!?]+");
+        return sentences.length;
     }
 }

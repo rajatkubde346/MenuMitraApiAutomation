@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -139,8 +140,8 @@ public class GetMenuList extends APIBase
     @DataProvider(name = "getMenuListData") 
     public Object[][] getMenuListData() throws customException {
         try {
-            LogUtils.info("Reading positive menu list test scenario data");
-            ExtentReport.getTest().log(Status.INFO, "Reading positive menu list test scenario data");
+            LogUtils.info("Reading menu list test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading menu list test scenario data");
 
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             if (readExcelData == null || readExcelData.length == 0) {
@@ -150,27 +151,33 @@ public class GetMenuList extends APIBase
                 throw new customException(errorMsg);
             }
 
-            // Filter for positive test cases only
-            List<Object[]> positiveTestCases = new ArrayList<>();
-            for (Object[] row : readExcelData) {
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
                 if (row != null && row.length >= 3 &&
-                    "getmenulist".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-                    "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-                    positiveTestCases.add(row);
+                        "getmenulist".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+
+                    filteredData.add(row);
                 }
             }
 
-            if (positiveTestCases.isEmpty()) {
-                String errorMsg = "No positive menu list test cases found in test data";
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid menu list test data found after filtering";
                 LogUtils.failure(logger, errorMsg);
                 ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
                 throw new customException(errorMsg);
             }
 
-            Object[][] positiveTestData = positiveTestCases.toArray(new Object[0][]);
-            LogUtils.info("Successfully retrieved " + positiveTestData.length + " positive menu list test scenarios");
-            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + positiveTestData.length + " positive menu list test scenarios");
-            return positiveTestData;
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
+            }
+
+            LogUtils.info("Successfully retrieved " + obj.length + " menu list test scenarios");
+            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + obj.length + " menu list test scenarios");
+            return obj;
         } catch (Exception e) {
             String errorMsg = "Error in getMenuListData: " + e.getMessage();
             LogUtils.exception(logger, errorMsg, e);
@@ -244,15 +251,196 @@ public class GetMenuList extends APIBase
         }
         catch(Exception e)
         {
-            String errorMsg = "Error in menu list test: " + e.getMessage();
+            LogUtils.exception(logger, "Error in menu list test", e);
+            ExtentReport.getTest().log(Status.ERROR, "Error in menu list test: " + e.getMessage());
+            if(response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException("Error in menu list test: " + e.getMessage());
+        }
+    }
+    
+    @DataProvider(name = "getMenuListNegativeData")
+    public Object[][] getMenuListNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading get menu list negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading get menu list negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "getmenulist".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid get menu list negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting menu list negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting menu list negative test data: " + e.getMessage());
+            throw new customException("Error in getting menu list negative test data: " + e.getMessage());
+        }
+    }
+    
+    @Test(dataProvider = "getMenuListNegativeData")
+    public void getMenuListNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting get menu list negative test case: " + testCaseid);
+            ExtentReport.createTest("Get Menu List Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            if (apiName.equalsIgnoreCase("getmenulist") && testType.equalsIgnoreCase("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+                
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+                
+                // Set payload for get menu list request
+                menurequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                
+                // Add more request parameters as needed
+                
+                response = ResponseUtil.getResponseWithAuth(baseURI, menurequest, httpsmethod, accessToken);
+                
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+                
+                // Log expected vs actual status code for reporting
+                int expectedStatusCode = Integer.parseInt(statusCode);
+                ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+                ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+                
+                // Check for server errors
+                if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                    LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+                }
+                // Validate status code
+                else if (response.getStatusCode() != expectedStatusCode) {
+                    LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                }
+                else {
+                    LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                    
+                    // Validate response body
+                    actualJsonBody = new JSONObject(response.asString());
+                    
+                    // Log expected vs actual response body for reporting
+                    ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedResponseBody);
+                    ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualJsonBody.toString(4));
+                    
+                    if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                    	expectedJsonBody = new JSONObject(expectedResponseBody);
+                        
+                        // Validate response message
+                        if (expectedJsonBody.has("detail") && actualJsonBody.has("detail")) {
+                            String expectedDetail = expectedJsonBody.getString("detail");
+                            String actualDetail = actualJsonBody.getString("detail");
+                            
+                            // Check if the detail message has more than 6 sentences
+                            if (countSentences(actualDetail) > 6) {
+                                String errorMsg = "Error message contains more than 6 sentences: " + countSentences(actualDetail) + " sentences found";
+                                LogUtils.failure(logger, errorMsg);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Message: " + actualDetail);
+                            } else {
+                                LogUtils.info("Sentence count validation passed: " + countSentences(actualDetail) + " sentences");
+                                ExtentReport.getTest().log(Status.PASS, "Sentence count validation passed: " + countSentences(actualDetail) + " sentences");
+                                
+                                if (expectedDetail.equals(actualDetail)) {
+                                    LogUtils.info("Error message validation passed: " + actualDetail);
+                                    ExtentReport.getTest().log(Status.PASS, "Error message validation passed: " + actualDetail);
+                                } else {
+                                    LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                                    ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                                }
+                            }
+                        }
+                        
+                        // Complete response validation
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    }
+                    
+                    LogUtils.success(logger, "Get menu list negative test completed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Get menu list negative test completed successfully", ExtentColor.GREEN));
+                }
+                
+                // Always log the full response
+                ExtentReport.getTest().log(Status.INFO, "Full Response:");
+                ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+            } else {
+                String errorMsg = "Invalid API name or test type: " + apiName + ", " + testType;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+        } catch (Exception e) {
+            String errorMsg = "Error in get menu list negative test: " + e.getMessage();
             LogUtils.exception(logger, errorMsg, e);
             ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            if(response != null)
-            {
+            if (response != null) {
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
             }
             throw new customException(errorMsg);
         }
+    }
+    
+    /**
+     * Method to count the number of sentences in a text
+     * @param text The text to analyze
+     * @return The number of sentences
+     */
+    private int countSentences(String text) {
+        if (text == null || text.isEmpty()) {
+            return 0;
+        }
+        
+        // Count sentences by splitting on period, question mark, or exclamation mark
+        // followed by a space or end of string
+        String[] sentences = text.split("[.!?]\\s*");
+        
+        // Filter out empty strings that might result from the split
+        int count = 0;
+        for (String sentence : sentences) {
+            if (!sentence.trim().isEmpty()) {
+                count++;
+            }
+        }
+        
+        return count;
     }
 }

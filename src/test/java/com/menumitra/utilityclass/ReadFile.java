@@ -17,9 +17,9 @@ public class ReadFile
      *
      * @param path The file path.
      * @return A FileInputStream for reading the file.
-     * @throws MenumitraException If the file is not found or there is an unexpected error.
+     * @throws CustomExceptions If the file is not found or there is an unexpected error.
      */
-	public static FileInputStream readFile(String path)
+	public static FileInputStream readFile(String path) throws customException
 	{
 		LogUtils.info("Attempting to read file from path: " + path);
 		file=new File(path);
@@ -33,12 +33,12 @@ public class ReadFile
 		catch (FileNotFoundException e) 
 		{
 			LogUtils.error("File not found at path: " + path);
-			throw new MenumitraException("File Not Found. Check File Location: "+e.getMessage());
+			throw new customException("File Not Found. Check File Location: "+e.getMessage());
 		}
 		catch (Exception e) 
 		{
 			LogUtils.error("Unexpected error while reading file: " + e.getMessage());
-			throw new MenumitraException("Unexpected error occurred: "+e.getMessage());
+			throw new customException("Unexpected error occured: "+e.getMessage());
 		}
 	}
 	

@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Default test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>1/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>3/0/0</td>
 </tr><tr>
-<td>Started on:</td><td>Thu May 22 21:17:17 IST 2025</td>
+<td>Started on:</td><td>Fri May 09 19:09:07 IST 2025</td>
 </tr>
-<tr><td>Total time:</td><td>4 seconds (4991 ms)</td>
+<tr><td>Total time:</td><td>4 seconds (4560 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,12 +75,44 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='com.menumitratCommonAPITestScript.ActivityLogTestScript.activityLogTest()'><b>activityLogTest</b><br>Test class: com.menumitratCommonAPITestScript.ActivityLogTestScript<br>Parameters: activitylog, activitylog_001, positive, Verfiy Activity log, post, {
-    "user_id": 2
-}, , 200</td>
+<td title='com.menumitratCommonAPITestScript.ManagerUpdateTestScript.updateManagerPositive()'><b>updateManagerPositive</b><br>Test class: com.menumitratCommonAPITestScript.ManagerUpdateTestScript<br>Parameters: managerupdate, managerupdate_001, positive, Verify Manager Update, patch, {
+    "outlet_id": "1",
+    "user_id": "30",          
+    "name": "Manager one",        
+    "mobile": "9888888899",    
+    "address": "123 Example Street, City",  
+    "aadhar_number": "123456789012",
+    "update_user_id": "2"
+}, {
+    "message": "Manager updated successfully"
+}, 200</td>
 <td></td>
 <td>0</td>
-<td>com.menumitratCommonAPITestScript.ActivityLogTestScript@7d322cad</td></tr>
+<td>com.menumitratCommonAPITestScript.ManagerUpdateTestScript@7d9d1a19</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ManagerUpdateTestScript.updateManagerPositive()'><b>updateManagerPositive</b><br>Test class: com.menumitratCommonAPITestScript.ManagerUpdateTestScript<br>Parameters: managerupdate, managerupdate_002, positive, Verify Manger update using empty name, patch, {
+    "outlet_id": "1",
+    "user_id":"2",          
+    "name": "",        
+    "mobile": "9888888822",    
+    "address": "123 Example Street, City",  
+    "aadhar_number": "123456789012"    ,    "update_user_id": "2"     
+}, { "detail": "name is required." }, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ManagerUpdateTestScript@7d9d1a19</td></tr>
+<tr>
+<td title='com.menumitratCommonAPITestScript.ManagerUpdateTestScript.updateManagerPositive()'><b>updateManagerPositive</b><br>Test class: com.menumitratCommonAPITestScript.ManagerUpdateTestScript<br>Parameters: managerupdate, managerupdate_002, positive, Verify Manger update using empty user id, patch, {
+    "outlet_id": "1",
+    "user_id":"",          
+    "name": "manger",        
+    "mobile": "9888888822",    
+    "address": "123 Example Street, City",  
+    "aadhar_number": "123456789012"   ,    "update_user_id": "2"      
+},  {"detail":"user_id is required."}, 400</td>
+<td></td>
+<td>0</td>
+<td>com.menumitratCommonAPITestScript.ManagerUpdateTestScript@7d9d1a19</td></tr>
 </table><p>
 </body>
 </html>

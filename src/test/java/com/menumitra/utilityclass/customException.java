@@ -1,9 +1,7 @@
 package com.menumitra.utilityclass;
 
-/**
- * Custom exception class for Menumitra application.
- */
-public class customException extends Exception {
+public class customException extends Exception
+{
     private static final long serialVersionUID = 1L;
 
     public customException(String message) {
@@ -17,4 +15,5 @@ public class customException extends Exception {
     public customException(Throwable cause) {
         super(cause);
     }
-} 
+
+}

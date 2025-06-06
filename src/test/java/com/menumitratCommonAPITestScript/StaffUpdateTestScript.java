@@ -78,6 +78,26 @@ public class StaffUpdateTestScript extends APIBase {
         }
     }
 
+    @DataProvider(name = "getStaffUpdateNegativeData")
+    public Object[][] getStaffUpdateNegativeData() throws customException {
+        try {
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            List<Object[]> filterData = new ArrayList<>();
+            
+            for (Object[] row : readExcelData) {
+                if (row != null && "staffupdate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filterData.add(row);
+                }
+            }
+            
+            return filterData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            LogUtils.error("Error while reading staff update negative test data: " + e.getMessage());
+            throw new customException("Error while reading staff update negative test data: " + e.getMessage());
+        }
+    }
+
     @BeforeClass
     private void setup() throws customException {
         try {
@@ -155,7 +175,8 @@ public class StaffUpdateTestScript extends APIBase {
                 if (response.getStatusCode() == 200) {
                     LogUtils.success(logger, "Staff updated successfully");
                     ExtentReport.getTest().log(Status.PASS, "Staff updated successfully");
-                    //                } else {
+                    //validateResponseBody.handleResponseBody(response, new JSONObject(expectedResponseBody));
+                } else {
                     LogUtils.failure(logger, "Staff update failed with status code: " + response.getStatusCode());
                     ExtentReport.getTest().log(Status.FAIL, "Staff update failed");
                 }
@@ -209,7 +230,8 @@ public class StaffUpdateTestScript extends APIBase {
                     // Validate response body if expected response is provided
                     if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
                         JSONObject expectedResponseJson = new JSONObject(expectedResponseBody);
-                                            }
+                        validateResponseBody.handleResponseBody(response, expectedResponseJson);
+                    }
                 }
             }
         } catch (Exception e) {

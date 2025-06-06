@@ -1,10 +1,13 @@
 package com.menumitra.utilityclass;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.json.JSONObject;
 
 public class ResponseUtil 
 {
@@ -14,6 +17,9 @@ public class ResponseUtil
     // Static response object to store API responses
     static Response response;
 
+    private static final ObjectMapper objectMapper = new ObjectMapper()
+        .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+
     /**
      * Makes an HTTP request based on the specified method and returns the response
      * 
@@ -21,105 +27,11 @@ public class ResponseUtil
      * @param requestBody The request body object
      * @param method The HTTP method to use (post, put, etc.)
      * @return Response object containing the API response
-     * @throws MenumitraException If there is an error during the API request
+     * @throws customException If there is an error during the API request
      */
-    public static Response getResponse(String url, Object requestBody, String method) throws MenumitraException 
+    public static Response getResponse(String url, Object requestBody, String method) throws customException 
     {
-        try {
-            LogUtils.info("Making " + method.toUpperCase() + " request to: " + url);
-            
-           
-            switch (method.toLowerCase()) {
-                case "post":
-                   try
-                   {
-                	   LogUtils.info("Executing POST request");
-                       response = RestAssured.given()
-   	                    	    .contentType(ContentType.JSON)
-   	                    	    .body(requestBody)
-   	                    	    .when()
-   	                    	    .post(url)
-   	                    	    .then()
-   	                    	    .log().all()
-   	                    	    .extract()
-   	                    	    .response();
-                       LogUtils.info("POST request completed successfully");
-                       return response;
-                   }
-                   catch (Exception e)
-                   {
-                	   LogUtils.error("Error: Get response..");
-                       throw new MenumitraException("Error: Get response");
-                   }
-                    
-                case "put":
-		                	response=RestAssured.given()
-				            	    .contentType(ContentType.JSON)
-				            	    .body(requestBody)
-				            	    .when()
-				            	    .put(url)
-				            	    .then()
-				            	    .log().all()
-				            	    .extract()
-				            	    .response();
-             
-                    LogUtils.info("PUT request completed successfully");
-                    return response;
-
-                case "get":
-                            try{
-                                LogUtils.info("start get response...");
-                                response=RestAssured
-                                		.given()
-                                		.contentType(ContentType.JSON)
-                                		.when()
-                                		.get(url)
-                                		.then()
-                                		.log()
-                                		.all()
-                                		.extract()
-                                		.response();
-                                
-                                LogUtils.info("successfully get response..");
-                                return response;
-                            }
-                            catch(Exception e)
-                            {
-                                LogUtils.error("Error: Get response..");
-                                throw new MenumitraException("Error: Get response");
-                              
-                            }
-                    
-                case "delete":
-                                try {
-                                    
-                                    LogUtils.info("start delete data..");
-                                    response=RestAssured.given()
-		                            	    .contentType(ContentType.JSON)
-		                            	    .body(requestBody)
-		                            	    .when()
-		                            	    .delete(url)
-		                            	    .then()
-		                            	    .log().all()
-		                            	    .extract()
-		                            	    .response();
-                                    LogUtils.info("Delete Data Successfully");
-                                    return response;
-                                    
-                                } catch (Exception e) {
-                                  
-                                	LogUtils.error("Error:Unable to delete data check request body");
-                                	throw new MenumitraException("Error:Unble to delete data check request body");
-                                }
-                
-                default:
-                    LogUtils.warn("Unsupported HTTP method: " + method);
-                    return null;
-            }
-        } catch (Exception e) {
-            LogUtils.error("Error during " + method.toUpperCase() + " request: " + e.getMessage());
-            throw new MenumitraException("Error during API request: " + e.getMessage());
-        }
+        return getResponseWithAuth(url, requestBody, method, null);
     }
 
     /**
@@ -128,48 +40,52 @@ public class ResponseUtil
      * @param url The endpoint URL to send the request to
      * @param requestBody The request body object
      * @param method The HTTP method to use (post, put, etc.)
-     * @param jwttoken The JWT token for authorization
      * @return Response object containing the API response
-     * @throws MenumitraException If there is an error during the API request
+     * @throws customException If there is an error during the API request
      */
-    public static Response getResponseWithAuth(String url, Object requestBody, String method, String jwttoken) throws MenumitraException 
+    public static Response getResponseWithAuth(String url, Object requestBody, String method, String jwttoken) throws customException 
     {
         try {
             LogUtils.info("Making " + method.toUpperCase() + " request to: " + url);
             
+            // Convert request body to JSON string using snake_case naming
+            String jsonBody;
+            try {
+                jsonBody = objectMapper.writeValueAsString(requestBody);
+                LogUtils.info("Serialized request body: " + jsonBody);
+            } catch (Exception e) {
+                LogUtils.error("Error serializing request body: " + e.getMessage());
+                throw new customException("Error serializing request body: " + e.getMessage());
+            }
            
             switch (method.toLowerCase()) {
                 case "post":
-                	 try
-                     {
-                  	   LogUtils.info("Executing POST request");
-                         response = RestAssured.given()
-     	                    	    .contentType(ContentType.JSON)
-     	                    	    .header("Authorization","Bearer "+jwttoken)
-     	                    	    .body(requestBody)
-     	                    	    .when()
-     	                    	    .post(url)
-     	                    	    .then()
-     	                    	    .log().all()
-     	                    	    .extract()
-     	                    	    .response();
-                         LogUtils.info("POST request completed successfully");
-                         return response;
-                     }
-                     catch (Exception e)
-                     {
-                  	   LogUtils.error("Error: Get response..");
-                         throw new MenumitraException("Error: Get response");
-                     }
+                    try {
+                        LogUtils.info("Executing POST request");
+                        response = RestAssured.given()
+                            .contentType(ContentType.JSON)
+                            .header("Authorization", "Bearer " + jwttoken)
+                            .body(jsonBody)
+                            .when()
+                            .post(url)
+                            .then()
+                            .log().all()
+                            .extract()
+                            .response();
+                        LogUtils.info("POST request completed successfully");
+                        return response;
+                    } catch (Exception e) {
+                        LogUtils.error("Error in POST request: " + e.getMessage());
+                        throw new customException("Error in POST request: " + e.getMessage());
+                    }
                     
                 case "put":
-                    try
-                    {
+                    try {
                         LogUtils.info("Executing PUT request");
                         response = RestAssured.given()
                             .contentType(ContentType.JSON)
-                            .header("Authorization","Bearer "+jwttoken)
-                            .body(requestBody)
+                            .header("Authorization", "Bearer " + jwttoken)
+                            .body(jsonBody)
                             .when()
                             .put(url)
                             .then()
@@ -178,29 +94,23 @@ public class ResponseUtil
                             .response();
                         LogUtils.info("PUT request completed successfully");
                         return response;
-                    }
-                    catch (Exception e)
-                    {
-                        LogUtils.error("Error: Get response..");
-                        throw new MenumitraException("Error: Get response");
+                    } catch (Exception e) {
+                        LogUtils.error("Error in PUT request: " + e.getMessage());
+                        throw new customException("Error in PUT request: " + e.getMessage());
                     }
 
                 case "get":
-                            try{
-                                response =RestAssured.given()
-                            .header("Authorization","Bearer ",jwttoken)
+                    try {
+                        response = RestAssured.given()
+                            .header("Authorization", "Bearer " + jwttoken)
                             .when()
                             .get(url);
-                                
-                                LogUtils.info("successfully get response..");
-                                return response;
-                            }
-                            catch(Exception e)
-                            {
-                                LogUtils.error("Error: Get response..");
-                                throw new MenumitraException("Error: Get response");
-                              
-                            }
+                        LogUtils.info("GET request completed successfully");
+                        return response;
+                    } catch (Exception e) {
+                        LogUtils.error("Error in GET request: " + e.getMessage());
+                        throw new customException("Error in GET request: " + e.getMessage());
+                    }
                     
                 case "delete":
                                 try {
@@ -209,7 +119,7 @@ public class ResponseUtil
                                     response =RestAssured.given()
                                     .contentType(ContentType.JSON)
                                     .header("Authorization", "Bearer " + jwttoken)
-                                    .body(requestBody)
+                                    .body(jsonBody)
                                     .when()
                                     .delete(url)
                                     .then()
@@ -224,7 +134,7 @@ public class ResponseUtil
                                 } catch (Exception e) {
                                   
                                 	LogUtils.error("Error:Unable to delete data check request body");
-                                	throw new MenumitraException("Error:Unble to delete data check request body");
+                                	throw new customException("Error:Unble to delete data check request body");
                                 }
                 case "patch":
                                 try {
@@ -232,7 +142,7 @@ public class ResponseUtil
                                     response = RestAssured.given()
                                         .contentType(ContentType.JSON)  // Add content type
                                         .header("Authorization", "Bearer " + jwttoken)  // Fix the header format
-                                        .body(requestBody)
+                                        .body(jsonBody)
                                         .when()
                                         .patch(url)
                                         .then()
@@ -243,15 +153,15 @@ public class ResponseUtil
                                     return response;
                                 } catch (Exception e) {
                                     LogUtils.error("Error: PATCH request failed");
-                                    throw new MenumitraException("Error: Failed to execute PATCH request");
+                                    throw new customException("Error: Failed to execute PATCH request");
                                 }
                 default:
                     LogUtils.warn("Unsupported HTTP method: " + method);
-                    return null;
+                    throw new customException("Unsupported HTTP method: " + method);
             }
         } catch (Exception e) {
             LogUtils.error("Error during " + method.toUpperCase() + " request: " + e.getMessage());
-            throw new MenumitraException("Error during API request: " + e.getMessage());
+            throw new customException("Error during API request: " + e.getMessage());
         }
     }
 
@@ -259,19 +169,16 @@ public class ResponseUtil
      * Validates the response schema against a JSON schema definition file
      * @param response The REST Assured Response object to validate
      * @param jsonPath Path to the JSON schema file to validate against
-     * @throws MenumitraException If schema validation fails or other errors occur
+     * @throws customException If schema validation fails or other errors occur
      */
-    public static void validateResponseSchema(Response response,String jsonPath) throws MenumitraException
+    public static void validateResponseSchema(Response response, String jsonPath) throws customException
     {
-        try{
-            LogUtils.info("Validating response schema");
+        try {
             response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonPath));
-            LogUtils.info("Success validate json schema validator..");
+            LogUtils.info("Response schema validation successful");
+        } catch (Exception e) {
+            LogUtils.error("Schema validation failed: " + e.getMessage());
+            throw new customException("Schema validation failed: " + e.getMessage());
         }
-        catch (Exception e) 
-        {
-			LogUtils.error("Error:Failed to validate response schema");
-            throw new MenumitraException("Error: Failed to validate response schema");
-		}
     }
 }	

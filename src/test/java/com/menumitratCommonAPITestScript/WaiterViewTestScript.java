@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -199,6 +200,14 @@ public class WaiterViewTestScript extends APIBase
                 ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
 
+                // Validate status code
+                if (response.getStatusCode() != 200) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
+                
                 // Only log response information to the report without validation
                 actualJsonBody = new JSONObject(response.asString());
                 LogUtils.info("Response received successfully");
@@ -219,5 +228,205 @@ public class WaiterViewTestScript extends APIBase
             }
             throw new customException(errorMsg);
         }
+    }
+    
+    
+    @DataProvider(name = "getWaiterViewNegativeData")
+    public Object[][] getWaiterViewNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading waiter view negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading waiter view negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "waiterview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid waiter view negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting waiter view negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting waiter view negative test data: " + e.getMessage());
+            throw new customException("Error in getting waiter view negative test data: " + e.getMessage());
+        }
+    }
+    
+    @Test(dataProvider = "getWaiterViewNegativeData")
+    public void waiterViewNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting waiter view negative test case: " + testCaseid);
+            ExtentReport.createTest("Waiter View Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            if (apiName.equalsIgnoreCase("waiterview") && testType.equalsIgnoreCase("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+                
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+                
+                // Set payload for waiter view request
+                if (requestBodyJson.has("outlet_id")) {
+                    waiterViewRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                }
+                if (requestBodyJson.has("user_id")) {
+                    waiterViewRequest.setUser_id(requestBodyJson.getString("user_id"));
+                }
+                
+                response = ResponseUtil.getResponseWithAuth(baseURI, waiterViewRequest, httpsmethod, accessToken);
+                
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+                
+                int expectedStatusCode = Integer.parseInt(statusCode);
+                
+                // Report both expected and actual status codes
+                ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+                ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+                
+                // Check for server errors
+                if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                    LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+                }
+                // Validate status code
+                else if (response.getStatusCode() != expectedStatusCode) {
+                    LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                }
+                else {
+                    LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                    
+                    // Validate response body
+                    actualJsonBody = new JSONObject(response.asString());
+                    
+                    if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                        expectedJsonBody = new JSONObject(expectedResponseBody);
+                        
+                        // Log expected vs actual response bodies
+                        ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedJsonBody.toString(2));
+                        ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualJsonBody.toString(2));
+                        
+                        // Validate response message
+                        if (expectedJsonBody.has("message") && actualJsonBody.has("message")) {
+                            String expectedMessage = expectedJsonBody.getString("message");
+                            String actualMessage = actualJsonBody.getString("message");
+                            
+                            // Check if message exceeds 6 sentences
+                            String[] sentences = actualMessage.split("[.!?]+");
+                            int sentenceCount = 0;
+                            for (String sentence : sentences) {
+                                if (sentence.trim().length() > 0) {
+                                    sentenceCount++;
+                                }
+                            }
+                            
+                            if (sentenceCount > 6) {
+                                String errorMsg = "Response message exceeds maximum allowed sentences - Found: " + sentenceCount + ", Maximum allowed: 6";
+                                LogUtils.failure(logger, errorMsg);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Message: " + actualMessage);
+                            } else {
+                                LogUtils.info("Response message sentence count is valid: " + sentenceCount);
+                                ExtentReport.getTest().log(Status.PASS, "Response message sentence count is valid: " + sentenceCount);
+                            }
+                            
+                            if (expectedMessage.equals(actualMessage)) {
+                                LogUtils.info("Error message validation passed: " + actualMessage);
+                                ExtentReport.getTest().log(Status.PASS, "Error message validation passed");
+                            } else {
+                                LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedMessage + ", Actual: " + actualMessage);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedMessage);
+                                ExtentReport.getTest().log(Status.FAIL, "Actual: " + actualMessage);
+                            }
+                        }
+                        
+                        // Complete response validation
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    }
+                    
+                    LogUtils.success(logger, "Waiter view negative test completed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Waiter view negative test completed successfully", ExtentColor.GREEN));
+                }
+                
+                // Always log the full response
+                ExtentReport.getTest().log(Status.INFO, "Full Response:");
+                ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+            } else {
+                String errorMsg = "Invalid API name or test type: API=" + apiName + ", TestType=" + testType;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+        } catch (Exception e) {
+            String errorMsg = "Error in waiter view negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+    
+    /**
+     * Validate if a message contains more than the maximum allowed number of sentences
+     * @param message The message to validate
+     * @param maxSentences Maximum allowed sentences
+     * @return Error message if validation fails, null if validation passes
+     */
+    private String validateSentenceCount(String message, int maxSentences) {
+        if (message == null || message.trim().isEmpty()) {
+            return null; // Empty message, no sentences
+        }
+        
+        String[] sentences = message.split("[.!?]+");
+        int sentenceCount = 0;
+        
+        for (String sentence : sentences) {
+            if (sentence.trim().length() > 0) {
+                sentenceCount++;
+            }
+        }
+        
+        if (sentenceCount > maxSentences) {
+            return "Response message exceeds maximum allowed sentences - Found: " + sentenceCount + 
+                   ", Maximum allowed: " + maxSentences;
+        }
+        
+        return null; // Validation passed
     }
 }

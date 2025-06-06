@@ -10,7 +10,6 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 import org.bson.types.Symbol;
 import org.json.JSONObject;
-import org.json.JSONArray;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -32,6 +31,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
@@ -82,45 +82,49 @@ public class MenuCreateTestScript extends APIBase {
     @DataProvider(name = "getMenuCreateData")
     public static Object[][] getMenuCreateData() throws customException {
         try {
-            LogUtils.info("Reading positive menu create test scenario data");
-            ExtentReport.getTest().log(Status.INFO, "Reading positive menu create test scenario data");
+            LogUtils.info("Reading menu create test scenario data");
 
+            LogUtils.info("Reading positive test scenario data for login API from Excel sheet");
             Object[][] testData = DataDriven.readExcelData("src\\test\\resources\\excelsheet\\apiEndpoint.xlsx",
                     "CommonAPITestScenario");
 
             if (testData == null || testData.length == 0) {
-                String errorMsg = "No menu create test scenario data found in Excel sheet";
-                LogUtils.error(errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                throw new customException(errorMsg);
+                LogUtils.error("No Login Api positive test scenario data found in Excel sheet");
+                throw new customException("No Login APi Positive test scenario data found in Excel sheet");
             }
 
-            // Filter for positive test cases only
-            List<Object[]> positiveTestCases = new ArrayList<>();
-            for (Object[] row : testData) {
+            List<Object[]> filteredData = new ArrayList<>();
+
+            for (int i = 0; i < testData.length; i++) {
+                Object[] row = testData[i];
+
+                // Ensure row is not null and has at least 3 columns
                 if (row != null && row.length >= 3 &&
-                    "menucreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-                    "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-                    positiveTestCases.add(row);
+                        "menucreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+
+                    filteredData.add(row); // Add the full row (all columns)
                 }
             }
 
-            if (positiveTestCases.isEmpty()) {
-                String errorMsg = "No positive menu create test cases found in test data";
-                LogUtils.error(errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                throw new customException(errorMsg);
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
             }
 
-            Object[][] positiveTestData = positiveTestCases.toArray(new Object[0][]);
-            LogUtils.info("Successfully retrieved " + positiveTestData.length + " positive menu create test scenarios");
-            ExtentReport.getTest().log(Status.PASS, "Successfully retrieved " + positiveTestData.length + " positive menu create test scenarios");
-            return positiveTestData;
+            // Optional: print to verify
+            /*
+             * for (Object[] row : obj) {
+             * System.out.println(Arrays.toString(row));
+             * }
+             */
+            return obj;
         } catch (Exception e) {
-            String errorMsg = "Error while reading positive menu create test scenario data: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, errorMsg);
-            throw new customException(errorMsg);
+            LogUtils.exception(logger, "Error while reading menu create test scenario data from Excel sheet", e);
+            ExtentReport.getTest().log(Status.ERROR,
+                    "Error while reading menu create test scenario data: " + e.getMessage());
+            throw new customException(
+                    "Error while reading menu create test scenario data from Excel sheet: " + e.getMessage());
         }
     }
 
@@ -179,8 +183,8 @@ public class MenuCreateTestScript extends APIBase {
     }
 
     @Test(dataProvider = "getMenuCreateData")
-    private void createMenuUsigValidInputData(String apiName, String testCaseid, String testType, String description,
-            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+    private void createMenuUsigValidInputData(String apiName,String testCaseid, String testType, String description,
+    		String httpsmethod,String requestBodyPayload,String expectedResponseBody,String statusCode)
             throws customException {
 
         try {
@@ -188,177 +192,35 @@ public class MenuCreateTestScript extends APIBase {
             LogUtils.info("Test Description: " + description);
             ExtentReport.createTest("Menu Creation Test - " + testCaseid);
             ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            expectedResponse=new JSONObject(expectedResponseBody);
 
-            // Validate test case ID
-            if (testCaseid == null || testCaseid.trim().isEmpty()) {
-                throw new customException("Test case ID cannot be empty");
-            }
-
-            expectedResponse = new JSONObject(expectedResponseBody);
-            requestBodyJson = new JSONObject(requestBodyPayload.replace("\\", "\\\\"));
-
-            // Log request details
-            LogUtils.info("Request Body: " + requestBodyJson.toString(2));
-            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString(2));
-
-            // Validate portion_data
-            if (!requestBodyJson.has("portion_data")) {
-                String errorMsg = "Portion data is required for menu creation";
-                LogUtils.failure(logger, errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                throw new customException(errorMsg);
-            }
-
-            // Validate portion data structure
-            JSONArray portionData = requestBodyJson.getJSONArray("portion_data");
-            if (portionData.length() == 0) {
-                String errorMsg = "Portion data array cannot be empty";
-                LogUtils.failure(logger, errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                throw new customException(errorMsg);
-            }
-
-            // Create a new JSONArray to store validated portion data
-            JSONArray validatedPortionData = new JSONArray();
-
-            for (int i = 0; i < portionData.length(); i++) {
-                JSONObject portion = portionData.getJSONObject(i);
-                JSONObject validatedPortion = new JSONObject();
-
-                // Check and set portion_name
-                if (!portion.has("portion_name")) {
-                    String errorMsg = "Portion name is required at index " + i;
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    throw new customException(errorMsg);
-                }
-                String portionName = portion.getString("portion_name");
-                if (portionName == null || portionName.trim().isEmpty()) {
-                    String errorMsg = "Portion name cannot be empty at index " + i;
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    throw new customException(errorMsg);
-                }
-                validatedPortion.put("portion_name", portionName.trim());
-
-                // Check and set price
-                if (!portion.has("price")) {
-                    String errorMsg = "Price is required at index " + i;
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    throw new customException(errorMsg);
-                }
-                try {
-                    double price = portion.getDouble("price");
-                    if (price <= 0) {
-                        String errorMsg = "Price must be greater than 0 at index " + i;
-                        LogUtils.failure(logger, errorMsg);
-                        ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                        throw new customException(errorMsg);
-                    }
-                    validatedPortion.put("price", price);
-                } catch (Exception e) {
-                    String errorMsg = "Invalid price format at index " + i;
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    throw new customException(errorMsg);
-                }
-
-                // Check and set unit_value and unit_type
-                String unitValue = null;
-                String unitType = null;
-
-                // Handle both old format (unit) and new format (unit_value + unit_type)
-                if (portion.has("unit")) {
-                    String unit = portion.getString("unit");
-                    if (unit != null && !unit.trim().isEmpty()) {
-                        // Parse unit string (e.g., "250g" -> value="250", type="g")
-                        String[] parts = unit.trim().split("(?<=\\d)(?=\\D)|(?<=\\D)(?=\\d)");
-                        if (parts.length >= 2) {
-                            unitValue = parts[0].trim();
-                            unitType = parts[1].trim();
-                        } else {
-                            unitValue = unit.trim();
-                            unitType = "g"; // Default unit type
-                        }
-                    }
-                } else {
-                    // Check for new format
-                    if (portion.has("unit_value")) {
-                        unitValue = portion.getString("unit_value");
-                    }
-                    if (portion.has("unit_type")) {
-                        unitType = portion.getString("unit_type");
-                    }
-                }
-
-                // Validate unit value
-                if (unitValue == null || unitValue.trim().isEmpty()) {
-                    String errorMsg = "Unit value is required at index " + i;
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    throw new customException(errorMsg);
-                }
-                validatedPortion.put("unit_value", unitValue.trim());
-
-                // Validate unit type
-                if (unitType == null || unitType.trim().isEmpty()) {
-                    String errorMsg = "Unit type is required at index " + i;
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    throw new customException(errorMsg);
-                }
-                validatedPortion.put("unit_type", unitType.trim());
-
-                // Log the processed unit data
-                LogUtils.info("Processed unit data at index " + i + ": value=" + unitValue + ", type=" + unitType);
-                ExtentReport.getTest().log(Status.INFO, "Processed unit data at index " + i + ": value=" + unitValue + ", type=" + unitType);
-
-                // Check and set flag
-                if (!portion.has("flag")) {
-                    // Set default flag value to 1 if not provided
-                    LogUtils.info("Flag not provided at index " + i + ", setting default value to 1");
-                    ExtentReport.getTest().log(Status.INFO, "Flag not provided at index " + i + ", setting default value to 1");
-                    validatedPortion.put("flag", 1);
-                } else {
-                    try {
-                        int flag = portion.getInt("flag");
-                        if (flag != 0 && flag != 1) {
-                            String errorMsg = "Flag must be either 0 or 1 at index " + i;
-                            LogUtils.failure(logger, errorMsg);
-                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                            throw new customException(errorMsg);
-                        }
-                        validatedPortion.put("flag", flag);
-                    } catch (Exception e) {
-                        String errorMsg = "Invalid flag format at index " + i;
-                        LogUtils.failure(logger, errorMsg);
-                        ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                        throw new customException(errorMsg);
-                    }
-                }
-
-                // Log the processed portion data
-                LogUtils.info("Processed portion data at index " + i + ": " + validatedPortion.toString(2));
-                ExtentReport.getTest().log(Status.INFO, "Processed portion data at index " + i + ": " + validatedPortion.toString(2));
-
-                validatedPortionData.put(validatedPortion);
-            }
-
-            // Update the request body with validated portion data
-            requestBodyJson.put("portion_data", validatedPortionData);
-
-            request = RestAssured.given();
+            requestBodyJson=new JSONObject(requestBodyPayload.replace("\\","\\\\"));
+      
+            request=RestAssured.given();
             request.header("Authorization", "Bearer " + accessToken);
             request.contentType("multipart/form-data");
+            		
+            if(requestBodyJson.has("images") && !requestBodyJson.getString("images").isEmpty()) {
+                LogUtils.info("Processing image attachments");
+                File imageFile=new File(requestBodyJson.getString("images"));
+                if(imageFile.exists()) {
+                    for(int i=0;i<5;i++) {
+                        request.multiPart("images",imageFile);
+                    }
+                    LogUtils.info("Successfully attached 5 image files");
+                    ExtentReport.getTest().log(Status.INFO, "Successfully attached 5 image files");
+                } else {
+                    LogUtils.warn("Image file not found at path: " + requestBodyJson.getString("images"));
+                    ExtentReport.getTest().log(Status.WARNING, "Image file not found at specified path");
+                }
+            }
 
-            // Log validated request body
-            LogUtils.info("Validated Request Body: " + requestBodyJson.toString(2));
-            ExtentReport.getTest().log(Status.INFO, "Validated Request Body: " + requestBodyJson.toString(2));
-
-            // Set up request parameters
+            LogUtils.info("Setting up request form parameters");
+            ExtentReport.getTest().log(Status.INFO, "Setting up request form parameters");
+            
             request.multiPart("user_id", userId);
-            request.multiPart("outlet_id", requestBodyJson.getString("outlet_id"));
+            request.multiPart("outlet_id", requestBodyJson.getString("outlet_id")); 
             request.multiPart("menu_cat_id", requestBodyJson.getString("menu_cat_id"));
             request.multiPart("name", requestBodyJson.getString("name"));
             request.multiPart("food_type", requestBodyJson.getString("food_type"));
@@ -367,49 +229,248 @@ public class MenuCreateTestScript extends APIBase {
             request.multiPart("portion_data", requestBodyJson.getJSONArray("portion_data").toString());
             request.multiPart("ingredients", requestBodyJson.getString("ingredients"));
             request.multiPart("offer", requestBodyJson.getString("offer"));
-            request.multiPart("rating", requestBodyJson.getString("rating"));
+            request.multiPart("rating", requestBodyJson.getString("rating")); 
+            request.multiPart("cgst", requestBodyJson.getString("cgst"));
+            request.multiPart("sgst", requestBodyJson.getString("sgst"));
+            		
+            LogUtils.info("Sending POST request to endpoint: " + baseUri);
+            ExtentReport.getTest().log(Status.INFO, "Sending POST request to create menu item");
+            response=request.when().post(baseUri).then().extract().response();
+            
+            LogUtils.info("Received response with status code: " + response.getStatusCode());
+            LogUtils.info("Response body: " + response.asPrettyString());
+            
+            if(response.getStatusCode()==200) {
+                LogUtils.success(logger, "Menu item created successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu item created successfully", ExtentColor.GREEN));
+                //validateResponseBody.handleResponseBody(response, expectedResponse);
+                LogUtils.info("Response validation completed successfully");
+                ExtentReport.getTest().log(Status.PASS, "Response validation completed successfully");
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            } else {
+                LogUtils.failure(logger, "Menu creation failed with status code: " + response.getStatusCode());
+                LogUtils.error("Response body: " + response.asPrettyString());
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Menu creation failed", ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+            }
+
+        } catch (Exception e) {
+            LogUtils.error("Error during menu creation test execution: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test execution failed", ExtentColor.RED));
+            ExtentReport.getTest().log(Status.FAIL, "Error details: " + e.getMessage());
+            throw new customException("Error during menu creation test execution: " + e.getMessage());
+        }
+    }
+
+
+
+    /**
+     * Data provider for menu create negative test scenarios
+     */
+    @DataProvider(name = "getMenuCreateNegativeData")
+    public Object[][] getMenuCreateNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading menu create negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading menu create negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null || readExcelData.length == 0) {
+                LogUtils.error("No menu create test scenario data found in Excel sheet");
+                throw new customException("No menu create test scenario data found in Excel sheet");
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "menucreate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid menu create negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            LogUtils.info("Successfully retrieved " + result.length + " test scenarios for menu create negative testing");
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting menu create negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting menu create negative test data: " + e.getMessage());
+            throw new customException("Error in getting menu create negative test data: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Test method for negative menu create scenarios
+     */
+    @Test(dataProvider = "getMenuCreateNegativeData")
+    public void createMenuNegative(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+            throws customException {
+        try {
+            LogUtils.info("Starting menu create negative test case: " + testCaseid);
+            LogUtils.info("Test Description: " + description);
+            ExtentReport.createTest("Menu Create Negative Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            // Validate API name and test type
+            if (!"menucreate".equalsIgnoreCase(apiName)) {
+                String errorMsg = "Invalid API name for menu create test: " + apiName;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            if (!"negative".equalsIgnoreCase(testType)) {
+                String errorMsg = "Invalid test type for menu create negative test: " + testType;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            // Request preparation
+            ExtentReport.getTest().log(Status.INFO, "Preparing request body");
+            LogUtils.info("Preparing request body");
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            
+            // Set up the request
+            LogUtils.info("Setting up multipart request");
+            ExtentReport.getTest().log(Status.INFO, "Setting up multipart request");
+            
+            requestBodyJson=new JSONObject(requestBodyPayload.replace("\\","\\\\"));
+            
+            request=RestAssured.given();
+            request.header("Authorization", "Bearer " + accessToken);
+            request.contentType("multipart/form-data");
+            		
+            if(requestBodyJson.has("images") && !requestBodyJson.getString("images").isEmpty()) {
+                LogUtils.info("Processing image attachments");
+                File imageFile=new File(requestBodyJson.getString("images"));
+                if(imageFile.exists()) {
+                    for(int i=0;i<5;i++) {
+                        request.multiPart("images",imageFile);
+                    }
+                    LogUtils.info("Successfully attached 5 image files");
+                    ExtentReport.getTest().log(Status.INFO, "Successfully attached 5 image files");
+                } else {
+                    LogUtils.warn("Image file not found at path: " + requestBodyJson.getString("images"));
+                    ExtentReport.getTest().log(Status.WARNING, "Image file not found at specified path");
+                }
+            }
+
+            LogUtils.info("Setting up request form parameters");
+            ExtentReport.getTest().log(Status.INFO, "Setting up request form parameters");
+            
+            request.multiPart("user_id", userId);
+            request.multiPart("outlet_id", requestBodyJson.getString("outlet_id")); 
+            request.multiPart("menu_cat_id", requestBodyJson.getString("menu_cat_id"));
+            request.multiPart("name", requestBodyJson.getString("name"));
+            request.multiPart("food_type", requestBodyJson.getString("food_type"));
+            request.multiPart("description", requestBodyJson.getString("description"));
+            request.multiPart("spicy_index", requestBodyJson.getString("spicy_index"));
+            request.multiPart("portion_data", requestBodyJson.getJSONArray("portion_data").toString());
+            request.multiPart("ingredients", requestBodyJson.getString("ingredients"));
+            request.multiPart("offer", requestBodyJson.getString("offer"));
+            request.multiPart("rating", requestBodyJson.getString("rating")); 
             request.multiPart("cgst", requestBodyJson.getString("cgst"));
             request.multiPart("sgst", requestBodyJson.getString("sgst"));
 
-            // Send request and get response
+            
+            // API call
             LogUtils.info("Sending POST request to endpoint: " + baseUri);
             ExtentReport.getTest().log(Status.INFO, "Sending POST request to endpoint: " + baseUri);
             
             response = request.when().post(baseUri).then().extract().response();
             
-            // Log response
-            LogUtils.info("Response Status Code: " + response.getStatusCode());
-            LogUtils.info("Response Body: " + response.asPrettyString());
+            // Response logging
             ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
             ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
-
-            // Validate response
+            LogUtils.info("Response Body: " + response.asPrettyString());
+            
+            // Validation
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + statusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+            
             if (response.getStatusCode() == Integer.parseInt(statusCode)) {
-                LogUtils.success(logger, "Menu item created successfully");
-                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu item created successfully", ExtentColor.GREEN));
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
                 
-                // Validate response body
                 actualResponseBody = new JSONObject(response.asString());
-                                
-                LogUtils.info("Response validation completed successfully");
-                ExtentReport.getTest().log(Status.PASS, "Response validation completed successfully");
+                expectedResponse = new JSONObject(expectedResponseBody);
+                
+                ExtentReport.getTest().log(Status.INFO, "Starting response body validation");
+                LogUtils.info("Starting response body validation");
+                ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+                
+                // Validate response message sentence count
+                if (actualResponseBody.has("message")) {
+                    String message = actualResponseBody.getString("message");
+                    String[] sentences = message.split("[.!?]+");
+                    int sentenceCount = 0;
+                    
+                    for (String sentence : sentences) {
+                        if (!sentence.trim().isEmpty()) {
+                            sentenceCount++;
+                        }
+                    }
+                    
+                    ExtentReport.getTest().log(Status.INFO, "Response message contains " + sentenceCount + " sentences");
+                    LogUtils.info("Response message contains " + sentenceCount + " sentences");
+                    
+                    if (sentenceCount > 6) {
+                        String errorMsg = "Response message contains more than 6 sentences (" + sentenceCount + "), which exceeds the limit";
+                        ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                        LogUtils.failure(logger, errorMsg);
+                        throw new customException(errorMsg);
+                    } else {
+                        ExtentReport.getTest().log(Status.PASS, "Response message sentence count validation passed: " + sentenceCount + " sentences");
+                        LogUtils.success(logger, "Response message sentence count validation passed: " + sentenceCount + " sentences");
+                    }
+                }
+                
+                // Perform detailed response validation
+                ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
+                LogUtils.info("Performing detailed response validation");
+                validateResponseBody.handleResponseBody(response, expectedResponse);
+                
+                ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                LogUtils.success(logger, "Response body validation passed successfully");
+                
             } else {
-                String errorMsg = "Menu creation failed with status code: " + response.getStatusCode();
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
                 LogUtils.failure(logger, errorMsg);
-                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
                 throw new customException(errorMsg);
             }
-
-        } catch (customException e) {
-            LogUtils.error("Test execution failed: " + e.getMessage());
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Test execution failed", ExtentColor.RED));
-            ExtentReport.getTest().log(Status.FAIL, "Error details: " + e.getMessage());
-            throw e;
         } catch (Exception e) {
-            LogUtils.error("Unexpected error during test execution: " + e.getMessage());
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Unexpected error during test execution", ExtentColor.RED));
-            ExtentReport.getTest().log(Status.FAIL, "Error details: " + e.getMessage());
-            throw new customException("Unexpected error during test execution: " + e.getMessage());
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            LogUtils.error("Stack trace: " + Arrays.toString(e.getStackTrace()));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body:\n" + response.asPrettyString());
+                LogUtils.error("Failed Response Status Code: " + response.getStatusCode());
+                LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
+            }
+            throw new customException(errorMsg);
         }
     }
 
@@ -434,5 +495,3 @@ public class MenuCreateTestScript extends APIBase {
     }
 
 }
-
-

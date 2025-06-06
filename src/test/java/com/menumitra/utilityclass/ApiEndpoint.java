@@ -15,13 +15,13 @@ public class ApiEndpoint
     Object[][] getDataFormExcel;
 
 
-    public static List<Map<String,String>> getApiList(String sheetName)
+    public static List<Map<String,String>> getApiList(String sheetName) throws customException
     {
         return getApiDataFromExcel(sheetName);
     }
 
    
-    private static List<Map<String,String>> getApiDataFromExcel(String sheetName)
+    private static List<Map<String,String>> getApiDataFromExcel(String sheetName) throws customException
     {
         ApiEndpoint api=new ApiEndpoint();
         try
@@ -49,7 +49,7 @@ public class ApiEndpoint
         }
         catch(Exception e)
         {
-            throw new MenumitraException("Error reading API data from Excel sheet: " + e.getMessage());
+            throw new customException("Error reading API data from Excel sheet: " + e.getMessage());
         }
 
     }

@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -126,38 +127,45 @@ public class TicketListViewTestScript extends APIBase
     public Object[][] getTicketListViewData() throws customException {
         try {
             LogUtils.info("Reading ticket list view test scenario data");
-
+            ExtentReport.getTest().log(Status.INFO, "Reading ticket list view test scenario data");
+            
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
-            if (readExcelData == null || readExcelData.length == 0) {
-                LogUtils.error("No ticket list view test scenario data found in Excel sheet");
-                throw new customException("No ticket list view test scenario data found in Excel sheet");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
-
+            
             List<Object[]> filteredData = new ArrayList<>();
-
+            
             for (int i = 0; i < readExcelData.length; i++) {
                 Object[] row = readExcelData[i];
-                if (row != null && row.length >= 2 &&
+                if (row != null && row.length >= 3 &&
                         "ticketlistview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
                         "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-
+                    
                     filteredData.add(row);
                 }
             }
-
-            Object[][] obj = new Object[filteredData.size()][];
-            for (int i = 0; i < filteredData.size(); i++) {
-                obj[i] = filteredData.get(i);
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid ticket list view test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
-
-            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for ticket list view");
-            return obj;
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
         } catch (Exception e) {
-            LogUtils.error("Error while reading ticket list view test scenario data: " + e.getMessage());
-            ExtentReport.getTest().log(Status.ERROR,
-                    "Error while reading ticket list view test scenario data: " + e.getMessage());
-            throw new customException(
-                    "Error while reading ticket list view test scenario data: " + e.getMessage());
+            LogUtils.failure(logger, "Error in getting ticket list view test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting ticket list view test data: " + e.getMessage());
+            throw new customException("Error in getting ticket list view test data: " + e.getMessage());
         }
     }
     
@@ -172,6 +180,7 @@ public class TicketListViewTestScript extends APIBase
             if (apiName.equalsIgnoreCase("ticketlistview")) {
                 requestBodyJson = new JSONObject(requestBody);
                 
+                
                 if(requestBodyJson.has("outlet_id")) {
                     ticketListViewRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
                 }
@@ -185,6 +194,14 @@ public class TicketListViewTestScript extends APIBase
                 LogUtils.info("Response Body: " + response.asString());
                 ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+                
+                // Validate status code
+                if (response.getStatusCode() != Integer.parseInt(statusCode)) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
                 
                 // Only show response without validation
                 actualJsonBody = new JSONObject(response.asString());
@@ -348,7 +365,8 @@ public class TicketListViewTestScript extends APIBase
                         }
                         
                         // Complete response validation
-                                            }
+                        validateResponseBody.handleResponseBody(response, expectedResponseJson);
+                    }
                     
                     LogUtils.success(logger, "Ticket list view negative test completed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Ticket list view negative test completed successfully", ExtentColor.GREEN));

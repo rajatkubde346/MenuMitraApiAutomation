@@ -6,9 +6,6 @@ public class staffRequest
 	private int outlet_id;
 	private int user_id;
 	private String staff_role;
-	private String name;
-	private String mobile;
-	private String address;
 	
 	
 	public String getStaff_id() {
@@ -43,27 +40,5 @@ public class staffRequest
 		this.staff_role = staff_role;
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
+	
 }

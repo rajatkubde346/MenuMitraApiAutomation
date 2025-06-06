@@ -1,18 +1,17 @@
 package com.menumitra.apiRequest;
 
-public class ChefRequest 
-{
-    private String chef_id;
-    private int outlet_id;
+public class ChefRequest {
+    private String update_user_id;
+    private String outlet_id;
     private String user_id;
     private String name;
     private String mobile;
     private String address;
-    private String update_user_id;
     private String aadhar_number;
     private String dob;
     private String email;
-    
+    private String chef_id;
+
     public String getUpdate_user_id() {
         return update_user_id;
     }
@@ -21,19 +20,11 @@ public class ChefRequest
         this.update_user_id = update_user_id;
     }
 
-    public String getChef_id() {
-        return chef_id;
-    }
-
-    public void setChef_id(String chef_id) {
-        this.chef_id = chef_id;
-    }   
-
-    public int getOutlet_id() {
+    public String getOutlet_id() {
         return outlet_id;
     }
 
-    public void setOutlet_id(int outlet_id) {         
+    public void setOutlet_id(String outlet_id) {
         this.outlet_id = outlet_id;
     }
 
@@ -44,7 +35,7 @@ public class ChefRequest
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -92,4 +83,12 @@ public class ChefRequest
     public void setEmail(String email) {
         this.email = email;
     }
-} 
+
+    public String getChef_id() {
+        return chef_id;
+    }
+
+    public void setChef_id(String chef_id) {
+        this.chef_id = chef_id;
+    }
+}

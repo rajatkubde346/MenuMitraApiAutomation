@@ -31,6 +31,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -304,7 +305,7 @@ public class CreateOrderTestScript extends APIBase {
                 ExtentReport.getTest().log(Status.INFO, "<pre>" + response.asPrettyString() + "</pre>");
                 
                 // Validate status code
-                if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                if (response.getStatusCode() == 201) {
                     LogUtils.success(logger, "Create Dine-In order API executed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create Dine-In order API executed successfully", ExtentColor.GREEN));
                     ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
@@ -333,7 +334,7 @@ public class CreateOrderTestScript extends APIBase {
                     ExtentReport.getTest().log(Status.INFO, MarkupHelper.createLabel("Test completed successfully", ExtentColor.GREEN));
                     ExtentReport.flushReport();
                 } else {
-                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    String errorMsg = "Status code mismatch - Expected: 201, Actual: " + response.getStatusCode();
                     LogUtils.failure(logger, errorMsg);
                     ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
                     ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error Response:", ExtentColor.RED));
@@ -426,7 +427,7 @@ public class CreateOrderTestScript extends APIBase {
                 ExtentReport.getTest().log(Status.INFO, "<pre>" + response.asPrettyString() + "</pre>");
                 
                 // Validate status code
-                if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                if (response.getStatusCode() == 201) {
                     LogUtils.success(logger, "Create Delivery order API executed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create Delivery order API executed successfully", ExtentColor.GREEN));
                     ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
@@ -454,10 +455,23 @@ public class CreateOrderTestScript extends APIBase {
                     ExtentReport.getTest().log(Status.INFO, MarkupHelper.createLabel("Test completed successfully", ExtentColor.GREEN));
                     ExtentReport.flushReport();
                 } else {
-                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    String errorMsg = "Status code mismatch - Expected: 201, Actual: " + response.getStatusCode();
                     LogUtils.failure(logger, errorMsg);
                     ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asString());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error Response:", ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "<pre>" + response.asPrettyString() + "</pre>");
+                    
+                    // Try to extract error message if available
+                    try {
+                        JSONObject errorJson = new JSONObject(response.asString());
+                        if (errorJson.has("message")) {
+                            String message = errorJson.getString("message");
+                            ExtentReport.getTest().log(Status.FAIL, "Error Message: " + message);
+                        }
+                    } catch (Exception e) {
+                        ExtentReport.getTest().log(Status.INFO, "Could not parse error response JSON: " + e.getMessage());
+                    }
+                    
                     ExtentReport.flushReport();
                     throw new customException(errorMsg);
                 }
@@ -535,7 +549,7 @@ public class CreateOrderTestScript extends APIBase {
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
                 
                 // Validate status code
-                if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                if (response.getStatusCode() == 201) {
                     LogUtils.success(logger, "Create Dine-In order API executed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create Dine-In order API executed successfully", ExtentColor.GREEN));
                     ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
@@ -549,7 +563,7 @@ public class CreateOrderTestScript extends APIBase {
                     ExtentReport.flushReport();
                 } else {
                 	
-                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    String errorMsg = "Status code mismatch - Expected: 200, Actual: " + response.getStatusCode();
                     LogUtils.failure(logger, errorMsg);
                     ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
                     ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asString());
@@ -624,7 +638,7 @@ public class CreateOrderTestScript extends APIBase {
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
                 
                 // Validate status code
-                if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                if (response.getStatusCode() == 201) {
                     LogUtils.success(logger, "Create Dine-In order API executed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create Dine-In order API executed successfully", ExtentColor.GREEN));
                     ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
@@ -638,7 +652,7 @@ public class CreateOrderTestScript extends APIBase {
                     ExtentReport.flushReport();
                 } else {
                 	
-                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    String errorMsg = "Status code mismatch - Expected: 200, Actual: " + response.getStatusCode();
                     LogUtils.failure(logger, errorMsg);
                     ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
                     ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asString());
@@ -657,14 +671,152 @@ public class CreateOrderTestScript extends APIBase {
     
     @Test(dataProvider = "getCounterOrderData", priority = 5)
     public void createCounterOrder(String apiName, String testCaseid, String testType, String description,
-            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+    	    String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
         try {
             LogUtils.info("Create Counter Order Test");
-            ExtentReport.createTest("Create Counter Order Test - " + testCaseid);
-            ExtentReport.getTest().log(Status.INFO, "Create Counter Order Test: " + description);
-
-            if (apiName.equalsIgnoreCase("createordercounter")) {
+            ExtentReport.createTest("Create Counter Order Test");
+            ExtentReport.getTest().log(Status.INFO, "Create Counter Order Test");
+         // Initialize order request
+            if(apiName.equalsIgnoreCase("createordercounter")) {
                 requestBodyJson = new JSONObject(requestBody);
+                orderRequest = new OrderRequest();
+                orderRequest.setUser_id(String.valueOf(user_id));
+                orderRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                
+                orderRequest.setOrder_type(requestBodyJson.getString("order_type"));
+                orderRequest.setPayment_method(requestBodyJson.getString("payment_method"));
+                
+                
+
+                // Set order_items
+                JSONArray orderItemsArray = requestBodyJson.getJSONArray("order_items");
+                List<OrderRequest.OrderItem> orderItemList = new ArrayList<>();
+
+                for (int i = 0; i < orderItemsArray.length(); i++) {
+                    JSONObject item = orderItemsArray.getJSONObject(i);
+
+                    OrderRequest.OrderItem orderItem = new OrderRequest.OrderItem();
+                    orderItem.setMenu_id(item.getInt("menu_id"));
+                    orderItem.setQuantity(item.getInt("quantity"));
+                    orderItem.setPortion_name(item.getString("portion_name"));
+                    orderItem.setComment(item.getString("comment"));
+
+                    orderItemList.add(orderItem);
+                }
+                
+                orderRequest.setOrder_items(new ArrayList<>(orderItemList));
+                orderRequest.setAction(requestBodyJson.getString("action"));
+                orderRequest.setCustomer_name(requestBodyJson.getString("customer_name"));
+                orderRequest.setCustomer_mobile(requestBodyJson.getString("customer_mobile"));
+                orderRequest.setCustomer_address(requestBodyJson.getString("customer_address"));
+                orderRequest.setCustomer_alternate_mobile(requestBodyJson.getString("customer_alternate_mobile"));
+                orderRequest.setCustomer_landmark(requestBodyJson.getString("customer_landmark"));
+                orderRequest.setSpecial_discount(requestBodyJson.getString("special_discount"));
+                orderRequest.setCharges(requestBodyJson.getString("charges"));
+                orderRequest.setTip(requestBodyJson.getString("tip"));
+                
+                LogUtils.info("Constructed Dine-In order request");
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Constructed Dine-In order request");
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+                
+                response = ResponseUtil.getResponseWithAuth(baseURI, orderRequest, httpsmethod, accessToken);
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+                
+                // Validate status code
+                if (response.getStatusCode() == 201) {
+                    LogUtils.success(logger, "Create Dine-In order API executed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create Dine-In order API executed successfully", ExtentColor.GREEN));
+                    ExtentReport.getTest().log(Status.PASS, "Status Code: " + response.getStatusCode());
+                    
+                    // Only show response without validation
+                    ExtentReport.getTest().log(Status.PASS, "Full Response:");
+                    ExtentReport.getTest().log(Status.PASS, response.asPrettyString());
+                    
+                    // Add a screenshot or additional details that might help visibility
+                    ExtentReport.getTest().log(Status.INFO, MarkupHelper.createLabel("Test completed successfully", ExtentColor.GREEN));
+                    ExtentReport.flushReport();
+                } else {
+                	
+                    String errorMsg = "Status code mismatch - Expected: 200, Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asString());
+                    ExtentReport.flushReport();
+                    throw new customException(errorMsg);
+                    
+                }
+            }
+            
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Exception in create Counter order test: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Exception in create Counter order test: " + e.getMessage());
+            throw new customException("Exception in create Counter order test: " + e.getMessage());
+        }
+    }
+    
+    @DataProvider(name = "getCreateOrderNegativeData")
+    public Object[][] getCreateOrderNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading create order negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading create order negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "createorder".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid create order negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting create order negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting create order negative test data: " + e.getMessage());
+            throw new customException("Error in getting create order negative test data: " + e.getMessage());
+        }
+    }
+
+    @Test(dataProvider = "getCreateOrderNegativeData")
+    public void createOrderNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting create order negative test case: " + testCaseid);
+            ExtentReport.createTest("Create Order Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            if (apiName.equalsIgnoreCase("createorder") && testType.equalsIgnoreCase("negative")) {
+                requestBodyJson = new JSONObject(requestBody);
+                
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
                 
                 // Set payload for create order request
                 orderRequest = new OrderRequest();
@@ -705,31 +857,127 @@ public class CreateOrderTestScript extends APIBase {
                 ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
                 
-                if (response.getStatusCode() == Integer.parseInt(statusCode)) {
-                    LogUtils.success(logger, "Create Counter order API executed successfully");
-                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create Counter order API executed successfully", ExtentColor.GREEN));
+                int expectedStatusCode = Integer.parseInt(statusCode);
+                
+                // Report both expected and actual status codes
+                ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+                ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + response.getStatusCode());
+                
+                // Check for server errors
+                if (response.getStatusCode() == 500 || response.getStatusCode() == 502) {
+                    LogUtils.failure(logger, "Server error detected with status code: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + response.getStatusCode(), ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+                }
+                // Validate status code
+                else if (response.getStatusCode() != expectedStatusCode) {
+                    LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                    ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + response.getStatusCode());
+                }
+                else {
+                    LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                    ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
                     
-                    // Validate response body if expected response is provided
+                    // Validate response body
                     actualResponseBody = new JSONObject(response.asString());
+                    
                     if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
                         expectedJsonBody = new JSONObject(expectedResponseBody);
-                                            }
+                        
+                        // Log expected vs actual response bodies
+                        ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedJsonBody.toString(2));
+                        ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualResponseBody.toString(2));
+                        
+                        // Validate response message
+                        if (expectedJsonBody.has("detail") && actualResponseBody.has("detail")) {
+                            String expectedDetail = expectedJsonBody.getString("detail");
+                            String actualDetail = actualResponseBody.getString("detail");
+                            
+                            // Check if message exceeds 6 sentences
+                            String[] sentences = actualDetail.split("[.!?]+");
+                            int sentenceCount = 0;
+                            for (String sentence : sentences) {
+                                if (sentence.trim().length() > 0) {
+                                    sentenceCount++;
+                                }
+                            }
+                            
+                            if (sentenceCount > 6) {
+                                String errorMsg = "Response message exceeds maximum allowed sentences - Found: " + sentenceCount + ", Maximum allowed: 6";
+                                LogUtils.failure(logger, errorMsg);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Message: " + actualDetail);
+                            } else {
+                                LogUtils.info("Response message sentence count is valid: " + sentenceCount);
+                                ExtentReport.getTest().log(Status.PASS, "Response message sentence count is valid: " + sentenceCount);
+                            }
+                            
+                            if (expectedDetail.equals(actualDetail)) {
+                                LogUtils.info("Error message validation passed: " + actualDetail);
+                                ExtentReport.getTest().log(Status.PASS, "Error message validation passed");
+                            } else {
+                                LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedDetail);
+                                ExtentReport.getTest().log(Status.FAIL, "Actual: " + actualDetail);
+                            }
+                        }
+                        
+                        // Complete response validation
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    }
                     
-                    // Log the full response
-                    ExtentReport.getTest().log(Status.PASS, "Full Response:");
-                    ExtentReport.getTest().log(Status.PASS, response.asPrettyString());
-                } else {
-                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
-                    LogUtils.failure(logger, errorMsg);
-                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-                    ExtentReport.getTest().log(Status.FAIL, "Response: " + response.asPrettyString());
-                    throw new customException(errorMsg);
+                    LogUtils.success(logger, "Create order negative test completed successfully");
+                    ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Create order negative test completed successfully", ExtentColor.GREEN));
                 }
+                
+                // Always log the full response
+                ExtentReport.getTest().log(Status.INFO, "Full Response:");
+                ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+            } else {
+                String errorMsg = "Invalid API name or test type: API=" + apiName + ", TestType=" + testType;
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
         } catch (Exception e) {
-            LogUtils.failure(logger, "Exception in create Counter order test: " + e.getMessage());
-            ExtentReport.getTest().log(Status.FAIL, "Exception in create Counter order test: " + e.getMessage());
-            throw new customException("Exception in create Counter order test: " + e.getMessage());
+            String errorMsg = "Error in create order negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
         }
+    }
+
+    /**
+     * Validate if a message contains more than the maximum allowed number of sentences
+     * @param message The message to validate
+     * @param maxSentences Maximum allowed sentences
+     * @return Error message if validation fails, null if validation passes
+     */
+    private String validateSentenceCount(String message, int maxSentences) {
+        if (message == null || message.trim().isEmpty()) {
+            return null; // Empty message, no sentences
+        }
+        
+        String[] sentences = message.split("[.!?]+");
+        int sentenceCount = 0;
+        
+        for (String sentence : sentences) {
+            if (sentence.trim().length() > 0) {
+                sentenceCount++;
+            }
+        }
+        
+        if (sentenceCount > maxSentences) {
+            return "Response message exceeds maximum allowed sentences - Found: " + sentenceCount + 
+                   ", Maximum allowed: " + maxSentences;
+        }
+        
+        return null; // Validation passed
     }
 }

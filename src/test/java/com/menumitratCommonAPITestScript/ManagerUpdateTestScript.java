@@ -28,6 +28,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -81,6 +82,27 @@ public class ManagerUpdateTestScript extends APIBase {
             LogUtils.error("Error while reading manager update test scenario data: " + e.getMessage());
             ExtentReport.getTest().log(Status.ERROR, "Error while reading manager update test scenario data: " + e.getMessage());
             throw new customException("Error while reading manager update test scenario data: " + e.getMessage());
+        }
+    }
+
+    @DataProvider(name = "getManagerUpdateNegativeData")
+    public static Object[][] getManagerUpdateNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading manager update negative test scenario data");
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            List<Object[]> filteredData = new ArrayList<>();
+            for (Object[] row : readExcelData) {
+                if (row != null && row.length >= 3 &&
+                        "managerupdate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
+                }
+            }
+            return filteredData.toArray(new Object[0][]);
+        } catch (Exception e) {
+            LogUtils.error("Error while reading manager update negative test scenario data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.ERROR, "Error while reading manager update negative test scenario data: " + e.getMessage());
+            throw new customException("Error while reading manager update negative test scenario data: " + e.getMessage());
         }
     }
 
@@ -157,6 +179,75 @@ public class ManagerUpdateTestScript extends APIBase {
             if (response.getStatusCode() == Integer.parseInt(statusCode)) {
                 ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
                 LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+            } else {
+                String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                ExtentReport.getTest().log(Status.FAIL, errorMsg);
+                LogUtils.failure(logger, errorMsg);
+                throw new customException(errorMsg);
+            }
+        } catch (Exception e) {
+            String errorMsg = "Test execution failed: " + e.getMessage();
+            ExtentReport.getTest().log(Status.FAIL, errorMsg);
+            LogUtils.error(errorMsg);
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body:\n" + response.asPrettyString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+
+    @Test(dataProvider = "getManagerUpdateNegativeData")
+    private void updateManagerNegative(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBodyPayload, String expectedResponseBody, String statusCode)
+            throws customException {
+        try {
+            LogUtils.info("Starting manager update negative test case: " + testCaseid);
+            ExtentReport.createTest("Manager Update Negative Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+
+            requestBodyJson = new JSONObject(requestBodyPayload);
+            // Set request object
+            managerUpdateRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+            managerUpdateRequest.setUser_id(requestBodyJson.getString("user_id"));
+            managerUpdateRequest.setName(requestBodyJson.getString("name"));
+            managerUpdateRequest.setMobile(requestBodyJson.getString("mobile"));
+            managerUpdateRequest.setAddress(requestBodyJson.getString("address"));
+            managerUpdateRequest.setAadhar_number(requestBodyJson.getString("aadhar_number"));
+            managerUpdateRequest.setUpdate_user_id(requestBodyJson.getString("update_user_id"));
+            // Log payload and request
+            ExtentReport.getTest().log(Status.INFO, "Payload: " + requestBodyPayload);
+            LogUtils.info("Payload: " + requestBodyPayload);
+
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString(2));
+            LogUtils.info("Request Body: " + requestBodyJson.toString(2));
+
+            response = ResponseUtil.getResponseWithAuth(baseURI, managerUpdateRequest, httpsmethod, accessToken);
+
+            // Log response
+            ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+            LogUtils.info("Response Status Code: " + response.getStatusCode());
+            ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
+            LogUtils.info("Response Body: " + response.asPrettyString());
+
+            // Validate status code
+            if (response.getStatusCode() == Integer.parseInt(statusCode)) {
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
+                LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
+                actualResponseBody = new JSONObject(response.asString());
+                expectedResponse = new JSONObject(expectedResponseBody);
+
+                // Log actual and expected response
+                ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
+                LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
+                ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
+                LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
+
+                // Validate response body
+                validateResponseBody.handleResponseBody(response, expectedResponse);
+
+                ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
+                LogUtils.success(logger, "Response body validation passed successfully");
             } else {
                 String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
                 ExtentReport.getTest().log(Status.FAIL, errorMsg);

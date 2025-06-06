@@ -29,6 +29,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 import io.restassured.response.Response;
 
@@ -126,39 +127,98 @@ public class OrderListViewCdskdsTestScript extends APIBase
     @DataProvider(name = "getOrderListViewCdskdsData")
     public Object[][] getOrderListViewCdskdsData() throws customException {
         try {
-            LogUtils.info("Reading order list view CDS KDS test scenario data");
-
+            LogUtils.info("Reading order list view cdskds test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading order list view cdskds test scenario data");
+            
             Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
-            if (readExcelData == null || readExcelData.length == 0) {
-                LogUtils.error("No order list view CDS KDS test scenario data found in Excel sheet");
-                throw new customException("No order list view CDS KDS test scenario data found in Excel sheet");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
-
+            
             List<Object[]> filteredData = new ArrayList<>();
-
+            
             for (int i = 0; i < readExcelData.length; i++) {
                 Object[] row = readExcelData[i];
-                if (row != null && row.length >= 2 &&
+                if (row != null && row.length >= 3 &&
                         "orderlistviewcdskds".equalsIgnoreCase(Objects.toString(row[0], "")) &&
                         "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-
+                    
                     filteredData.add(row);
                 }
             }
-
-            Object[][] obj = new Object[filteredData.size()][];
-            for (int i = 0; i < filteredData.size(); i++) {
-                obj[i] = filteredData.get(i);
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid order list view cdskds test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
             }
-
-            LogUtils.info("Successfully retrieved " + obj.length + " test scenarios for order list view CDS KDS");
-            return obj;
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
         } catch (Exception e) {
-            LogUtils.error("Error while reading order list view CDS KDS test scenario data: " + e.getMessage());
-            ExtentReport.getTest().log(Status.ERROR,
-                    "Error while reading order list view CDS KDS test scenario data: " + e.getMessage());
-            throw new customException(
-                    "Error while reading order list view CDS KDS test scenario data: " + e.getMessage());
+            LogUtils.failure(logger, "Error in getting order list view cdskds test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting order list view cdskds test data: " + e.getMessage());
+            throw new customException("Error in getting order list view cdskds test data: " + e.getMessage());
+        }
+    }
+    
+    @Test(dataProvider = "getOrderListViewCdskdsData")
+    public void orderListViewCdskdsTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting order list view cdskds test case: " + testCaseid);
+            ExtentReport.createTest("Order List View Cdskds Test - " + testCaseid);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            if (apiName.equalsIgnoreCase("orderlistviewcdskds")) {
+                requestBodyJson = new JSONObject(requestBody);
+                orderListViewCdskdsRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
+                
+                
+                LogUtils.info("Request Body: " + requestBodyJson.toString());
+                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+                
+                response = ResponseUtil.getResponseWithAuth(baseURI, orderListViewCdskdsRequest, httpsmethod, accessToken);
+                
+                LogUtils.info("Response Status Code: " + response.getStatusCode());
+                LogUtils.info("Response Body: " + response.asString());
+                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
+                
+                // Validate status code
+                if (response.getStatusCode() != 200) {
+                    String errorMsg = "Status code mismatch - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
+                    LogUtils.failure(logger, errorMsg);
+                    ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                    throw new customException(errorMsg);
+                }
+                
+                // Only show response without validation
+                actualJsonBody = new JSONObject(response.asString());
+                LogUtils.info("Order list view cdskds response received successfully");
+                ExtentReport.getTest().log(Status.PASS, "Order list view cdskds response received successfully");
+                ExtentReport.getTest().log(Status.PASS, "Response: " + response.asPrettyString());
+                
+                LogUtils.success(logger, "Order list view cdskds test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Order list view cdskds test completed successfully", ExtentColor.GREEN));
+            }
+        } catch (Exception e) {
+            String errorMsg = "Error in order list view cdskds test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
         }
     }
     
@@ -302,7 +362,8 @@ public class OrderListViewCdskdsTestScript extends APIBase
                         }
                         
                         // Complete response validation
-                                            }
+                        validateResponseBody.handleResponseBody(response, expectedJsonBody);
+                    }
                     
                     LogUtils.success(logger, "Order list view cdskds negative test completed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Order list view cdskds negative test completed successfully", ExtentColor.GREEN));
@@ -325,45 +386,6 @@ public class OrderListViewCdskdsTestScript extends APIBase
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
                 ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
             }
-            throw new customException(errorMsg);
-        }
-    }
-
-    @Test(dataProvider = "getOrderListViewCdskdsData")
-    public void orderListViewCdskdsTest(String apiName, String testCaseid, String testType, String description,
-            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
-        try {
-            LogUtils.info("Starting order list view cdskds test case: " + testCaseid);
-            ExtentReport.createTest("Order List View CDSKDS Test - " + testCaseid);
-            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
-            
-            if (apiName.equalsIgnoreCase("orderlistviewcdskds")) {
-                requestBodyJson = new JSONObject(requestBody);
-                
-                // Set request parameters
-                orderListViewCdskdsRequest.setOutlet_id(requestBodyJson.getString("outlet_id"));
-                orderListViewCdskdsRequest.setOrder_status(requestBodyJson.getString("order_status"));
-                
-                LogUtils.info("Request Body: " + requestBodyJson.toString());
-                ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
-                
-                // Make API call
-                response = ResponseUtil.getResponseWithAuth(baseURI, orderListViewCdskdsRequest, httpsmethod, accessToken);
-                
-                // Log response
-                LogUtils.info("Response Status Code: " + response.getStatusCode());
-                LogUtils.info("Response Body: " + response.asString());
-                ExtentReport.getTest().log(Status.INFO, "Response Status Code: " + response.getStatusCode());
-                ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asString());
-                
-                // Mark test as passed
-                LogUtils.success(logger, "Order list view cdskds test completed successfully");
-                ExtentReport.getTest().log(Status.PASS, "Order list view cdskds test completed successfully");
-            }
-        } catch (Exception e) {
-            String errorMsg = "Error in order list view cdskds test: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
             throw new customException(errorMsg);
         }
     }

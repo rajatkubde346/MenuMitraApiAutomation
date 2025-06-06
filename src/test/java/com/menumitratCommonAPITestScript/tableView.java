@@ -32,6 +32,7 @@ import com.menumitra.utilityclass.RequestValidator;
 import com.menumitra.utilityclass.ResponseUtil;
 import com.menumitra.utilityclass.TokenManagers;
 import com.menumitra.utilityclass.customException;
+import com.menumitra.utilityclass.validateResponseBody;
 
 @Listeners(Listener.class)
 public class tableView extends APIBase
@@ -73,38 +74,36 @@ public class tableView extends APIBase
     @DataProvider(name = "getTableViewData")
     public static Object[][] getTableViewData() throws customException {
         try {
-            LogUtils.info("Reading positive table view test scenario data");
+            LogUtils.info("Starting to read table view test scenario data from Excel");
             
             Object[][] testData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
             
             if (testData == null || testData.length == 0) {
-                String errorMsg = "No table view test scenario data found in Excel sheet";
+                String errorMsg = "No table view test scenario data found in Excel sheet at path: " + excelSheetPathForGetApis;
                 LogUtils.error(errorMsg);
                 throw new customException(errorMsg);
             }
 
-            // Filter for positive test cases only
-            List<Object[]> positiveTestCases = new ArrayList<>();
-            for (Object[] row : testData) {
+            List<Object[]> filteredData = new ArrayList<>();
+            for (int i = 0; i < testData.length; i++) {
+                Object[] row = testData[i];
                 if (row != null && row.length >= 3 &&
-                    "tableview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-                    "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-                    positiveTestCases.add(row);
+                        "tableview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "positive".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    filteredData.add(row);
                 }
             }
 
-            if (positiveTestCases.isEmpty()) {
-                String errorMsg = "No positive table view test cases found in test data";
-                LogUtils.error(errorMsg);
-                throw new customException(errorMsg);
+            Object[][] obj = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                obj[i] = filteredData.get(i);
             }
 
-            Object[][] positiveTestData = positiveTestCases.toArray(new Object[0][]);
-            LogUtils.info("Successfully retrieved " + positiveTestData.length + " positive table view test scenarios");
-            return positiveTestData;
+            LogUtils.info("Successfully filtered " + obj.length + " test scenarios for table view");
+            return obj;
 
         } catch (Exception e) {
-            String errorMsg = "Error while reading positive table view test scenario data: " + e.getMessage();
+            String errorMsg = "Error while reading table view test scenario data from Excel sheet: " + e.getMessage();
             LogUtils.error(errorMsg);
             throw new customException(errorMsg);
         }
@@ -222,7 +221,8 @@ public class tableView extends APIBase
                     
                     ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
                     LogUtils.info("Performing detailed response validation");
-                    //                    
+                    //validateResponseBody.handleResponseBody(response, expectedResponse);
+                    
                     ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
                     LogUtils.success(logger, "Response body validation passed successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Table viewed successfully", ExtentColor.GREEN));
@@ -252,5 +252,224 @@ public class tableView extends APIBase
             throw new customException(errorMsg);
         }
     }
+    
+    
+    
+    
+    
+    
+    @DataProvider(name = "getTableViewNegativeData")
+    public Object[][] getTableViewNegativeData() throws customException {
+        try {
+            LogUtils.info("Reading table view negative test scenario data");
+            ExtentReport.getTest().log(Status.INFO, "Reading table view negative test scenario data");
+            
+            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
+            if (readExcelData == null) {
+                String errorMsg = "Error fetching data from Excel sheet - Data is null";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            List<Object[]> filteredData = new ArrayList<>();
+            
+            for (int i = 0; i < readExcelData.length; i++) {
+                Object[] row = readExcelData[i];
+                if (row != null && row.length >= 3 &&
+                        "tableview".equalsIgnoreCase(Objects.toString(row[0], "")) &&
+                        "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
+                    
+                    filteredData.add(row);
+                }
+            }
+            
+            if (filteredData.isEmpty()) {
+                String errorMsg = "No valid table view negative test data found after filtering";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            Object[][] result = new Object[filteredData.size()][];
+            for (int i = 0; i < filteredData.size(); i++) {
+                result[i] = filteredData.get(i);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            LogUtils.failure(logger, "Error in getting table view negative test data: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error in getting table view negative test data: " + e.getMessage());
+            throw new customException("Error in getting table view negative test data: " + e.getMessage());
+        }
+    }
+    
+   
+    
+    @Test(dataProvider = "getTableViewNegativeData")
+    public void tableViewNegativeTest(String apiName, String testCaseid, String testType, String description,
+            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
+        try {
+            LogUtils.info("Starting table view negative test case: " + testCaseid);
+            ExtentReport.createTest("Table View Negative Test - " + testCaseid + ": " + description);
+            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
+            
+            // Validate API name and test type
+            if (!apiName.equalsIgnoreCase("tableview")) {
+                String errorMsg = "Invalid API name: Expected 'tableview', Found: '" + apiName + "'";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            if (!testType.equalsIgnoreCase("negative")) {
+                String errorMsg = "Invalid test type: Expected 'negative', Found: '" + testType + "'";
+                LogUtils.failure(logger, errorMsg);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+                throw new customException(errorMsg);
+            }
+            
+            requestBodyJson = new JSONObject(requestBody);
+            
+            LogUtils.info("Request Body: " + requestBodyJson.toString());
+            ExtentReport.getTest().log(Status.INFO, "Request Body: " + requestBodyJson.toString());
+            
+            ExtentReport.getTest().log(Status.INFO, "Setting outlet_id in request");
+            LogUtils.info("Setting outlet_id in request");
+            tableViewRequest.setOutlet_id(requestBodyJson.getInt("outlet_id"));
+            
+            ExtentReport.getTest().log(Status.INFO, "Setting user_id in request: " + user_id);
+            LogUtils.info("Setting user_id in request: " + user_id);
+            tableViewRequest.setTable_number(requestBodyJson.getString("table_number"));
+            
+            ExtentReport.getTest().log(Status.INFO, "Setting section_id in request");
+            LogUtils.info("Setting section_id in request");
+            tableViewRequest.setSection_id(requestBodyJson.getString("section_id"));
+            
+            ExtentReport.getTest().log(Status.INFO, "Final Request Body: " + requestBodyJson.toString(2));
+            LogUtils.info("Final Request Body: " + requestBodyJson.toString(2));
+            
+            response = ResponseUtil.getResponseWithAuth(baseURI, tableViewRequest, httpsmethod, accessToken);
+            
+            // Log both expected and actual status codes
+            int expectedStatusCode = Integer.parseInt(statusCode);
+            int actualStatusCode = response.getStatusCode();
+            
+            LogUtils.info("Expected Status Code: " + expectedStatusCode);
+            LogUtils.info("Actual Status Code: " + actualStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Expected Status Code: " + expectedStatusCode);
+            ExtentReport.getTest().log(Status.INFO, "Actual Status Code: " + actualStatusCode);
+            
+            // Log both expected and actual response bodies
+            String actualResponse = response.asString();
+            LogUtils.info("Expected Response Body: " + expectedResponseBody);
+            LogUtils.info("Actual Response Body: " + actualResponse);
+            ExtentReport.getTest().log(Status.INFO, "Expected Response Body: " + expectedResponseBody);
+            ExtentReport.getTest().log(Status.INFO, "Actual Response Body: " + actualResponse);
+            
+            // Check for server errors
+            if (actualStatusCode == 500 || actualStatusCode == 502) {
+                LogUtils.failure(logger, "Server error detected with status code: " + actualStatusCode);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Server error detected: " + actualStatusCode, ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Response Body: " + response.asPrettyString());
+            }
+            // Validate status code
+            else if (actualStatusCode != expectedStatusCode) {
+                LogUtils.failure(logger, "Status code mismatch - Expected: " + expectedStatusCode + ", Actual: " + actualStatusCode);
+                ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Status code mismatch", ExtentColor.RED));
+                ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedStatusCode + ", Actual: " + actualStatusCode);
+            }
+            else {
+                LogUtils.success(logger, "Status code validation passed: " + actualStatusCode);
+                ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + actualStatusCode);
+                
+                // Validate response body
+                actualResponseBody = new JSONObject(response.asString());
+                System.out.println(actualResponse);
+                
+                if (expectedResponseBody != null && !expectedResponseBody.isEmpty()) {
+                	expectedResponse = new JSONObject(expectedResponseBody);
+                    
+                    // Validate response message
+                    if (expectedResponse.has("detail") && actualResponseBody.has("detail")) {
+                        String expectedDetail = expectedResponse.getString("detail");
+                        String actualDetail = actualResponseBody.getString("detail");
+                        
+                        // Check sentence count
+                        boolean hasFiveSentences = checkSentenceCount(actualDetail);
+                        if (!hasFiveSentences) {
+                            int sentenceCount = actualDetail.split("[.!?](?:\\s|$)").length;
+                            
+                            if (sentenceCount > 5) {
+                                String warningMsg = "Response message has more than 5 sentences: " + sentenceCount;
+                                LogUtils.failure(logger, warningMsg);
+                                ExtentReport.getTest().log(Status.WARNING, MarkupHelper.createLabel(warningMsg, ExtentColor.AMBER));
+                            } else {
+                                LogUtils.info("Response message has fewer than 5 sentences: " + sentenceCount + " (allowed)");
+                                ExtentReport.getTest().log(Status.INFO, "Response message has fewer than 5 sentences: " + sentenceCount + " (allowed)");
+                            }
+                        } else {
+                            LogUtils.info("Response message has exactly 5 sentences");
+                            ExtentReport.getTest().log(Status.INFO, "Response message has exactly 5 sentences");
+                        }
+                        
+                        if (expectedDetail.equals(actualDetail)) {
+                            LogUtils.info("Error message validation passed: " + actualDetail);
+                            ExtentReport.getTest().log(Status.PASS, "Error message validation passed: " + actualDetail);
+                        } else {
+                            LogUtils.failure(logger, "Error message mismatch - Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel("Error message mismatch", ExtentColor.RED));
+                            ExtentReport.getTest().log(Status.FAIL, "Expected: " + expectedDetail + ", Actual: " + actualDetail);
+                        }
+                    }
+                    
+                    // Complete response validation
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
+                }
+                
+                LogUtils.success(logger, "Table view negative test completed successfully");
+                ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Table view negative test completed successfully", ExtentColor.GREEN));
+            }
+            
+            // Always log the full response
+            ExtentReport.getTest().log(Status.INFO, "Full Response:");
+            ExtentReport.getTest().log(Status.INFO, response.asPrettyString());
+        } catch (Exception e) {
+            String errorMsg = "Error in table view negative test: " + e.getMessage();
+            LogUtils.exception(logger, errorMsg, e);
+            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
+            if (response != null) {
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Status Code: " + response.getStatusCode());
+                ExtentReport.getTest().log(Status.FAIL, "Failed Response Body: " + response.asString());
+            }
+            throw new customException(errorMsg);
+        }
+    }
+    
+    
+    /**
+     * Checks if a message contains exactly 5 sentences.
+     * 
+     * @param message The message to check
+     * @return true if the message contains exactly 5 sentences, false otherwise
+     */
+    private boolean checkSentenceCount(String message) {
+        if (message == null || message.trim().isEmpty()) {
+            return false;
+        }
+        
+        // Pattern to match sentences ending with ., !, ? followed by space or end of string
+        Pattern pattern = Pattern.compile("[.!?](?:\\s|$)");
+        String[] sentences = pattern.split(message);
+        
+        // Filter out empty strings which might come from multiple punctuation marks
+        int count = 0;
+        for (String sentence : sentences) {
+            if (!sentence.trim().isEmpty()) {
+                count++;
+            }
+        }
+        
+        return count == 5;
+    }
 }
-
