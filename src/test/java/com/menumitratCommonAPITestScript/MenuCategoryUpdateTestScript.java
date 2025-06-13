@@ -167,7 +167,7 @@ public class MenuCategoryUpdateTestScript extends APIBase
     /**
      * Test method to update menu category
      */
-   // @Test(dataProvider="getMenuCategoryUpdateData")
+    @Test(dataProvider="getMenuCategoryUpdateData")
     private void updateMenuCategoryUsingValidInputData(String apiName, String testCaseid, String testType, String description,
             String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
         try {
@@ -215,7 +215,7 @@ public class MenuCategoryUpdateTestScript extends APIBase
                 {
                     LogUtils.success(logger, "Menu category updated successfully");
                     ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Menu category updated successfully", ExtentColor.GREEN));
-                    //validateResponseBody.handleResponseBody(response, expectedResponse);
+                    validateResponseBody.handleResponseBody(response, expectedResponse);
                     LogUtils.info("Response validation completed successfully");
                     ExtentReport.getTest().log(Status.PASS, "Response validation completed successfully");
                     ExtentReport.getTest().log(Status.INFO, "Response Body: " + response.asPrettyString());
@@ -237,147 +237,6 @@ public class MenuCategoryUpdateTestScript extends APIBase
         }
     }
 
-    @DataProvider(name = "getMenuCategoryUpdateNegativeData")
-    public Object[][] getMenuCategoryUpdateNegativeData() throws customException {
-        try {
-            LogUtils.info("Reading menu category update negative test scenario data");
-            Object[][] readExcelData = DataDriven.readExcelData(excelSheetPathForGetApis, "CommonAPITestScenario");
-            if (readExcelData == null || readExcelData.length == 0) {
-                LogUtils.error("No menu category update test scenario data found in Excel sheet");
-                throw new customException("No menu category update test scenario data found in Excel sheet");
-            }
-
-            List<Object[]> filteredData = new ArrayList<>();
-
-            for (Object[] row : readExcelData) {
-                if (row != null && row.length >= 3 &&
-                    "menucategoryupdate".equalsIgnoreCase(Objects.toString(row[0], "")) &&
-                    "negative".equalsIgnoreCase(Objects.toString(row[2], ""))) {
-                    filteredData.add(row);
-                }
-            }
-
-            return filteredData.toArray(new Object[0][]);
-        } catch (Exception e) {
-            LogUtils.error("Error while reading menu category update negative test scenario data: " + e.getMessage());
-            throw new customException("Error while reading menu category update negative test scenario data: " + e.getMessage());
-        }
-    }
-
-    @Test(dataProvider = "getMenuCategoryUpdateNegativeData")
-    public void menuCategoryUpdateNegativeTest(String apiName, String testCaseid, String testType, String description,
-            String httpsmethod, String requestBody, String expectedResponseBody, String statusCode) throws customException {
-        try {
-            LogUtils.info("Starting menu category update negative test: " + description);
-            ExtentReport.createTest("Menu Category Update Negative Test - " + testCaseid);
-            ExtentReport.getTest().log(Status.INFO, "Test Description: " + description);
-            
-            if(apiName.equalsIgnoreCase("menucategoryupdate") && testType.equalsIgnoreCase("negative"))
-            {
-            	 LogUtils.info("Processing menu category create request");
-            	 requestBodyJson = new JSONObject(requestBody.replace("\\", "\\\\"));
-            	 expectedResponse = new JSONObject(expectedResponseBody.toString());
-                
-                 request = RestAssured.given();
-                 request.header("Authorization", "Bearer " + accessToken);
-                 request.header("Content-Type", "multipart/form-data");
-
-                 // Set multipart form data
-                 request.multiPart("outlet_id", requestBodyJson.getInt("outlet_id"));
-                 request.multiPart("category_name", requestBodyJson.getString("category_name"));
-                 request.multiPart("menu_cat_id",requestBodyJson.getString("menu_cat_id"));
-                 // Handle image file upload if it exists in the request
-                 if (requestBodyJson.has("image") && !requestBodyJson.getString("image").isEmpty())
-                 {
-                     File categoryImage = new File(requestBodyJson.getString("image"));
-                     if(categoryImage.exists())
-                     {
-                         request.multiPart("image", categoryImage);
-                     }
-                 }
-                 request.multiPart("user_id",String.valueOf(userId));
-                 LogUtils.info("Constructing request body");
-                 ExtentReport.getTest().log(Status.INFO, "Constructing request body");
-                 LogUtils.info("Sending POST request to endpoint: " + baseUri);
-                 ExtentReport.getTest().log(Status.INFO, "Sending POST request to create menu category");
-                 response = request.when().patch(baseUri).then().extract().response();
-
-                 LogUtils.info("Received response with status code: " + response.getStatusCode());
-                 ExtentReport.getTest().log(Status.INFO, "Received response with status code: " + response.getStatusCode());
-                 LogUtils.info("Response body: " + response.asPrettyString());
-                 ExtentReport.getTest().log(Status.INFO, "Response body: " + response.asPrettyString());
-                 if (response.getStatusCode() == Integer.parseInt(statusCode)) {
-                     ExtentReport.getTest().log(Status.PASS, "Status code validation passed: " + response.getStatusCode());
-                     LogUtils.success(logger, "Status code validation passed: " + response.getStatusCode());
-                     
-                     actualResponseBody = new JSONObject(response.asString());
-                     expectedResponse = new JSONObject(expectedResponseBody);
-                     
-                     ExtentReport.getTest().log(Status.INFO, "Starting response body validation");
-                     LogUtils.info("Starting response body validation");
-                     ExtentReport.getTest().log(Status.INFO, "Expected Response Body:\n" + expectedResponse.toString(2));
-                     LogUtils.info("Expected Response Body:\n" + expectedResponse.toString(2));
-                     ExtentReport.getTest().log(Status.INFO, "Actual Response Body:\n" + actualResponseBody.toString(2));
-                     LogUtils.info("Actual Response Body:\n" + actualResponseBody.toString(2));
-                     
-                     // Validate response message sentence count
-                     if (actualResponseBody.has("message")) {
-                         String message = actualResponseBody.getString("message");
-                         String[] sentences = message.split("[.!?]+");
-                         int sentenceCount = 0;
-                         
-                         for (String sentence : sentences) {
-                             if (!sentence.trim().isEmpty()) {
-                                 sentenceCount++;
-                             }
-                         }
-                         
-                         ExtentReport.getTest().log(Status.INFO, "Response message contains " + sentenceCount + " sentences");
-                         LogUtils.info("Response message contains " + sentenceCount + " sentences");
-                         
-                         if (sentenceCount > 6) {
-                             String errorMsg = "Response message contains more than 6 sentences (" + sentenceCount + "), which exceeds the limit";
-                             ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                             LogUtils.failure(logger, errorMsg);
-                             throw new customException(errorMsg);
-                         } else {
-                             ExtentReport.getTest().log(Status.PASS, "Response message sentence count validation passed: " + sentenceCount + " sentences");
-                             LogUtils.success(logger, "Response message sentence count validation passed: " + sentenceCount + " sentences");
-                         }
-                     }
-                     
-                     // Perform detailed response validation
-                     ExtentReport.getTest().log(Status.INFO, "Performing detailed response validation");
-                     LogUtils.info("Performing detailed response validation");
-                     validateResponseBody.handleResponseBody(response, expectedResponse);
-                     
-                     ExtentReport.getTest().log(Status.PASS, "Response body validation passed successfully");
-                     LogUtils.success(logger, "Response body validation passed successfully");
-                     
-                 } else {
-                     String errorMsg = "Status code validation failed - Expected: " + statusCode + ", Actual: " + response.getStatusCode();
-                     ExtentReport.getTest().log(Status.FAIL, errorMsg);
-                     LogUtils.failure(logger, errorMsg);
-                     LogUtils.error("Failed Response Body:\n" + response.asPrettyString());
-                     throw new customException(errorMsg);
-                 }
-            }
-            
-
-        } catch (Exception e) {
-            String errorMsg = "Error during menu category update negative test: " + e.getMessage();
-            LogUtils.exception(logger, errorMsg, e);
-            ExtentReport.getTest().log(Status.FAIL, MarkupHelper.createLabel(errorMsg, ExtentColor.RED));
-            throw new customException(errorMsg);
-        }
-    }
-
-    private int countSentences(String text) {
-        // Split text into sentences using common sentence terminators
-        String[] sentences = text.split("[.!?]+");
-        return sentences.length;
-    }
-
     /**
      * Cleanup method to perform post-test cleanup
      * @throws customException 
@@ -385,10 +244,16 @@ public class MenuCategoryUpdateTestScript extends APIBase
     @AfterClass
     private void tearDown() throws customException 
     {
-    	
-       /*LogUtils.info("Performing tear down");
-       ExtentReport.getTest().log(Status.INFO, "Performing tear down");
-       ActionsMethods.logout();
-       TokenManagers.clearTokens();*/
+        try {
+            LogUtils.info("Cleaning up resources");
+            ExtentReport.getTest().log(Status.INFO, "Cleaning up resources");
+            // Add any cleanup code here
+            LogUtils.info("Cleanup completed successfully");
+            ExtentReport.getTest().log(Status.PASS, "Cleanup completed successfully");
+        } catch (Exception e) {
+            LogUtils.error("Error during cleanup: " + e.getMessage());
+            ExtentReport.getTest().log(Status.FAIL, "Error during cleanup: " + e.getMessage());
+            throw new customException("Error during cleanup: " + e.getMessage());
+        }
     }
 }

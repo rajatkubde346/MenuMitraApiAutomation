@@ -661,7 +661,7 @@ public class LoadOrderTestScripts extends APIBase {
         try {
             LogUtils.info("Starting Load Test for Multiple Orders");
             ExtentReport.createTest("Load Test - Multiple Orders");
-            ExtentReport.getTest().log(Status.INFO, "Starting load test for 5 takeaway and 5 delivery orders");
+            ExtentReport.getTest().log(Status.INFO, "Starting load test for 500 parcel and 500 delivery orders");
 
             // Get test data for takeaway and delivery orders
             Object[][] takeawayData = getTakeawayLoadOrderData();
@@ -679,26 +679,46 @@ public class LoadOrderTestScripts extends APIBase {
                     .map(Object::toString)
                     .toArray(String[]::new);
 
-            // Perform load test - 5 iterations for each order type
-            for (int i = 1; i <= 5; i++) {
+            // Initialize response time tracking
+            List<Long> parcelResponseTimes = new ArrayList<>();
+            List<Long> deliveryResponseTimes = new ArrayList<>();
+            long totalParcelTime = 0;
+            long totalDeliveryTime = 0;
+            long minParcelTime = Long.MAX_VALUE;
+            long maxParcelTime = 0;
+            long minDeliveryTime = Long.MAX_VALUE;
+            long maxDeliveryTime = 0;
+
+            // Perform load test - 500 iterations for each order type
+            for (int i = 1; i <= 500; i++) {
                 try {
-                    // Test Takeaway Order
-                    LogUtils.info("Iteration " + i + " - Testing Takeaway Order");
-                    ExtentReport.getTest().log(Status.INFO, "Iteration " + i + " - Testing Takeaway Order");
+                    // Test Parcel Order
+                    LogUtils.info("Iteration " + i + " - Testing Parcel Order");
+                    ExtentReport.getTest().log(Status.INFO, "Iteration " + i + " - Testing Parcel Order");
+                    
+                    long startTime = System.currentTimeMillis();
                     loadTakeawayOrder(
                         takeawayTestCase[0],
-                        "LoadTest_Takeaway_" + i,
+                        "LoadTest_Parcel_" + i,
                         takeawayTestCase[2],
-                        "Load Test Iteration " + i + " for Takeaway Order",
+                        "Load Test Iteration " + i + " for Parcel Order",
                         takeawayTestCase[4],
                         takeawayTestCase[5],
                         takeawayTestCase[6],
                         takeawayTestCase[7]
                     );
+                    long endTime = System.currentTimeMillis();
+                    long responseTime = endTime - startTime;
+                    parcelResponseTimes.add(responseTime);
+                    totalParcelTime += responseTime;
+                    minParcelTime = Math.min(minParcelTime, responseTime);
+                    maxParcelTime = Math.max(maxParcelTime, responseTime);
 
                     // Test Delivery Order
                     LogUtils.info("Iteration " + i + " - Testing Delivery Order");
                     ExtentReport.getTest().log(Status.INFO, "Iteration " + i + " - Testing Delivery Order");
+                    
+                    startTime = System.currentTimeMillis();
                     loadDeliveryOrder(
                         deliveryTestCase[0],
                         "LoadTest_Delivery_" + i,
@@ -709,12 +729,29 @@ public class LoadOrderTestScripts extends APIBase {
                         deliveryTestCase[6],
                         deliveryTestCase[7]
                     );
+                    endTime = System.currentTimeMillis();
+                    responseTime = endTime - startTime;
+                    deliveryResponseTimes.add(responseTime);
+                    totalDeliveryTime += responseTime;
+                    minDeliveryTime = Math.min(minDeliveryTime, responseTime);
+                    maxDeliveryTime = Math.max(maxDeliveryTime, responseTime);
 
-                    // Add a small delay between iterations
-                    Thread.sleep(1000);
+                    // Add a small delay between iterations to prevent overwhelming the server
+                    Thread.sleep(2000); // 2 second delay between requests
                     
-                    LogUtils.info("Completed iteration " + i + " successfully");
-                    ExtentReport.getTest().log(Status.PASS, "Completed iteration " + i + " successfully");
+                    // Log progress every 50 orders
+                    if (i % 50 == 0) {
+                        LogUtils.info("Completed " + i + " iterations successfully");
+                        ExtentReport.getTest().log(Status.INFO, "Completed " + i + " iterations successfully");
+                        
+                        // Log current statistics
+                        double avgParcelTime = totalParcelTime / (double)i;
+                        double avgDeliveryTime = totalDeliveryTime / (double)i;
+                        
+                        ExtentReport.getTest().log(Status.INFO, "Current Statistics:");
+                        ExtentReport.getTest().log(Status.INFO, "Parcel Orders - Avg: " + avgParcelTime + "ms, Min: " + minParcelTime + "ms, Max: " + maxParcelTime + "ms");
+                        ExtentReport.getTest().log(Status.INFO, "Delivery Orders - Avg: " + avgDeliveryTime + "ms, Min: " + minDeliveryTime + "ms, Max: " + maxDeliveryTime + "ms");
+                    }
                 } catch (Exception e) {
                     LogUtils.failure(logger, "Failed in iteration " + i + ": " + e.getMessage());
                     ExtentReport.getTest().log(Status.FAIL, "Failed in iteration " + i + ": " + e.getMessage());
@@ -723,8 +760,40 @@ public class LoadOrderTestScripts extends APIBase {
                 }
             }
 
-            LogUtils.success(logger, "Load test completed successfully");
+            // Calculate final statistics
+            double avgParcelTime = totalParcelTime / 500.0;
+            double avgDeliveryTime = totalDeliveryTime / 500.0;
+
+            // Log final statistics
+            LogUtils.info("Load test completed successfully");
             ExtentReport.getTest().log(Status.PASS, MarkupHelper.createLabel("Load test completed successfully", ExtentColor.GREEN));
+            
+            // Add detailed response time statistics to the report
+            ExtentReport.getTest().log(Status.INFO, "Final Response Time Statistics:");
+            ExtentReport.getTest().log(Status.INFO, "Parcel Orders:");
+            ExtentReport.getTest().log(Status.INFO, "- Average Response Time: " + String.format("%.2f", avgParcelTime) + "ms");
+            ExtentReport.getTest().log(Status.INFO, "- Minimum Response Time: " + minParcelTime + "ms");
+            ExtentReport.getTest().log(Status.INFO, "- Maximum Response Time: " + maxParcelTime + "ms");
+            
+            ExtentReport.getTest().log(Status.INFO, "Delivery Orders:");
+            ExtentReport.getTest().log(Status.INFO, "- Average Response Time: " + String.format("%.2f", avgDeliveryTime) + "ms");
+            ExtentReport.getTest().log(Status.INFO, "- Minimum Response Time: " + minDeliveryTime + "ms");
+            ExtentReport.getTest().log(Status.INFO, "- Maximum Response Time: " + maxDeliveryTime + "ms");
+
+            // Add response time distribution
+            ExtentReport.getTest().log(Status.INFO, "Response Time Distribution:");
+            ExtentReport.getTest().log(Status.INFO, "Parcel Orders:");
+            ExtentReport.getTest().log(Status.INFO, "- < 1s: " + parcelResponseTimes.stream().filter(t -> t < 1000).count());
+            ExtentReport.getTest().log(Status.INFO, "- 1-2s: " + parcelResponseTimes.stream().filter(t -> t >= 1000 && t < 2000).count());
+            ExtentReport.getTest().log(Status.INFO, "- 2-3s: " + parcelResponseTimes.stream().filter(t -> t >= 2000 && t < 3000).count());
+            ExtentReport.getTest().log(Status.INFO, "- > 3s: " + parcelResponseTimes.stream().filter(t -> t >= 3000).count());
+            
+            ExtentReport.getTest().log(Status.INFO, "Delivery Orders:");
+            ExtentReport.getTest().log(Status.INFO, "- < 1s: " + deliveryResponseTimes.stream().filter(t -> t < 1000).count());
+            ExtentReport.getTest().log(Status.INFO, "- 1-2s: " + deliveryResponseTimes.stream().filter(t -> t >= 1000 && t < 2000).count());
+            ExtentReport.getTest().log(Status.INFO, "- 2-3s: " + deliveryResponseTimes.stream().filter(t -> t >= 2000 && t < 3000).count());
+            ExtentReport.getTest().log(Status.INFO, "- > 3s: " + deliveryResponseTimes.stream().filter(t -> t >= 3000).count());
+
             ExtentReport.flushReport();
 
         } catch (Exception e) {

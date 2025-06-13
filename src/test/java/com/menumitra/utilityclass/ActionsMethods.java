@@ -113,49 +113,49 @@ public class ActionsMethods
     }
     
 	
-    public static void logout() throws customException
-    {
-    
-    	try
-    	{
-    		LogUtils.info("===== Starting Logout API Execution =====");
-    		ExtentReport.createTest("Logout");
-    		ExtentReport.getTest().log(Status.INFO, "===== Starting Logout API Execution =====");
-    		
-    		String baseURI=EnviromentChanges.getBaseUrl()+APIBase.property.getProperty("logout");
-    		LogUtils.info("Constructed Logout Base URI: " + baseURI);
-    		ExtentReport.getTest().log(Status.INFO, "Constructed Logout Base URI: " + baseURI);
-    		
-    		LogoutRequest logout=new LogoutRequest();
-    		logout.setUser_id(TokenManagers.getUserId());
-    		logout.setRole(TokenManagers.getRole());
-    		logout.setApp(TokenManagers.getRole());
-    		LogUtils.info("Logout payload prepared");
-    		ExtentReport.getTest().log(Status.INFO, "Logout payload prepared with mobile: ");
-    		
-    		response=ResponseUtil.getResponse(baseURI,logout,APIBase.property.getProperty("httpmethod"));
-    		LogUtils.info("POST request executed for Logout API");
-    		ExtentReport.getTest().log(Status.INFO, "POST request executed for Logout API");
-    		
-    		if(response.getStatusCode()==200)
-    		{
-    			LogUtils.success(logger,"[SUCCESS] Logout user successfully");
-    			ExtentReport.getTest().log(Status.PASS, "[SUCCESS] Logout user successfully");
-    		}
-    		else
-    		{
-    			LogUtils.failure(logger,"[FAILURE] Logout failed. Status code: " + response.getStatusCode()
-                + " | Response: " + response.getBody().asString());
-    			ExtentReport.getTest().log(Status.FAIL, "[FAILURE] Logout failed. Status code: " + response.getStatusCode()
-                + " | Response: " + response.getBody().asString());
-    		}
-    		
-    	}
-    	catch (Exception e)
-    	{
-    		LogUtils.exception(logger,"Error while executing logout API:", e);
-    		ExtentReport.getTest().log(Status.FAIL, "Error while executing logout API: " + e.getMessage());
-	        throw new customException("[EXCEPTION] Error during logout API execution: " + e.getMessage());
-		}
-    }
+//    public static void logout() throws customException
+////    {
+////    
+////    	try
+////    	{
+////    		LogUtils.info("===== Starting Logout API Execution =====");
+////    		ExtentReport.createTest("Logout");
+////    		ExtentReport.getTest().log(Status.INFO, "===== Starting Logout API Execution =====");
+////    		
+////    		String baseURI=EnviromentChanges.getBaseUrl()+APIBase.property.getProperty("logout");
+////    		LogUtils.info("Constructed Logout Base URI: " + baseURI);
+////    		ExtentReport.getTest().log(Status.INFO, "Constructed Logout Base URI: " + baseURI);
+////    		
+////    		LogoutRequest logout=new LogoutRequest();
+////    		logout.setUser_id(TokenManagers.getUserId());
+////    		logout.setRole(TokenManagers.getRole());
+////    		logout.setApp(TokenManagers.getRole());
+////    		LogUtils.info("Logout payload prepared");
+////    		ExtentReport.getTest().log(Status.INFO, "Logout payload prepared with mobile: ");
+////    		
+////    		response=ResponseUtil.getResponse(baseURI,logout,APIBase.property.getProperty("httpmethod"));
+////    		LogUtils.info("POST request executed for Logout API");
+////    		ExtentReport.getTest().log(Status.INFO, "POST request executed for Logout API");
+////    		
+////    		if(response.getStatusCode()==200)
+////    		{
+////    			LogUtils.success(logger,"[SUCCESS] Logout user successfully");
+////    			ExtentReport.getTest().log(Status.PASS, "[SUCCESS] Logout user successfully");
+////    		}
+////    		else
+////    		{
+////    			LogUtils.failure(logger,"[FAILURE] Logout failed. Status code: " + response.getStatusCode()
+////                + " | Response: " + response.getBody().asString());
+////    			ExtentReport.getTest().log(Status.FAIL, "[FAILURE] Logout failed. Status code: " + response.getStatusCode()
+////                + " | Response: " + response.getBody().asString());
+////    		}
+////    		
+////    	}
+////    	catch (Exception e)
+////    	{
+////    		LogUtils.exception(logger,"Error while executing logout API:", e);
+////    		ExtentReport.getTest().log(Status.FAIL, "Error while executing logout API: " + e.getMessage());
+////	        throw new customException("[EXCEPTION] Error during logout API execution: " + e.getMessage());
+////		}
+////    }
 }
